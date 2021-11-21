@@ -1,0 +1,35 @@
+{
+  "name": "bilibili-desktop",
+  "version": "0.0.0",
+  "main": "electron/main.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit --skipLibCheck && vite build",
+    "serve": "vite preview",
+    "electron:serve": "electron .",
+    "dev:electron": "tsc -p tsconfig.electron.json && cross-env NODE_ENV=development electron ./build/main.js",
+    "dev:tsc": "nodemon --watch electron/main.ts --exec yarn run electron:serve"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "element-plus": "^1.2.0-beta.3",
+    "qrcode.vue": "^3.3.3",
+    "svg-sprite-loader": "^6.0.11",
+    "vue": "^3.2.16",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.7",
+    "@types/qs": "^6.9.7",
+    "@vitejs/plugin-vue": "^1.9.3",
+    "cross-env": "^7.0.3",
+    "electron": "^15.3.1",
+    "node-sass": "^6.0.1",
+    "nodemon": "^2.0.15",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
+    "typescript": "^4.4.3",
+    "vite": "^2.6.4",
+    "vue-tsc": "^0.3.0"
+  }
+}

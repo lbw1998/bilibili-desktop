@@ -10,13 +10,13 @@
 import { computed } from "vue";
 const props = defineProps({
   name: {
-      type: String,
-      required: true
-    },
-    color: {
-      type: String,
-      default: ''
-    }
+    type: String,
+    required: true
+  },
+  color: {
+    type: String,
+    default: ''
+  }
 })
 
 const iconName = computed(()=>`#icon-${props.name}`);

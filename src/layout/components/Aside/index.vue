@@ -1,7 +1,7 @@
 <template>
   <el-menu default-active="/recommend" class="aside" :router="true" :collapse="true">
     <div class="logo-wrap">
-      <img src="../../assets/logo.png" alt="" width="48">
+      <img src="@/assets/logo.png" alt="" width="48">
     </div>
     <el-menu-item index="/recommend">
       <el-icon><House /></el-icon>
@@ -34,8 +34,16 @@
       <template #title>动态</template>
     </el-menu-item>
     <div class="user">
-      <el-avatar :size="38" :icon="User" @click="showDialog"></el-avatar>
+      <el-avatar :size="38" v-if="!userInfo.isLogin" :icon="User" @click="showDialog"></el-avatar>
+      <el-avatar :size="38" v-else :src="userInfo.face" @click="userDialog = true" ></el-avatar>
     </div>
+    <UserInfoVue
+      :visible="userDialog"
+      :userInfo="userInfo"
+      @changeVisible="(visible) => userDialog = visible"
+      @logout="logout"
+    >
+    </UserInfoVue>
     <el-dialog
       v-model="loginDialog"
       title="扫码登录"
@@ -61,14 +69,23 @@ import {
   Setting,
   User,
 } from "@element-plus/icons";
-import { getLoginUrlApi, loginApi } from "@/api/system/user";
 import { ref } from "vue";
 import QrcodeVue from 'qrcode.vue'
+import UserInfoVue from "@/components/UserInfo.vue";
+import { getLoginUrlApi, loginApi } from "@/api/system/user";
+import useUserInfo from "./methods/getUserInfo";
+import { ElMessage, ElNotification } from "element-plus";
 
 const loginDialog = ref(false)
+const userDialog = ref(false)
 const loginUrl = ref('')
 const loading = ref(true)
 let timer: NodeJS.Timer | null = null
+
+const { getUserInfo, userInfo } = useUserInfo()
+
+getUserInfo()
+// 获取扫描URL
 const getLoginUrl = async () => {
   loading.value = true
   const res = await getLoginUrlApi()
@@ -78,20 +95,34 @@ const getLoginUrl = async () => {
     login(res.data.oauthKey)
   }, 1000)
 }
-
+// 登录
 const login = async (oauthKey:string) => {
   const res = await loginApi({oauthKey})
-  if(res.code == 0) loginDialog.value = false
+  if(res.code == 0) {
+    loginDialog.value = false
+    getUserInfo()
+  }
 }
-
+// 清除定时器
 const clearTimer = () => {
   clearInterval(Number(timer))
 }
-
+// 显示扫描弹框
 const showDialog = () => {
   getLoginUrl()
   loginDialog.value = true
 }
+// 注销
+const logout = () => {
+  userDialog.value = false
+  ElNotification({
+    title: '通知',
+    message: '注销成功',
+    type: 'success',
+    position: 'bottom-left',
+  })
+}
+
 
 </script>
 
@@ -114,8 +145,10 @@ const showDialog = () => {
     justify-content: center;
     align-items: center;
     font-size: 32px;
-    cursor: pointer;
     -webkit-app-region: no-drag;
+    .el-avatar {
+      cursor: pointer;
+    }
   }
   .dialog-contain {
     width: 100%;

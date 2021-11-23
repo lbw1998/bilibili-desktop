@@ -11,8 +11,10 @@
     "dev:tsc": "nodemon --watch electron/main.ts --exec yarn run electron:serve"
   },
   "dependencies": {
+    "@types/js-cookie": "^3.0.1",
     "axios": "^0.24.0",
     "element-plus": "^1.2.0-beta.3",
+    "js-cookie": "^3.0.1",
     "qrcode.vue": "^3.3.3",
     "svg-sprite-loader": "^6.0.11",
     "vue": "^3.2.16",

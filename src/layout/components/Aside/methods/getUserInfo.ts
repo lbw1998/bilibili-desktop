@@ -1,6 +1,7 @@
-import { getUserInfoApi } from "@/api/system/user";
+import { getUserInfoApi, getUserStateApi, UserState } from "@/api/system/user";
 import { UserInfo } from "@/api/system/user";
 import { reactive } from "vue";
+import store from "@/utils/store";
 
 export default function useUserInfo() {
   const userInfo = reactive(<UserInfo>{
@@ -15,22 +16,33 @@ export default function useUserInfo() {
     money: 0,
     wallet: {},
   })
-  
+  const userState = reactive(<UserState>{
+    follower: 0,
+    following: 0,
+    dynamic_count: 0
+  })
   const getUserInfo = async () => {
-    const res = await getUserInfoApi()
-    if (res.code == 0) {
-      userInfo.face = res.data.face
-      userInfo.vipStatus = res.data.vipStatus
-      userInfo.vipType = res.data.vipType
-      userInfo.vip = res.data.vip
-      userInfo.uname = res.data.uname
-      userInfo.vip_nickname_color = res.data.vip_nickname_color
-      userInfo.level_info = res.data.level_info
-      userInfo.money = res.data.money
-      userInfo.wallet = res.data.wallet
+    const resInfo = await getUserInfoApi()
+    const resState = await getUserStateApi()
+    if (resState.code == 0) {
+      userState.follower= resState.data.follower
+      userState.following= resState.data.following
+      userState.dynamic_count= resState.data.dynamic_count
     }
-    userInfo.isLogin = res.data.isLogin
+    if (resInfo.code == 0) {
+      store.mid = resInfo.data.mid
+      userInfo.face = resInfo.data.face
+      userInfo.vipStatus = resInfo.data.vipStatus
+      userInfo.vipType = resInfo.data.vipType
+      userInfo.vip = resInfo.data.vip
+      userInfo.uname = resInfo.data.uname
+      userInfo.vip_nickname_color = resInfo.data.vip_nickname_color
+      userInfo.level_info = resInfo.data.level_info
+      userInfo.money = resInfo.data.money
+      userInfo.wallet = resInfo.data.wallet
+    }
+    store.isLogin = resInfo.data.isLogin
   }
-  return {userInfo, getUserInfo}
+  return {userInfo, userState, getUserInfo}
 }
 

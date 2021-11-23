@@ -1,5 +1,5 @@
 
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
   {
@@ -12,7 +12,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: routes,
 });
 
@@ -22,7 +22,7 @@ addRoute()
 function addRoute() {
   const modules = import.meta.glob('../views/**')
   for (const path in modules) {
-    router.addRoute('layout', { path: `/${path.split('/')[2]}`, component: modules[path] })
+    router.addRoute('layout', { path: `/${path.split('/')[2]}`,name: path.split('/')[2], component: modules[path] })
   }
 }
 

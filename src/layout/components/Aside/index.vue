@@ -34,12 +34,13 @@
       <template #title>动态</template>
     </el-menu-item>
     <div class="user">
-      <el-avatar :size="38" v-if="!userInfo.isLogin" :icon="User" @click="showDialog"></el-avatar>
+      <el-avatar :size="38" v-if="!store.isLogin" :icon="User" @click="showDialog"></el-avatar>
       <el-avatar :size="38" v-else :src="userInfo.face" @click="userDialog = true" ></el-avatar>
     </div>
     <UserInfoVue
       :visible="userDialog"
-      :userInfo="userInfo"
+      :user-info="userInfo"
+      :user-state="userState"
       @changeVisible="(visible) => userDialog = visible"
       @logout="logout"
     >
@@ -72,9 +73,11 @@ import {
 import { ref } from "vue";
 import QrcodeVue from 'qrcode.vue'
 import UserInfoVue from "@/components/UserInfo.vue";
-import { getLoginUrlApi, loginApi } from "@/api/system/user";
+import { getLoginUrlApi, loginApi, logoutApi } from "@/api/system/user";
 import useUserInfo from "./methods/getUserInfo";
-import { ElMessage, ElNotification } from "element-plus";
+import { ElNotification } from "element-plus";
+import { getBiliCSRF } from "@/utils/cookie";
+import store from "@/utils/store";
 
 const loginDialog = ref(false)
 const userDialog = ref(false)
@@ -82,7 +85,7 @@ const loginUrl = ref('')
 const loading = ref(true)
 let timer: NodeJS.Timer | null = null
 
-const { getUserInfo, userInfo } = useUserInfo()
+const { getUserInfo, userInfo, userState } = useUserInfo()
 
 getUserInfo()
 // 获取扫描URL
@@ -95,6 +98,7 @@ const getLoginUrl = async () => {
     login(res.data.oauthKey)
   }, 1000)
 }
+
 // 登录
 const login = async (oauthKey:string) => {
   const res = await loginApi({oauthKey})
@@ -113,14 +117,18 @@ const showDialog = () => {
   loginDialog.value = true
 }
 // 注销
-const logout = () => {
-  userDialog.value = false
-  ElNotification({
-    title: '通知',
-    message: '注销成功',
-    type: 'success',
-    position: 'bottom-left',
-  })
+const logout = async () => {
+  const { code } = await logoutApi({biliCSRF: getBiliCSRF() || ''})
+  if(code == 0 ) {
+    userDialog.value = false
+    ElNotification({
+      title: '通知',
+      message: '注销成功',
+      type: 'success',
+      position: 'bottom-left',
+    })
+    store.clearUserInfo()
+  }
 }
 
 

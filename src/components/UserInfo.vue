@@ -45,15 +45,15 @@
       <div class="counts">
         <div class="count-item">
           <div class="item-key">关注</div>
-          <div class="item-value">16</div>
+          <div class="item-value">{{userState.following}}</div>
         </div>
         <div class="count-item">
           <div class="item-key">粉丝</div>
-          <div class="item-value">6</div>
+          <div class="item-value">{{userState.follower}}</div>
         </div>
         <div class="count-item">
           <div class="item-key">动态</div>
-          <div class="item-value">7</div>
+          <div class="item-value">{{userState.dynamic_count}}</div>
         </div>
       </div>
       <el-menu
@@ -61,19 +61,23 @@
       >
         <el-menu-item index="1">
           <el-icon><location /></el-icon>
-          <span>Navigator One</span>
+          <span>个人主页</span>
         </el-menu-item>
         <el-menu-item index="2">
           <el-icon><icon-menu /></el-icon>
-          <span>Navigator Two</span>
+          <span>消息</span>
         </el-menu-item>
         <el-menu-item index="3">
           <el-icon><document /></el-icon>
-          <span>Navigator Three</span>
+          <span>我的收藏</span>
         </el-menu-item>
         <el-menu-item index="4">
           <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
+          <span>稍后再看</span>
+        </el-menu-item>
+        <el-menu-item index="5">
+          <el-icon><setting /></el-icon>
+          <span>历史记录</span>
         </el-menu-item>
       </el-menu>
       <el-button class="logout" round size="small" type="danger" @click="emit('logout')">注销</el-button>
@@ -88,13 +92,13 @@ import {
   Menu as IconMenu,
   Setting,
 } from '@element-plus/icons'
-import { UserInfo } from '@/api/system/user';
+import { UserInfo, UserState  } from '@/api/system/user';
 
 const props = defineProps<{
   visible: boolean,
-  userInfo: UserInfo
+  userInfo: UserInfo,
+  userState: UserState
 }>()
-
 const emit = defineEmits<{
   (event: 'changeVisible', visible:boolean): void,
   (event: 'logout'): void,
@@ -206,7 +210,8 @@ const emit = defineEmits<{
     padding: 0 40px;
     border: none;
     li {
-      padding: 0 120px;
+      padding: 0 180px;
+      padding-left: 80px!important;
     }
   }
   .logout {

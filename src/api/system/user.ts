@@ -124,3 +124,29 @@ export const getUserInfoApi = () => {
     method: 'get'
   })
 }
+
+
+export interface UserState {
+  following: number;
+  follower: number;
+  dynamic_count: number;
+}
+// 获取粉丝关注登数量
+export const getUserStateApi = () => {
+  return request<UserState>({
+    url: 'https://api.bilibili.com/x/web-interface/nav/stat',
+    method: 'get',
+  })
+}
+
+interface LogoutData {
+  biliCSRF: string
+}
+// 注销
+export const logoutApi = (data:LogoutData) => {
+  return request({
+    url: 'https://passport.bilibili.com/login/exit/v2',
+    method: 'post',
+    data
+  })
+}

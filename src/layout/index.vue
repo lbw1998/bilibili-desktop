@@ -1,6 +1,6 @@
 <template>
   <el-container class="app-wrap">
-    <el-aside>
+    <el-aside v-show="!store.system.isFullScreen">
       <Aside></Aside>
     </el-aside>
     <el-container>
@@ -18,6 +18,7 @@
 import Aside from "./components/Aside/index.vue";
 import Main from "./components/Main.vue";
 import Header from "./components/Header.vue";
+import store from "@/utils/store";
 </script>
 
 <style lang="scss" scoped>

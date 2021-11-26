@@ -1,11 +1,17 @@
 import { reactive } from "vue";
 
 const store = reactive({
-  isLogin: false,
-  mid: 0,
+  user: {
+    isLogin: false,
+    mid: 0,
+  },
+  system: {
+    isLogin: false,
+    isFullScreen: false
+  },
   clearUserInfo: () => {
-    store.isLogin = false
-    store.mid = 0
+    store.user.isLogin = false
+    store.user.mid = 0
   }
 })
 export default store

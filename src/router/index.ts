@@ -20,7 +20,7 @@ addRoute()
 
 // 自动添加路由
 function addRoute() {
-  const modules = import.meta.glob('../views/**')
+  const modules = import.meta.glob('../views/*/*.vue')
   for (const path in modules) {
     router.addRoute('layout', { path: `/${path.split('/')[2]}`,name: path.split('/')[2], component: modules[path] })
   }

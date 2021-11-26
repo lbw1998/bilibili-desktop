@@ -34,7 +34,7 @@
       <template #title>动态</template>
     </el-menu-item>
     <div class="user">
-      <el-avatar :size="38" v-if="!store.isLogin" :icon="User" @click="showDialog"></el-avatar>
+      <el-avatar :size="38" v-if="!store.system.isLogin" :icon="User" @click="showDialog"></el-avatar>
       <el-avatar :size="38" v-else :src="userInfo.face" @click="userDialog = true" ></el-avatar>
     </div>
     <UserInfoVue
@@ -74,7 +74,7 @@ import { ref } from "vue";
 import QrcodeVue from 'qrcode.vue'
 import UserInfoVue from "@/components/UserInfo.vue";
 import { getLoginUrlApi, loginApi, logoutApi } from "@/api/system/user";
-import useUserInfo from "./methods/getUserInfo";
+import useUserInfo from "./composables/getUserInfo";
 import { ElNotification } from "element-plus";
 import { getBiliCSRF } from "@/utils/cookie";
 import store from "@/utils/store";
@@ -118,6 +118,8 @@ const showDialog = () => {
 }
 // 注销
 const logout = async () => {
+  console.log(getBiliCSRF());
+  
   const { code } = await logoutApi({biliCSRF: getBiliCSRF() || ''})
   if(code == 0 ) {
     userDialog.value = false
@@ -128,6 +130,7 @@ const logout = async () => {
       position: 'bottom-left',
     })
     store.clearUserInfo()
+    
   }
 }
 

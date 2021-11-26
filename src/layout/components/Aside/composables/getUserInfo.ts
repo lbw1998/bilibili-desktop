@@ -30,7 +30,7 @@ export default function useUserInfo() {
       userState.dynamic_count= resState.data.dynamic_count
     }
     if (resInfo.code == 0) {
-      store.mid = resInfo.data.mid
+      store.user.mid = resInfo.data.mid
       userInfo.face = resInfo.data.face
       userInfo.vipStatus = resInfo.data.vipStatus
       userInfo.vipType = resInfo.data.vipType
@@ -41,7 +41,7 @@ export default function useUserInfo() {
       userInfo.money = resInfo.data.money
       userInfo.wallet = resInfo.data.wallet
     }
-    store.isLogin = resInfo.data.isLogin
+    store.system.isLogin = resInfo.data.isLogin
   }
   return {userInfo, userState, getUserInfo}
 }

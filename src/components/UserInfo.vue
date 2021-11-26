@@ -35,7 +35,7 @@
       <div class="coins">
         <div class="coins-container">
           <div class="info">
-            <svg-icon class="icon" name="money" />
+            <svg-icon class="icon" name="money" color="#38B5DE" />
             <span class="money">{{userInfo.money}}.0</span>
             <svg-icon class="icon" name="coin" />
             <span class="money">{{userInfo.wallet.bcoin_balance}}</span>

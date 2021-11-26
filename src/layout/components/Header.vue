@@ -1,7 +1,7 @@
 <template>
   <div class="header-wrap">
     <div class="search-wrap">
-      <el-button type="info" class="back" :icon="ArrowLeftBold"  circle></el-button>
+      <el-button type="info" class="back" :icon="ArrowLeftBold" v-show="store.system.isFullScreen" circle @click="router.back()"></el-button>
       <el-input
         class="search-input"
         placeholder="搜索视频,番剧或UP主"
@@ -24,11 +24,16 @@
 </template>
 
 <script lang="ts" setup>
+import store from '@/utils/store'
+import { useRouter } from 'vue-router'
 import { ArrowLeftBold, Search } from '@element-plus/icons'
-  const { ipcRenderer } = require('electron')
-  const handleWindow = (data:string) => {
-    ipcRenderer.send('handleWindow', data)
-  }
+
+const router = useRouter()
+
+const { ipcRenderer } = require('electron')
+const handleWindow = (data:string) => {
+  ipcRenderer.send('handleWindow', data)
+}
   
 </script>
 

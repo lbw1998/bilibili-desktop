@@ -40,7 +40,7 @@
             </div>
           </template>
           <template #default>
-              <el-card  :body-style="{ padding: '0px' }">
+              <el-card  :body-style="{ padding: '0px' }" @click="toVideo({bvid: item.bvid})">
                 <img
                   :src="item.pic"
                   class="image"
@@ -73,6 +73,7 @@ import { ref } from 'vue'
 import RefreshButton from '@/components/RefreshButton.vue'
 import { ridList } from '@/utils/rid'
 import { refreshAllApi, Item } from "@/api/video/recommend"
+import { toVideo } from '@/utils/redirect'
 
 const itemList = ref(<Item[]>[])
 const refresh = ref(false)

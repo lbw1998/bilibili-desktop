@@ -2,15 +2,14 @@
 
 import axios, { Method, AxiosRequestHeaders, AxiosRequestConfig  } from "axios";
 import qs from "qs"
-
+const HttpsProxyAgent = require('https-proxy-agent');
 import { handleResponseErrors } from "./tools";
 // import router from "../router";
 // import { Message } from "element-ui";
 axios.defaults.withCredentials = true
 
 const service = axios.create({
-  timeout: 5000,
-  // baseURL: "/api"
+  timeout: 10000,
 });
 
 // 请求拦截器
@@ -65,27 +64,6 @@ type axiosOptions = {
   params?:object,
   data?:object
 }
-
-// function $http(method:Method , url:string, type: number, params?: object) {
-//   let contentType = [
-//     "application/x-www-form-urlencoded",
-//     "application/json",
-//     "multipart/form-data;charset=UTF-8"
-//   ];
-//   let headers = { "content-type": contentType[type], Referer: 'https://www.bilibili.com/' };
-
-//   // if (token === true)
-//   //   headers["Authorization"] = "Bearer " + localStorage.getItem("token");
-
-//   if (type === 0) params = qs.stringify(params);
-//   let axiosOptions:axiosOptions = { method, url, headers };
-//   if (method.toUpperCase() === "GET") {
-//     axiosOptions["params"] = params;
-//   } else {
-//     axiosOptions["data"] = params;
-//   }
-//   return service(axiosOptions);
-// }
 
 export interface BaseData<T = any> {
   code: number;

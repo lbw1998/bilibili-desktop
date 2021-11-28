@@ -1,9 +1,8 @@
 import { request } from '@/utils/axios';
 
 export interface VideoInfo {
-  avid?: string;
+  aid?: number;
   bvid?: string;
-  aid: number;
   videos: number;
   tid: number;
   tname: string;

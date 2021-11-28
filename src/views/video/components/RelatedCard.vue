@@ -1,0 +1,84 @@
+<template>
+  <el-card shadow="hover" :body-style="{ padding: '5px' }">
+    <div class="card-wrap">
+      <img
+        :src="videoInfo.pic"
+        class="image"
+      />
+      <div class="info">
+        <div class="title">
+          {{videoInfo.title}}
+        </div>
+        <div class="count-up">
+          {{videoInfo.owner.name}}
+        </div>
+        <div class="count">
+          <svg-icon name="view" />
+          <span class="view">{{videoInfo.stat.view}}</span>
+          <svg-icon name="barrage" />
+          <span class="view">{{videoInfo.stat.danmaku}}</span>
+        </div>
+      </div>
+    </div>
+  </el-card>
+</template>
+
+<script lang="ts" setup>
+import { VideoInfo } from '@/api/video/info';
+const props = defineProps<{
+  videoInfo: VideoInfo
+}>()
+</script>
+
+<style lang="scss" scoped>
+  .el-card {
+    width: 320px;
+    box-sizing: border-box;
+    .card-wrap {
+      display: flex;
+      .image {
+        width: 140px;
+        height: 80px;
+      }
+      .info {
+        margin-left: 10px;
+        flex: 1;
+        .title {
+          font-size: 14px;
+          font-weight: 500;
+          height: 36px;
+          line-height: 18px;
+          margin-bottom: 6px;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+        .count-up {
+          width: 160px;
+          margin-bottom: 4px;
+          color: #999;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          line-clamp: 2;
+        }
+        .count {
+          display: inline-block;
+          height: 16px;
+          width: 100%;
+          color: #999;
+          .view {
+            font-size: 12px;
+            width: 50px;
+            text-indent: 5px;
+            display: inline-block;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+</style>

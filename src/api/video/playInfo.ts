@@ -37,7 +37,7 @@ interface Durl {
 }
 
 export interface PlayInfoParams {
-  aid?: number,
+  avid?: number,
   bvid?: string,
   cid: number
 }

@@ -2,14 +2,18 @@
 
 import axios, { Method, AxiosRequestHeaders, AxiosRequestConfig  } from "axios";
 import qs from "qs"
-const HttpsProxyAgent = require('https-proxy-agent');
+// const HttpsProxyAgent = require('https-proxy-agent');
 import { handleResponseErrors } from "./tools";
 // import router from "../router";
-// import { Message } from "element-ui";
+// axios.defaults.adapter = require('axios/lib/adapters/http');
 axios.defaults.withCredentials = true
 
 const service = axios.create({
   timeout: 10000,
+  // headers: {
+    // origin: 'https://www.bilibili.com',
+    // referer: 'https://www.bilibili.com'
+  // },
 });
 
 // 请求拦截器
@@ -56,14 +60,6 @@ service.interceptors.response.use(
     }
   }
 );
-
-type axiosOptions = {
-  method: Method , 
-  url:string, 
-  headers: AxiosRequestHeaders,
-  params?:object,
-  data?:object
-}
 
 export interface BaseData<T = any> {
   code: number;

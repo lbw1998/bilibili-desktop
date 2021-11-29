@@ -1,10 +1,11 @@
 <template>
   <el-card shadow="hover" :body-style="{ padding: '5px' }">
     <div class="card-wrap">
-      <img
-        :src="videoInfo.pic"
-        class="image"
-      />
+      <el-image :src="videoInfo.pic" class="image">
+        <template #placeholder>
+          <div class="image" v-loading="true"></div>
+        </template>
+      </el-image>
       <div class="info">
         <div class="title">
           {{videoInfo.title}}

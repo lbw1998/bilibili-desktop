@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { toVideo } from '@/utils/redirect'
 import VCard from '@/components/VideoCard.vue'
 import { getHotApi, HotInfo } from '@/api/video/hot'
@@ -45,8 +45,11 @@ const loadMore = () => {
     pn++
   })
 }
-getHot()
 
+onMounted(() => {
+  getHot()
+
+})
 </script>
 
 <style lang="scss" scoped>

@@ -10,16 +10,18 @@ export const ridList = [
     code: 'douga',
     rid: 1
   },
-  {
-    label: '番剧',
-    code: 'anime',
-    rid: 13
-  },
-  {
-    label: '国创',
-    code: 'guochuang',
-    rid:	167
-  },
+  // {
+  //   label: '番剧',
+  //   code: 'anime',
+  //   noRank: true,
+  //   rid: 13
+  // },
+  // {
+  //   label: '国创',
+  //   code: 'guochuang',
+  //   noRank: true,
+  //   rid:	167
+  // },
   {
     label: '音乐',
     code: 'music',
@@ -80,11 +82,12 @@ export const ridList = [
     code: 'fashion',
     rid: 	155
   },
-  {
-    label: '资讯', // 注：该分区无排名功能
-    code: 'information',
-    rid: 	202
-  },
+  // {
+  //   label: '资讯', // 注：该分区无排名功能
+  //   code: 'information',
+  //   noRank: true,
+  //   rid: 	202
+  // },
   {
     label: '娱乐',
     code: 'ent',

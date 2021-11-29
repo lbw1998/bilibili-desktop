@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import RefreshButton from '@/components/RefreshButton.vue'
 import VCard from '@/components/VideoCard.vue'
 import { refreshAllApi, Item } from "@/api/video/recommend"
@@ -45,7 +45,9 @@ const loadMore = () => {
   })
 }
 
-refreshAll()
+onMounted(() => {
+  refreshAll()
+})
 
 </script>
 

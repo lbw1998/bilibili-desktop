@@ -1,6 +1,6 @@
 <template>
   <div class="player-wrap">
-    <video id="videoPlayer" v-show="!isLoading" crossorigin="anonymous" controls></video>
+    <video id="videoPlayer" v-show="!isLoading" controls></video>
     <div class="loading-wrap" v-show="isLoading">
       <div class="loading"></div>
       <div class="loading-tip">正在加载视频...</div>

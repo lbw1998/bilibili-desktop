@@ -1,6 +1,17 @@
 import { ElMessage } from "element-plus";
 // import router from "@/router";
 
+export const parseTimestamp = (date:number) => {
+  return new Date(date*1000).toLocaleString('zh', { hour12: false }).replace(' 24:00:00','')
+}
+
+export const formatNumber = (num:number) => {
+  if (num > 10000) {
+    return (num/10000).toFixed(1) + '万'
+  } else {
+    return num
+  }
+}
 
 /**
  * 跳转登录页

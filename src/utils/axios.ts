@@ -5,14 +5,14 @@ import qs from "qs"
 // const HttpsProxyAgent = require('https-proxy-agent');
 import { handleResponseErrors } from "./tools";
 // import router from "../router";
-// axios.defaults.adapter = require('axios/lib/adapters/http');
+// axios.defaults.adapter = require('axios/lib/adapters/http'); 
 axios.defaults.withCredentials = true
 
 const service = axios.create({
-  timeout: 10000,
+  timeout: 1000000,
   // headers: {
-    // origin: 'https://www.bilibili.com',
-    // referer: 'https://www.bilibili.com'
+  //   origin: 'https://www.bilibili.com',
+  //   referer: 'https://www.bilibili.com'
   // },
 });
 
@@ -57,6 +57,7 @@ service.interceptors.response.use(
       // network状态在app.vue中控制着一个全局的断网提示组件的显示隐藏
       // 关于断网组件中的刷新重新获取数据，会在断网组件中说明
       // store.commit('changeNetwork', false);
+      return {data: {code:500}}
     }
   }
 );

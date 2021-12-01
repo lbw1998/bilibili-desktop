@@ -1,4 +1,6 @@
-import { getPlayInfoApi, PlayInfoParams, PlayInfo } from "@/api/video/playInfo";
+
+import { getPlayInfoApi, PlayInfoParams } from "@/request/api/video/playInfo";
+import { PlayInfo } from "@/request/model/video/playInfo";
 import { reactive } from "vue";
 
 export default function usePlayInfo() {

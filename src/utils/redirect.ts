@@ -5,3 +5,8 @@ import router from "@/router";
 export const toVideo = (params:RouteParamsRaw) => {
   router.push({name:'video', params})
 }
+
+// 跳转到搜索情页面
+export const toSearch = (params:RouteParamsRaw) => {
+  router.push({name:'search', params})
+}

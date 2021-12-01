@@ -1,6 +1,6 @@
+import { RelagedParams, relatedApi } from "@/request/api/video/recommend";
+import { VideoInfo } from "@/request/model/video/info";
 import { ref } from "vue";
-import { relatedApi, RelagedParams } from "@/api/video/recommend";
-import { VideoInfo } from "@/api/video/info";
 
 export default function usePlayInfo() {
   const relatedInfo = ref<VideoInfo[]>([])

@@ -7,6 +7,7 @@
 
 <style>
 @import "./assets/css/common.css";
+@import "./assets/css/element.scss";
 #app {
   width: 100%;
   height: 100%;

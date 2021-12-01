@@ -1,7 +1,7 @@
 <template>
   <el-menu default-active="/recommend" class="aside" :router="true" :collapse="true">
     <div class="logo-wrap">
-      <img src="@/assets/logo.png" alt="" width="48">
+      <img src="@/assets/img/logo.png" alt="" width="48">
     </div>
     <el-menu-item index="/recommend">
       <el-icon><House /></el-icon>
@@ -73,11 +73,11 @@ import {
 import { ref } from "vue";
 import QrcodeVue from 'qrcode.vue'
 import UserInfoVue from "@/components/UserInfo.vue";
-import { getLoginUrlApi, loginApi, logoutApi } from "@/api/system/user";
 import useUserInfo from "./composables/getUserInfo";
 import { ElNotification } from "element-plus";
 import { getBiliCSRF } from "@/utils/cookie";
 import store from "@/utils/store";
+import { getLoginUrlApi, loginApi, logoutApi } from "@/request/api/system/login";
 
 const loginDialog = ref(false)
 const userDialog = ref(false)

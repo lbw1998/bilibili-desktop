@@ -1,5 +1,5 @@
-import { getVideoInfoApi, VideoInfoParams } from "@/api/video/info";
-import { VideoInfo } from "@/api/video/info";
+import { getVideoInfoApi, VideoInfoParams } from "@/request/api/video/info";
+import { VideoInfo } from "@/request/model/video/info";
 import { reactive } from "vue";
 
 export default function useVideoInfo() {

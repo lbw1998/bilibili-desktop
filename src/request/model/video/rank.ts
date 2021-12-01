@@ -1,8 +1,4 @@
-import { request } from '@/utils/axios';
-
-
-
-interface RankInfo {
+export interface RankInfo {
   note: string;
   list: RankVideoInfo[];
 }
@@ -51,15 +47,4 @@ interface Rights {
   is_cooperation: number;
   ugc_pay_preview: number;
   no_background: number;
-}
-
-interface RankParams {
-  rid: number
-}
-export const getRankingApi = (params?:RankParams) => {
-  return request<RankInfo>({
-    url: 'https://api.bilibili.com/x/web-interface/ranking',
-    method: 'get',
-    params
-  })
 }

@@ -13,9 +13,9 @@
         <div class="info-top">{{title}}</div>
         <div class="info-bottom">
           <svg-icon name="view" />
-          <span class="view">{{play}}</span>
+          <span class="view">{{formatNumber(play)}}</span>
           <svg-icon name="barrage" />
-          <span class="view">{{video_review}}</span>
+          <span class="view">{{formatNumber(video_review)}}</span>
           <svg-icon name="user" />
           <span class="view">{{author}}</span>
         </div>
@@ -29,6 +29,8 @@
 </template>
 
 <script lang="ts" setup>
+import { formatNumber } from '@/utils/tools';
+
 defineProps<{
   index: number,
   author: string,

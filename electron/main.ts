@@ -8,8 +8,8 @@ app.commandLine.appendSwitch('disable-web-security');
 function createWindow() {
   Menu.setApplicationMenu(null)
   const mainWindow = new BrowserWindow({
-    width: 1110,
-    height: 740,
+    width: 1200,
+    height: 840,
     frame: false,
     webPreferences: {
       webSecurity: false,
@@ -19,20 +19,21 @@ function createWindow() {
     }
   });
   const isDev = process.env.NODE_ENV === "development";
-  const xxx_filter = {
+    const filter = {
     urls: ["*://*/*"]
   }
-  session.defaultSession.webRequest.onBeforeSendHeaders(xxx_filter, (details, callback)=> {
-    details.requestHeaders['orgin'] = "https://www.bilibili.com"
+  session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback)=> {
+    details.requestHeaders['origin'] = "https://www.bilibili.com"
     details.requestHeaders['referer'] = "https://www.bilibili.com"
-    // details.requestHeaders['host'] = "https://www.bilibili.com"
-    // details.requestHeaders['user-agent'] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
-    callback({requestHeaders: details.requestHeaders});
+      // details.requestHeaders['Host'] = "https://www.bilibili.com"
+      // details.requestHeaders['user-agent'] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
+    
+    callback({ requestHeaders: details.requestHeaders });
   })
   // mainWindow.webContents.session.setProxy({proxyRules: 'https://www.bilibili.com'})
   // if (isDev) {
     mainWindow.loadURL("http://localhost:3000/");
-  // } else {
+    // } else {
     // mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
     // console.log(path.join(__dirname, "../dist/index.html"));
     

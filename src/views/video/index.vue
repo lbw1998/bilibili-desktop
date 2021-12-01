@@ -109,6 +109,7 @@ const route = useRoute()
 const activeTab = ref("video")
 const radio = ref('最热')
 const Player = ref()
+
 const {playInfo, getPlayInfo } = usePlayInfo()
 const {videoInfo, getVideoInfo} = useVideoInfo()
 const {relatedInfo, getRelatedInfo} = useRelatedInfo()
@@ -131,7 +132,9 @@ const init = (aid = route.params.aid as unknown as number) => {
     getRelatedInfo(relatedParams)
   })
 }
+
 init()
+
 const changeVideo = (aid:number) => {
   Player.value.destroy()
   init(aid)

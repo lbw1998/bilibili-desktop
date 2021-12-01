@@ -1,7 +1,7 @@
-import { getUserInfoApi, getUserStateApi, UserState } from "@/api/system/user";
-import { UserInfo } from "@/api/system/user";
 import { reactive } from "vue";
 import store from "@/utils/store";
+import { getUserInfoApi, getUserStateApi } from "@/request/api/system/user";
+import { UserInfo, UserState } from "@/request/model/system/user";
 
 export default function useUserInfo() {
   const userInfo = reactive(<UserInfo>{
@@ -24,12 +24,12 @@ export default function useUserInfo() {
   const getUserInfo = async () => {
     const resInfo = await getUserInfoApi()
     const resState = await getUserStateApi()
-    if (resState.code == 0) {
+    if (resState && resState.code == 0) {
       userState.follower= resState.data.follower
       userState.following= resState.data.following
       userState.dynamic_count= resState.data.dynamic_count
     }
-    if (resInfo.code == 0) {
+    if (resInfo && resInfo.code == 0) {
       store.user.mid = resInfo.data.mid
       userInfo.face = resInfo.data.face
       userInfo.vipStatus = resInfo.data.vipStatus

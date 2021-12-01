@@ -1,12 +1,6 @@
-import { request } from "@/utils/axios"
-
-interface HotData {
-  list: HotInfo[];
-  no_more: boolean;
-}
-
-export interface HotInfo {
-  aid: number;
+export interface VideoInfo {
+  aid?: number;
+  bvid?: string;
   videos: number;
   tid: number;
   tname: string;
@@ -16,30 +10,53 @@ export interface HotInfo {
   pubdate: number;
   ctime: number;
   desc: string;
+  desc_v2: Descv2[];
   state: number;
   duration: number;
-  mission_id?: number;
+  mission_id: number;
   rights: Rights;
   owner: Owner;
   stat: Stat;
   dynamic: string;
   cid: number;
   dimension: Dimension;
-  short_link: string;
-  short_link_v2: string;
-  first_frame: string;
-  bvid: string;
-  season_type: number;
-  is_ogv: boolean;
-  ogv_info?: any;
-  rcmd_reason: Rcmdreason;
-  up_from_v2?: number;
-  season_id?: number;
+  no_cache: boolean;
+  pages: Page[];
+  subtitle: Subtitle;
+  user_garb: Usergarb;
+  honor_reply: Honorreply;
 }
 
-interface Rcmdreason {
-  content: string;
-  corner_mark: number;
+interface Honorreply {
+  honor: Honor[];
+}
+
+interface Honor {
+  aid: number;
+  type: number;
+  desc: string;
+  weekly_recommend_num: number;
+}
+
+interface Usergarb {
+  url_image_ani_cut: string;
+}
+
+interface Subtitle {
+  allow_submit: boolean;
+  list: any[];
+}
+
+interface Page {
+  cid: number;
+  page: number;
+  from: string;
+  part: string;
+  duration: number;
+  vid: string;
+  weblink: string;
+  dimension: Dimension;
+  first_frame: string;
 }
 
 interface Dimension {
@@ -60,6 +77,8 @@ interface Stat {
   his_rank: number;
   like: number;
   dislike: number;
+  evaluation: string;
+  argue_msg: string;
 }
 
 interface Owner {
@@ -81,17 +100,14 @@ interface Rights {
   is_cooperation: number;
   ugc_pay_preview: number;
   no_background: number;
+  clean_mode: number;
+  is_stein_gate: number;
+  is_360: number;
+  no_share: number;
 }
-// 热门视频参数
-interface HotParams {
-  pn?: number
-  ps?: number
-}
-// 首页热门视频
-export const getHotApi = (params?:HotParams) => {
-  return request<HotData>({
-    url: 'https://api.bilibili.com/x/web-interface/popular',
-    method: 'get',
-    params
-  })
+
+interface Descv2 {
+  raw_text: string;
+  type: number;
+  biz_id: number;
 }

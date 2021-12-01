@@ -4,14 +4,16 @@
       <b class="title">排行榜</b>
     </div>
     <el-tabs v-model="activeRid" @tab-click="changeRid">
-      <el-tab-pane v-for="item in ridList" :name="item.rid" :key="item.rid">
-        <template #label>
-          <div class="tab-wrap">
-            <svg-icon class="icon" :name="item.code" />
-            <span>{{item.label}}</span>
-          </div>
-        </template>
-      </el-tab-pane>
+      <template v-for="item in ridList" :key="item.rid">
+        <el-tab-pane  :name="item.rid" v-if="item.isRank" >
+          <template #label>
+            <div class="tab-wrap">
+              <svg-icon class="icon" :name="item.code" />
+              <span>{{item.label}}</span>
+            </div>
+          </template>
+        </el-tab-pane>
+      </template>
     </el-tabs>
   </div>
   <el-scrollbar v-loading="refresh">
@@ -33,11 +35,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { toVideo } from '@/utils/redirect';
 import RCard from './components/RankCard.vue';
 import { ridList } from '@/utils/rid'
-import { getRankingApi, RankVideoInfo } from '@/api/video/rank';
+import { getRankingApi } from '@/request/api/video/rank';
+import { RankVideoInfo } from '@/request/model/video/rank';
 const activeRid = ref(0)
 const refresh= ref(true)
 const itemList = ref(<RankVideoInfo[]>[])
@@ -51,9 +54,8 @@ const getRanking = async (rid:number = 0) => {
   refresh.value = false
   itemList.value = res.data.list
 }
-onMounted(() => {
-  getRanking()
-})
+
+getRanking()
 </script>
 
 <style lang="scss" scoped>

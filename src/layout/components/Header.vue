@@ -2,10 +2,16 @@
   <div class="header-wrap">
     <div class="search-wrap">
       <el-button type="info" class="back" :icon="ArrowLeftBold" v-show="store.system.isFullScreen" circle @click="router.back()"></el-button>
-      <el-input
+      <el-autocomplete
+        v-model="searchWord"
         class="search-input"
         placeholder="搜索视频,番剧或UP主"
         :prefix-icon="Search"
+        :trigger-on-focus="false"
+        @select="toSearch({keyword: searchWord})"
+        :hide-loading="true"
+        :fetch-suggestions="querySearch"
+        @keyup.enter="toSearch({keyword: searchWord})"
         :input-style="{borderRadius: `var(--el-border-radius-round)`}"
       />
     </div>
@@ -25,16 +31,23 @@
 
 <script lang="ts" setup>
 import store from '@/utils/store'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ArrowLeftBold, Search } from '@element-plus/icons'
+import { toSearch } from '@/utils/redirect'
+import { searchSuggestApi } from '@/request/api/video/search'
 
 const router = useRouter()
-
 const { ipcRenderer } = require('electron')
 const handleWindow = (data:string) => {
   ipcRenderer.send('handleWindow', data)
 }
-  
+const searchWord = ref('')
+const querySearch = async (keyword: string, cb:Function) => {
+  const searchSuggest = await searchSuggestApi({term:keyword})
+  const newArr = Object.values(searchSuggest)
+  cb(newArr)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -49,6 +62,7 @@ const handleWindow = (data:string) => {
     transform: translateY(6px);
     padding-left: 20px;
     display: flex;
+    -webkit-app-region: no-drag;
     .back {
       color: #999999;
       margin-right: 20px;

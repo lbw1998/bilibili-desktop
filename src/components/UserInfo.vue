@@ -86,13 +86,13 @@
 </template>
 
 <script lang="ts" setup>
+import { UserInfo, UserState } from '@/request/model/system/user';
 import {
   Location,
   Document,
   Menu as IconMenu,
   Setting,
 } from '@element-plus/icons'
-import { UserInfo, UserState  } from '@/api/system/user';
 
 const props = defineProps<{
   visible: boolean,
@@ -206,10 +206,10 @@ const emit = defineEmits<{
       }
     }
   }
-  .el-menu ::v-deep {
+  .el-menu {
     padding: 0 40px;
     border: none;
-    li {
+    :deep(li) {
       padding: 0 180px;
       padding-left: 80px!important;
     }

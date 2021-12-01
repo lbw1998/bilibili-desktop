@@ -6,31 +6,32 @@
       </template>
     </el-image>
     <div class="card-info">
+      <el-avatar v-if="face" :size="42" class="face" :src="face"></el-avatar>
       <div class="owner">
-        <!-- <el-avatar :size="36" :src="face"></el-avatar> -->
         <span class="owner-name">{{name}}</span>
       </div>
       <div class="card-title">
-        <b>{{title}}</b>
+        <b v-html="title" :title="title"></b>
       </div>
       <div class="card-bottom">
         <svg-icon name="view" />
-        <span class="view">{{view}}</span>
+        <span class="view">{{formatNumber(view)}}</span>
         <svg-icon name="barrage" />
-        <span class="view">{{like}}</span>
+        <span class="view">{{like?formatNumber(like):''}}</span>
       </div>
     </div>
   </el-card>
 </template>
 
 <script lang="ts" setup>
-const props = defineProps<{
+import { formatNumber } from '@/utils/tools';
+defineProps<{
   pic: string,
   face?: string,
   name: string,
   title: string,
   view: number,
-  like: number
+  like?: number
 }>()
 
 </script>
@@ -44,8 +45,15 @@ const props = defineProps<{
     height: 186px;
   }
   .card-info {
-    padding: 4px 8px;
+    padding: 0px 8px 4px;
     box-sizing: border-box;
+    position: relative;
+    .face {
+      position: absolute;
+      right: 12px;
+      top: -25px;
+      border: 1px solid rgba($color: #999, $alpha: 0.2);
+    }
     .owner {
       display: flex;
       align-items: center;
@@ -55,13 +63,18 @@ const props = defineProps<{
     }
     .card-title {
       width: 270px;
-      /*强制文字在一行文本框内*/
-      white-space: nowrap;
-      /*溢出部分文字隐藏*/
+      height: 40px;
+      text-overflow: -o-ellipsis-lastline;
       overflow: hidden;
-      /*溢出部分省略号处理*/
       text-overflow: ellipsis;
-      padding: 5px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      :deep(.keyword) {
+        color: #f25d8e;
+        font-style: normal;
+      }
     }
     .card-bottom {
       span {

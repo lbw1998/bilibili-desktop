@@ -15,6 +15,7 @@
           :title="item.title"
           :view="item.stat.view"
           :like="item.stat.like"
+          :face="item.owner.face"
         ></v-card>
       </div>
     </div>
@@ -22,11 +23,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import RefreshButton from '@/components/RefreshButton.vue'
 import VCard from '@/components/VideoCard.vue'
-import { refreshAllApi, Item } from "@/api/video/recommend"
 import { toVideo } from '@/utils/redirect'
+import { refreshAllApi } from '@/request/api/video/recommend'
+import { Item } from '@/request/model/video/recommend'
 
 const itemList = ref(<Item[]>[])
 const refresh = ref(false)
@@ -45,10 +47,7 @@ const loadMore = () => {
   })
 }
 
-onMounted(() => {
-  refreshAll()
-})
-
+refreshAll()
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,3 @@
-import { request } from '@/utils/axios';
-
 export interface PlayInfo {
   from: string;
   result: string;
@@ -34,18 +32,4 @@ interface Durl {
   vhead: string;
   url: string;
   backup_url: string[];
-}
-
-export interface PlayInfoParams {
-  avid?: number,
-  bvid?: string,
-  cid: number
-}
-
-export const getPlayInfoApi = (params:PlayInfoParams) => {
-  return request<PlayInfo>({
-    url: 'https://api.bilibili.com/x/player/playurl',
-    method: 'get',
-    params
-  })
 }

@@ -19,7 +19,7 @@ const refresh = computed(() => props.animated === true ?'running':'paused')
 <style lang="scss" scoped>
   .refresh {
     color: #409EFF;
-    & ::v-deep .el-icon {
+    & :deep(.el-icon) {
       animation: rotate 2s linear infinite;
       animation-play-state: v-bind(refresh);
     }

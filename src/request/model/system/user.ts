@@ -1,34 +1,4 @@
-import { request } from '@/utils/axios';
-
-interface Qrcode {
-  url: string;
-  oauthKey: string;
-}
-// 获取登录URL
-export const getLoginUrlApi = () => {
-  return request<Qrcode>({
-    url: 'https://passport.bilibili.com/qrcode/getLoginUrl',
-    method: 'get'
-  })
-}
-
-interface LoginParams {
-  oauthKey: string
-  gourl?: string
-}
-
-interface LoginData {
-  url: string;
-}
-
-// 登录
-export const loginApi = (data:LoginParams) => {
-  return request<LoginData>({
-    url: 'https://passport.bilibili.com/qrcode/getLoginInfo',
-    method: 'post',
-    data
-  })
-}
+// 侧边栏用户信息
 export interface UserInfo {
   isLogin: boolean;
   email_verified: number;
@@ -117,36 +87,11 @@ interface Levelinfo {
   current_exp: number;
   next_exp: number;
 }
-// 获取侧边栏信息
-export const getUserInfoApi = () => {
-  return request<UserInfo>({
-    url: 'https://api.bilibili.com/nav',
-    method: 'get'
-  })
-}
 
+// 用户粉丝状态
 
 export interface UserState {
   following: number;
   follower: number;
   dynamic_count: number;
-}
-// 获取粉丝关注登数量
-export const getUserStateApi = () => {
-  return request<UserState>({
-    url: 'https://api.bilibili.com/x/web-interface/nav/stat',
-    method: 'get',
-  })
-}
-
-interface LogoutData {
-  biliCSRF: string
-}
-// 注销
-export const logoutApi = (data:LogoutData) => {
-  return request({
-    url: 'https://passport.bilibili.com/login/exit/v2',
-    method: 'post',
-    data
-  })
 }

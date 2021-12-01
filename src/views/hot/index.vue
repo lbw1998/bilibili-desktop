@@ -14,6 +14,7 @@
           :title="item.title"
           :view="item.stat.view"
           :like="item.stat.like"
+          :face="item.owner.face"
         ></v-card>
       </div>
     </div>
@@ -21,10 +22,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { toVideo } from '@/utils/redirect'
 import VCard from '@/components/VideoCard.vue'
-import { getHotApi, HotInfo } from '@/api/video/hot'
+import { getHotApi } from '@/request/api/video/hot'
+import { HotInfo } from '@/request/model/video/hot'
 
 const itemList = ref(<HotInfo[]>[])
 const refresh = ref(false)
@@ -46,10 +48,8 @@ const loadMore = () => {
   })
 }
 
-onMounted(() => {
-  getHot()
+getHot()
 
-})
 </script>
 
 <style lang="scss" scoped>

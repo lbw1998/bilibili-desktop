@@ -4,8 +4,8 @@
       <b class="title">搜索：{{searchParams.keyword}}</b>
     </div>
   </div>
-  <el-tabs v-model="searchParams.search_type" @tab-click="selectChange">
-    <el-tab-pane  v-for="item in searchTypes" :name="item.value" >
+  <el-tabs v-model="searchParams.search_type" @tab-click="tabChange">
+    <el-tab-pane :lazy="true" v-for="item in searchTypes" :name="item.value" >
       <template #label>
         <div class="tab-wrap">
           <span>{{item.title}}{{resultAllResult.top_tlist[item.value]?`(${resultAllResult.top_tlist[item.value]})`:''}}</span>
@@ -42,65 +42,105 @@
       </el-option>
     </el-select>
   </el-space>
+  <!-- 无限滚动 -->
   <el-scrollbar v-loading="refresh">
     <div class="contain-wrap" infinite-scroll-distance="800" :infinite-scroll-disabled="noMore" infinite-scroll-delay="1000" v-infinite-scroll="loadMore" >
-      <div class="item" v-for="(item, key) in itemList">
-        <template v-if="searchParams.search_type == 'video'">
-          <v-card
-            class="v-card card"
-            :pic="item.pic"
-            :name="item.author"
-            :title="item.title"
-            :view="item.play"
-            :like="item.review"
-          ></v-card>
-          <i></i><i></i><i></i><i></i><i></i>
-        </template>
-        <template v-if="searchParams.search_type == 'media_bangumi'">
-          <b-card
-            class="b-card card"
-            :pic="item.cover"
-            :title="item.title"
-            :display_info="item.display_info "
-            :season_type_name="item.season_type_name"
-            :areas="item.areas"
-            :pubtime="item.pubtime"
-            :styles="item.styles"
-            :fix_pubtime_str="item.fix_pubtime_str"
-            :desc="item.desc"
-            :cv="item.cv"
-            :score="item.media_score && item.media_score.score"
-          ></b-card>
-        </template>
-        <template v-if="searchParams.search_type == 'live_room'">
-          <v-card
-            class="v-card card"
-            :pic="item.cover"
-            :name="item.cate_name"
-            :title="item.title"
-            :face="item.uface"
-            :view="item.online"
-          ></v-card>
-        </template>
-      </div>
+      <template v-for="item in itemList">
+        <!-- 视频 -->
+        <v-card
+          v-if="searchParams.search_type == 'video'"
+          class="v-card card"
+          :pic="item.pic"
+          :name="item.author"
+          :title="item.title"
+          :view="item.play"
+          :like="item.review"
+          @click="toVideo({aid: item.id})"
+        ></v-card>
+        <!-- 番剧 -->
+        <b-card
+          v-else-if="searchParams.search_type == 'media_bangumi'"
+          class="b-card card"
+          :pic="item.cover"
+          :title="item.title"
+          :display_info="item.display_info "
+          :season_type_name="item.season_type_name"
+          :areas="item.areas"
+          :pubtime="item.pubtime"
+          :styles="item.styles"
+          :fix_pubtime_str="item.fix_pubtime_str"
+          :desc="item.desc"
+          :cv="item.cv"
+          @click="toVideo({aid: item.media_id})"
+          :score="item.media_score && item.media_score.score"
+        ></b-card>
+        <!-- 直播间 -->
+        <v-card
+          v-else-if="searchParams.search_type == 'live_room'"
+          class="v-card card"
+          :pic="item.cover"
+          :name="item.cate_name"
+          :title="item.title"
+          :face="item.uface"
+          :view="item.online"
+        ></v-card>
+        <!-- 用户 -->
+        <u-card
+          v-else-if="searchParams.search_type == 'bili_user'"
+          :upic="item.upic"
+          :uname="item.uname"
+          :level="item.level"
+          :usign="item.usign"
+        ></u-card>
+        <!-- 影视 -->
+        <b-card
+          v-else-if="searchParams.search_type == 'media_ft'"
+          class="b-card card"
+          :pic="item.cover"
+          :title="item.title"
+          :display_info="item.display_info "
+          :season_type_name="item.season_type_name"
+          :areas="item.areas"
+          :pubtime="item.pubtime"
+          :styles="item.styles"
+          :fix_pubtime_str="item.fix_pubtime_str"
+          :desc="item.desc"
+          :actors="item.cv"
+          :score="item.media_score && item.media_score.score"
+          @click="toVideo({aid: item.id})"
+        ></b-card>
+      </template>
+      <!-- 当卡片最后一行未铺满时 补齐 -->
+      <template v-if="'videolive_room'.includes(searchParams.search_type)">
+        <i class="v-content" v-for="i in 6"></i>
+      </template>
+      <template v-else>
+        <i class="u-content" v-for="i in 6"></i>
+      </template>
+    </div>
+    <div v-show="!itemList[0]" class="empty-wrap">
+      <img src="../../assets/img/empty.png" >
+      <p class="tip">什么都没有找到啊 T_T</p>
     </div>
   </el-scrollbar> 
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { ridList } from '@/utils/rid'
 import { useRoute } from 'vue-router';
 import VCard from '@/components/VideoCard.vue';
 import BCard from '@/components/BangumiCard.vue';
+import UCard from './components/UserCard.vue';
 import useSearchResult from './composables/useSearchResult';
 import { SearchTypeParams } from '@/request/api/video/search';
 import { SearchItem } from '@/request/model/video/search';
+import { toVideo } from '@/utils/redirect';
 
 const route = useRoute()
 const { resultAllResult, searchAllResult, searchTypeResult } = useSearchResult()
 const searchParams = reactive(<SearchTypeParams>{
-  keyword: route.params.keyword as unknown as string,
+  keyword: route.query.keyword as unknown as string,
   search_type: 'video',
   order: 'totalrank',
   duration: 0,
@@ -131,10 +171,10 @@ const searchTypes = [
     title: '影视',
     value: 'media_ft'
   },
-  {
-    title: '专栏',
-    value: 'artice'
-  },
+  // {
+  //   title: '专栏',
+  //   value: 'artice'
+  // },
 ]
 const sortType = [
   {
@@ -186,8 +226,12 @@ const getSearchResult = async () => {
     tids: searchParams.tids,
     page: searchParams.page
   }
-  const res = await searchTypeResult(params)
-  itemList.value = res.result
+  const data = await searchTypeResult(params)
+  if(!data.result) {
+    itemList.value = []
+  } else {
+    itemList.value = data.result
+  }
   refresh.value = false
 }
 const loadMore = async () => {
@@ -219,12 +263,24 @@ const selectChange = async () => {
     page: searchParams.page
   }
   const data = await searchTypeResult(params)
-  console.log(data);
-  
+  if(!data.result) {
+    itemList.value = []
+  } else {
+    itemList.value = data.result
+  }
   refresh.value = false
-  itemList.value = data.result
 }
-
+const tabChange = (e: any) => {
+  itemList.value = []
+  selectChange()
+}
+watch(route, value => {
+  searchParams.keyword = value.query.keyword as unknown as string
+  if(searchParams.keyword) {
+    searchAllResult({keyword: searchParams.keyword})
+    getSearchResult()
+  }
+})
 searchAllResult({keyword: searchParams.keyword})
 getSearchResult()
 </script>
@@ -280,13 +336,32 @@ getSearchResult()
     .card {
       cursor: pointer;
       margin-right: 6px;
+      margin-bottom: 15px;
       &:hover {
         transform: translateY(-4px);
       }
     }
-    i {
-      width: 800px;
-      margin-right: 6px;
+    .v-content {
+      width: 298px;
+    }
+    .u-content {
+      width: 210px;
+    }
+  }
+  .empty-wrap {
+    width: 100%;
+    height: calc(100vh - 320px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    img {
+      width: 480px;
+    }
+    .tip {
+      font-size: 15px;
+      color: #757575;
+      margin-top: 10px;
     }
   }
 }

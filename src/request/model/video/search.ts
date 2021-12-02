@@ -117,8 +117,41 @@ export interface SearchItem {
   rank_index: number;
   roomid: number;
   attentions: number;
+  usign: string;
+  fans: number;
+  videos: number;
+  upic: string;
+  verify_info: string;
+  level: number;
+  gender: number;
+  is_upuser: number;
+  is_live: number;
+  room_id: number;
+  res: Re[];
+  official_verify: Officialverify;
 }
 
+interface Officialverify {
+  type: number;
+  desc: string;
+}
+
+interface Re {
+  aid: number;
+  bvid: string;
+  title: string;
+  pubdate: number;
+  arcurl: string;
+  pic: string;
+  play: string;
+  dm: number;
+  coin: number;
+  fav: number;
+  desc: string;
+  duration: string;
+  is_pay: number;
+  is_union_video: number;
+}
 
 interface Mediascore {
   score: number;

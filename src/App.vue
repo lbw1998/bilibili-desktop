@@ -5,7 +5,7 @@
 <script setup lang="ts">
 </script>
 
-<style>
+<style lang="scss">
 @import "./assets/css/common.css";
 @import "./assets/css/element.scss";
 #app {

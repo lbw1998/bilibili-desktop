@@ -114,7 +114,7 @@ const {playInfo, getPlayInfo } = usePlayInfo()
 const {videoInfo, getVideoInfo} = useVideoInfo()
 const {relatedInfo, getRelatedInfo} = useRelatedInfo()
 // 初始化信息
-const init = (aid = route.params.aid as unknown as number) => {
+const init = (aid = route.query.aid as unknown as number) => {
 // 获取视频信息
   getVideoInfo({aid}).then(() => {
     const playParams = {

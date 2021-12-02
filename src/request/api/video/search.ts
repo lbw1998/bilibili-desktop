@@ -27,7 +27,7 @@ export const searchSuggestApi = (params:SearchSuggestParams) => {
 
 // 分类搜索
 export interface SearchTypeParams {
-  search_type: 'video' | 'media_bangumi' | 'live_room' | 'article' | 'bili_user' 
+  search_type: 'video' | 'media_bangumi' | 'live_room' | 'article' | 'bili_user' | 'media_ft'
   keyword: string
   order?: 'totalrank' | 'click' | 'pubdate' | 'dm'
   duration?: 0 | 1 | 2 | 3 | 4

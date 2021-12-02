@@ -31,7 +31,11 @@
             <label class="intros-title">开播时间：</label>
             {{fix_pubtime_str?fix_pubtime_str:parseTimestamp(pubtime)}}
           </div>
-          <template v-if="cv">
+          <template v-if="actors">
+            <label class="intros-title">出演：</label>
+            <span v-html="actors" class="intros-cv" :title="actors"></span>
+          </template>
+          <template v-else-if="cv">
             <label class="intros-title">声优：</label>
             <span v-html="cv" class="intros-cv" :title="cv"></span>
           </template>
@@ -57,12 +61,13 @@ defineProps<{
   display_info: Badge[] | undefined,
   desc: string,
   areas: string,
-  cv: string,
+  cv?: string,
   styles: string,
   fix_pubtime_str?: string,
   season_type_name: string,
   pubtime: number,
-  score: number
+  score: number,
+  actors?: string
 }>()
 
 </script>

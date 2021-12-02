@@ -25,7 +25,8 @@
 </template>
 
 <script lang="ts" setup>
-import { VideoInfo } from '@/api/video/info';
+import { VideoInfo } from '@/request/model/video/info';
+
 const props = defineProps<{
   videoInfo: VideoInfo
 }>()

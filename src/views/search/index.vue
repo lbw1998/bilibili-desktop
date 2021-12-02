@@ -82,7 +82,7 @@
           :name="item.cate_name"
           :title="item.title"
           :face="item.uface"
-          :view="item.online"
+          :online="item.online"
         ></v-card>
         <!-- 用户 -->
         <u-card

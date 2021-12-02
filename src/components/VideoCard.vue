@@ -14,10 +14,18 @@
         <b v-html="title" :title="title"></b>
       </div>
       <div class="card-bottom">
-        <svg-icon name="view" />
-        <span class="view">{{formatNumber(view)}}</span>
-        <svg-icon name="barrage" />
-        <span class="view">{{like?formatNumber(like):''}}</span>
+        <template v-if="view">
+          <svg-icon name="view" color="#999999"/>
+          <span class="view">{{formatNumber(view)}}</span>
+        </template>
+        <template v-if="like">
+          <svg-icon name="barrage" color="#999999"/>
+          <span class="view">{{formatNumber(like)}}</span>
+        </template>
+        <template v-if="online">
+          <svg-icon name="user" color="#999999" />
+          <span class="view">{{formatNumber(online)}}</span>
+        </template>
       </div>
     </div>
   </el-card>
@@ -30,8 +38,9 @@ defineProps<{
   face?: string,
   name: string,
   title: string,
-  view: number,
-  like?: number
+  view?: number,
+  like?: number,
+  online?: number
 }>()
 
 </script>
@@ -77,6 +86,8 @@ defineProps<{
       }
     }
     .card-bottom {
+      display: flex;
+      align-items: center;
       span {
         font-size: 12px;
         margin: 0 8px 0 5px;

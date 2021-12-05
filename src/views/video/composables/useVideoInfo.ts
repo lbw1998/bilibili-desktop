@@ -10,7 +10,10 @@ export default function useVideoInfo() {
     title: '',
     desc: '',
     owner: {},
-    stat: {}
+    stat: {},
+    ctime: 0,
+    videos: 1,
+    pages: {}
   })
   const getVideoInfo =  (params:VideoInfoParams) => new Promise<void>(async(resolve) => {
       const {data} = await getVideoInfoApi(params)
@@ -21,6 +24,9 @@ export default function useVideoInfo() {
       videoInfo.desc = data.desc
       videoInfo.owner = data.owner
       videoInfo.stat = data.stat
+      videoInfo.ctime = data.ctime
+      videoInfo.videos = data.videos
+      videoInfo.pages = data.pages
       resolve()
   })
   return { videoInfo, getVideoInfo }

@@ -89,6 +89,7 @@ defineProps<{
       display: flex;
       align-items: center;
       span {
+        
         font-size: 12px;
         margin: 0 8px 0 5px;
       }

@@ -15,9 +15,9 @@
         </div>
         <div class="count">
           <svg-icon name="view" />
-          <span class="view">{{videoInfo.stat.view}}</span>
+          <span class="view">{{formatNumber(videoInfo.stat.view)}}</span>
           <svg-icon name="barrage" />
-          <span class="view">{{videoInfo.stat.danmaku}}</span>
+          <span class="view">{{formatNumber(videoInfo.stat.danmaku)}}</span>
         </div>
       </div>
     </div>
@@ -26,6 +26,7 @@
 
 <script lang="ts" setup>
 import { VideoInfo } from '@/request/model/video/info';
+import { formatNumber } from '@/utils/tools';
 
 const props = defineProps<{
   videoInfo: VideoInfo
@@ -44,7 +45,7 @@ const props = defineProps<{
       }
       .info {
         margin-left: 10px;
-        flex: 1;
+        width: 160px;
         .title {
           font-size: 14px;
           font-weight: 500;
@@ -74,7 +75,7 @@ const props = defineProps<{
           color: #999;
           .view {
             font-size: 12px;
-            width: 50px;
+            min-width: 55px;
             text-indent: 5px;
             display: inline-block;
             margin-right: 5px;

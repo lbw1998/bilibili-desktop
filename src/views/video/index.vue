@@ -18,7 +18,7 @@
             </div>
           </div>
           <div class="up-info_bottom">
-            21/11/05 09:40
+            {{parseTimestamp(videoInfo.ctime)}}
           </div>
           <div class="video-title" :title="videoInfo.title">
             {{videoInfo.title}}
@@ -28,11 +28,11 @@
           </div>
           <div class="count">
             <svg-icon name="view" />
-            <span class="view">{{videoInfo.stat.view}}</span>
+            <span class="view">{{formatNumber(videoInfo.stat.view)}}</span>
             <svg-icon name="barrage" />
-            <span class="view">{{videoInfo.stat.danmaku}}</span>
+            <span class="view">{{formatNumber(videoInfo.stat.danmaku)}}</span>
             <svg-icon name="comment"/>
-            <span class="view">{{videoInfo.stat.reply}}</span>
+            <span class="view">{{formatNumber(videoInfo.stat.reply)}}</span>
           </div>
         </div>
         <div class="btn-wrap">
@@ -41,19 +41,19 @@
               <el-button circle size="small">
                 <svg-icon name="like" class="icon" color="#ed5b8c"></svg-icon>
               </el-button>
-              <span class="number">{{videoInfo.stat.like}}</span>
+              <span class="number">{{formatNumber(videoInfo.stat.like)}}</span>
             </div>
             <div class="status-item">
               <el-button circle size="small">
                 <svg-icon name="money" class="icon" color="#ed5b8c"></svg-icon>
               </el-button>
-              <span class="number">{{videoInfo.stat.coin}}</span>
+              <span class="number">{{formatNumber(videoInfo.stat.coin)}}</span>
             </div>
             <div class="status-item">
-              <el-button circle size="small">
+              <el-button class="btn" circle size="small">
                 <svg-icon name="star" class="icon" color="#ed5b8c"></svg-icon>
               </el-button>
-              <span class="number">{{videoInfo.stat.favorite}}</span>
+              <span class="number">{{formatNumber(videoInfo.stat.favorite)}}</span>
             </div>
           </div>
           <el-button :icon="Download" class="download-btn" disabled>下载</el-button>
@@ -61,33 +61,56 @@
       </div>
     </div>
     <div class="r-con">
-      <el-tabs v-model="activeTab" >
-        <el-tab-pane label="关联视频" name="video" />
-        <el-tab-pane label="评论" name="recommend" />
+      <el-tabs>
+        <el-tab-pane label="分集" v-if="videoInfo.videos !== 1">
+          <div class="scroll-wrap">
+            <el-scrollbar>
+              <el-card 
+                v-for="(item, key) in videoInfo.pages" 
+                @click="changeEpisode(item.cid, key)" 
+                :class="`episode-card ${activeEpisode==key?'activeEpisode':''}`" 
+                shadow="hover"
+                :title="item.part"
+                :body-style="{ 
+                  padding: '8px', 
+                  display: 'flex', 
+                  alignItems: 'center'
+                }"
+              >
+                <span class="index">{{key + 1}}</span>
+                <p class="part">{{item.part}}</p>
+              </el-card>
+            </el-scrollbar>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="关联视频">
+          <div class="scroll-wrap">
+            <el-scrollbar>
+              <v-card @click="changeVideo(item.aid!)"  v-for="item in relatedInfo" :video-info="item" class="v-card"></v-card>
+            </el-scrollbar>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="评论">
+           <div class="recommend">
+            <div class="r-title">
+              <h1>最热评论</h1>
+              <el-radio-group v-model="radio" size='mini' >
+                <el-radio-button label="最热"></el-radio-button>
+                <el-radio-button label="最新"></el-radio-button>
+              </el-radio-group>
+            </div>
+            <div class="r-content"></div>
+            <div class="r-footer">
+              <el-input
+                :rows="2"
+                type="textarea"
+                placeholder="留下你的评论吧~"
+              />
+              <el-button>发布</el-button>
+            </div>
+          </div>
+        </el-tab-pane>
       </el-tabs>
-      <div v-show="activeTab == 'video'" class="scroll-wrap">
-        <el-scrollbar>
-          <VCard @click="changeVideo(item.aid!)"  v-for="item in relatedInfo" :video-info="item" class="v-card"></VCard>
-        </el-scrollbar>
-      </div>
-      <div v-show="activeTab == 'recommend'" class="recommend">
-        <div class="r-title">
-          <h1>最热评论</h1>
-          <el-radio-group v-model="radio" size='mini' >
-            <el-radio-button label="最热"></el-radio-button>
-            <el-radio-button label="最新"></el-radio-button>
-          </el-radio-group>
-        </div>
-        <div class="r-content"></div>
-        <div class="r-footer">
-          <el-input
-            :rows="2"
-            type="textarea"
-            placeholder="留下你的评论吧~"
-          />
-          <el-button>发布</el-button>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -101,14 +124,15 @@ import PlayerVue from './components/Player.vue'
 import useVideoInfo from './composables/useVideoInfo'
 import usePlayInfo from './composables/usePlayInfo'
 import useRelatedInfo from './composables/useRelatedInfo'
+import { parseTimestamp, formatNumber } from '@/utils/tools'
 import { ref, onBeforeUnmount, computed } from 'vue'
 
 store.system.isFullScreen = true
 const route = useRoute()
 
-const activeTab = ref("video")
 const radio = ref('最热')
 const Player = ref()
+const activeEpisode = ref(0)
 
 const {playInfo, getPlayInfo } = usePlayInfo()
 const {videoInfo, getVideoInfo} = useVideoInfo()
@@ -138,6 +162,19 @@ init()
 const changeVideo = (aid:number) => {
   Player.value.destroy()
   init(aid)
+}
+
+const changeEpisode = ( cid:number, index:number) => {
+    Player.value.destroy()
+    activeEpisode.value = index
+    // 获取视频流
+    const playParams = {
+      ...(videoInfo.aid?{avid: videoInfo.aid}:{bvid: videoInfo.bvid}),
+      ...{cid}
+    }
+    getPlayInfo(playParams).then(() => {
+      Player.value.init()
+    })
 }
 
 const playerConfig = computed(() => {
@@ -267,7 +304,7 @@ onBeforeUnmount(() => {
             font-size: 12px;
             // width: 60px;
             display: inline-block;
-            margin-right: 6px;
+            margin-right: 12px;
             text-indent: 5px;
           }
         }
@@ -275,13 +312,17 @@ onBeforeUnmount(() => {
       .btn-wrap {
         width: 200px;
         .video-status {
-          width: 200px;
-          justify-content: center;
+          width: 100%;
+          justify-content: space-between;
           display: flex;
           .status-item {
             display: flex;
             flex-direction: column;
             margin-left: 5px;
+            align-items: center;
+            .btn {
+              width: 48px;
+            }
             .icon {
               font-size: 28px;
             }
@@ -304,7 +345,6 @@ onBeforeUnmount(() => {
     height: 100%;
     flex: none;
     margin-left: 30px;
-   
     .scroll-wrap {
       width: 336px;
       height: calc(100vh - 116px);
@@ -313,6 +353,25 @@ onBeforeUnmount(() => {
         .v-card {
           margin-bottom: 8px;
           cursor: pointer;
+        }
+        .episode-card {
+          width: 320px;
+          cursor: pointer;
+          margin-bottom: 4px;
+          font-weight: bold;
+          align-items: center;
+          .index {
+            width: 35px;
+          }
+          .part {
+            width: 263px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        .activeEpisode {
+          border: 1px solid black;
         }
       }
     }

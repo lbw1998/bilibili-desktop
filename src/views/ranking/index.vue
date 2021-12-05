@@ -28,7 +28,7 @@
         :play="item.play"
         :video_review="item.video_review"
         :pts="item.pts"
-        @click="toVideo({aid: item.aid})"
+        @click="toVideo({aid: item.aid as unknown as number})"
       ></r-card>
     </div>
   </el-scrollbar> 

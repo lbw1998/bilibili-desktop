@@ -10,6 +10,8 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 840,
+    minWidth: 1200,
+    minHeight: 840,
     frame: false,
     webPreferences: {
       webSecurity: false,
@@ -18,8 +20,7 @@ function createWindow() {
       contextIsolation: false,
     }
   });
-  const isDev = process.env.NODE_ENV === "development";
-    const filter = {
+  const filter = {
     urls: ["*://*/*"]
   }
   session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback)=> {
@@ -27,17 +28,15 @@ function createWindow() {
     details.requestHeaders['referer'] = "https://www.bilibili.com"
       // details.requestHeaders['Host'] = "https://www.bilibili.com"
       // details.requestHeaders['user-agent'] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
-    
     callback({ requestHeaders: details.requestHeaders });
   })
   // mainWindow.webContents.session.setProxy({proxyRules: 'https://www.bilibili.com'})
-  // if (isDev) {
+  const isDev = process.env.NODE_ENV === "development";
+  if (isDev) {
     mainWindow.loadURL("http://localhost:3000/");
-    // } else {
-    // mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
-    // console.log(path.join(__dirname, "../dist/index.html"));
-    
-  // }
+    } else {
+    mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
+  }
   ipcMain.on('handleWindow', (e,type) => {
     if (type === 'minWindow' ) {
       mainWindow.minimize();
@@ -51,7 +50,6 @@ function createWindow() {
 }
 app.on("ready", () => {
   createWindow();
-
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });

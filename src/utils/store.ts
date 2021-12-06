@@ -6,7 +6,6 @@ const store = reactive({
     mid: 0,
   },
   system: {
-    isLogin: false,
     isFullScreen: false
   },
   clearUserInfo: () => {

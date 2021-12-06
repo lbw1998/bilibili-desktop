@@ -6,9 +6,9 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit --skipLibCheck && vite build",
     "serve": "vite preview",
-    "electron:serve": "electron .",
+    "electron:serve": "cross-env NODE_ENV=development electron .",
     "dev:electron": "tsc -p tsconfig.electron.json && cross-env NODE_ENV=development electron ./build/main.js",
-    "dev:tsc": "nodemon --watch electron/main.ts --exec yarn run electron:serve"
+    "dev:tsc": "nodemon --watch electron/main.ts --exec yarn run electron:serve "
   },
   "dependencies": {
     "@types/js-cookie": "^3.0.1",

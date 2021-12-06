@@ -66,6 +66,7 @@ export interface BaseData<T = any> {
   code: number;
   message: string;
   data: T;
+  result?: T
 }
 
 const request = async <T = any>(config: AxiosRequestConfig): Promise<BaseData<T>> => {

@@ -23,6 +23,12 @@
       </el-icon>
       <template #title>分区</template>
     </el-menu-item>
+    <el-menu-item index="/bangumi">
+      <el-icon>
+        <svg-icon name="bangumi" size="24" />
+      </el-icon>
+      <template #title>番剧</template>
+    </el-menu-item>
     <el-menu-item index="/live">
       <el-icon><VideoCamera /></el-icon>
       <template #title>直播</template>
@@ -34,7 +40,7 @@
       <template #title>动态</template>
     </el-menu-item>
     <div class="user">
-      <el-avatar :size="38" v-if="!store.system.isLogin" :icon="User" @click="showDialog"></el-avatar>
+      <el-avatar :size="38" v-if="!store.user.isLogin" :icon="User" @click="showDialog"></el-avatar>
       <el-avatar :size="38" v-else :src="userInfo.face" @click="userDialog = true" ></el-avatar>
     </div>
     <UserInfoVue

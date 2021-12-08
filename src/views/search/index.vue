@@ -71,7 +71,7 @@
           :fix_pubtime_str="item.fix_pubtime_str"
           :desc="item.desc"
           :cv="item.cv"
-          @click="toVideo({aid: item.media_id})"
+          @click="toMedia({season_id: item.season_id, ep_id: item.eps[0].id})"
           :score="item.media_score && item.media_score.score"
         ></b-card>
         <!-- 直播间 -->
@@ -107,7 +107,7 @@
           :desc="item.desc"
           :actors="item.cv"
           :score="item.media_score && item.media_score.score"
-          @click="toVideo({aid: item.id})"
+          @click="toMedia({season_id: item.season_id, ep_id: item.eps[0].id})"
         ></b-card>
       </template>
       <!-- 当卡片最后一行未铺满时 补齐 -->
@@ -135,7 +135,7 @@ import UCard from './components/UserCard.vue';
 import useSearchResult from './composables/useSearchResult';
 import { SearchTypeParams } from '@/request/api/video/search';
 import { SearchItem } from '@/request/model/video/search';
-import { toVideo } from '@/utils/redirect';
+import { toVideo, toMedia } from '@/utils/redirect';
 
 const route = useRoute()
 const { resultAllResult, searchAllResult, searchTypeResult } = useSearchResult()

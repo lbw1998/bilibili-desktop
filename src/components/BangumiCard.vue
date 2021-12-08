@@ -86,17 +86,17 @@ defineProps<{
       height: 186px;
       border-radius: 5px;
     }
-      .image-tip {
-        width: 60px;
-        height: 24px;
-        font-size: 12px;
-        border-radius: 0 5px 0 5px;
-        top: 0;
-        right: 0;
-        position: absolute;
-        line-height: 24px;
-        text-align: center;
-      }
+    .image-tip {
+      width: 60px;
+      height: 24px;
+      font-size: 12px;
+      border-radius: 0 5px 0 5px;
+      top: 0;
+      right: 0;
+      position: absolute;
+      line-height: 24px;
+      text-align: center;
+    }
   }
   .video-info {
     padding-left: 12px;

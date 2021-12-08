@@ -10,8 +10,8 @@
     <el-tab-pane label="推荐">
       <RecommendTab></RecommendTab>
     </el-tab-pane>
-    <el-tab-pane label="高分番剧">Config</el-tab-pane>
-    <el-tab-pane label="官方索引">Role</el-tab-pane>
+    <!-- <el-tab-pane label="高分番剧">Config</el-tab-pane>
+    <el-tab-pane label="官方索引">Role</el-tab-pane> -->
   </el-tabs>
 </template>
 

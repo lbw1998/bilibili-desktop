@@ -5,8 +5,8 @@
       <refresh-button @click="refreshAll" :animated="refresh"></refresh-button>
     </div>
   </div>
-  <el-scrollbar  v-loading="refresh" >
-    <div class="contain-wrap" infinite-scroll-distance="800" infinite-scroll-delay="1000" v-infinite-scroll="loadMore" >
+  <el-scrollbar  v-loading="refresh" ref="scrollWrap" >
+    <div class="contain-wrap"  infinite-scroll-distance="800" infinite-scroll-delay="1000" v-infinite-scroll="loadMore" >
       <div class="item" v-for="(item, key) in itemList">
         <v-card 
           @click="toVideo({aid: item.id})" 
@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onActivated, onDeactivated } from 'vue'
 import RefreshButton from '@/components/RefreshButton.vue'
 import VCard from '@/components/VideoCard.vue'
 import { toVideo } from '@/utils/redirect'
@@ -32,7 +32,8 @@ import { Item } from '@/request/model/video/recommend'
 
 const itemList = ref(<Item[]>[])
 const refresh = ref(false)
-
+const scrollWrap = ref()
+let scrollTop = 0
 const refreshAll = () => {
   refresh.value = true
   refreshAllApi().then( res => {
@@ -48,6 +49,14 @@ const loadMore = () => {
 }
 
 refreshAll()
+
+onActivated(() => {
+  scrollWrap.value.setScrollTop(scrollTop)
+  
+})
+onDeactivated(() => {
+  scrollTop = scrollWrap.value.moveY
+})
 </script>
 
 <style lang="scss" scoped>

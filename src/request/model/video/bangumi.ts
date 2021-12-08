@@ -57,12 +57,6 @@ interface Newep {
   is_new: number;
 }
 
-interface Badgeinfo {
-  bg_color: string;
-  bg_color_night: string;
-  text: string;
-}
-
 interface Style {
   pinned: number;
   status_bar_color_type: number;
@@ -358,7 +352,7 @@ interface Newep {
   index_show: string;
 }
 
-interface Badgeinfo {
+export interface Badgeinfo {
   bg_color: string;
   bg_color_night: string;
   text: string;

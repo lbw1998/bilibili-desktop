@@ -74,7 +74,7 @@ defineExpose({init, destroy})
       width: 320px;
       height: 184px;
       z-index: 999;
-      background: url("../../../assets/img/loading.png");
+      background: url("../assets/img/loading.png");
       transform: scale(.5);
       animation: iconAnimation .94s steps(1) infinite;
     }

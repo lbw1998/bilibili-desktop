@@ -7,6 +7,7 @@
           style="width:100%;height: 100%;"
           fit="cover"
           :alt="item.desc"
+          @click="toMedia({season_id:item.season_id!, ep_id: item.episode_id! })"
         ></el-image>
       </el-carousel-item>
     </el-carousel>
@@ -17,7 +18,7 @@
         </div>
         <div class="timeline-wrap">
           <el-card shadow="hover" v-for="item in recommendInfo.timeline" :body-style="{ padding: '4px' }">
-            <div class="card-wrap">
+            <div class="card-wrap" @click="toMedia({season_id:item.season_id, ep_id: item.ep_id, bgmcount: item.bgmcount })">
               <el-image :src="item.square_cover" class="image">
                 <template #placeholder>
                   <div class="image" v-loading="true"></div>
@@ -43,7 +44,12 @@
         <div class="right-title">
           我的追番
         </div>
-        <el-card shadow="hover" v-for="item in recommendInfo.followList" :body-style="{ padding: '4px' }">
+        <el-card 
+          shadow="hover" 
+          v-for="item in recommendInfo.followList" 
+          :body-style="{ padding: '4px' }"
+          @click="toMedia({season_id:item.season_id, ep_id: item.new_ep.id })"
+        >
           <div class="card-wrap">
             <el-image :src="item.new_ep.cover" class="image">
               <template #placeholder>
@@ -80,10 +86,12 @@
       <div class="video-wrap">
         <b-card
           v-for="item in recommendInfo.hotList"
+          @click="toMedia({season_id:item.season_id, ep_id: item.new_ep.id})"
           class="item"
           :title="item.title"
           :pic="item.cover"
           :desc="item.desc"
+          :badge_info="item.badge_info"
         ></b-card>
       </div>
     </div>
@@ -94,10 +102,12 @@
       <div class="video-wrap">
         <b-card
           v-for="item in recommendInfo.recentlyList"
+          @click="toMedia({season_id:item.season_id, ep_id: item.new_ep.id})"
           class="item"
           :title="item.title"
           :pic="item.cover"
           :desc="item.desc"
+          :badge_info="item.badge_info"
         ></b-card>
       </div>
     </div>
@@ -108,10 +118,12 @@
       <div class="video-wrap">
         <b-card
           v-for="item in recommendInfo.oldList"
+          @click="toMedia({season_id:item.season_id, ep_id: item.new_ep.id})"
           class="item"
           :title="item.title"
           :pic="item.cover"
           :desc="item.desc"
+          :badge_info="item.badge_info"
         ></b-card>
       </div>
     </div>
@@ -124,6 +136,7 @@ import store from '@/utils/store'
 import BCard from './BangumiCard.vue'
 import { getBangumiFollowApi, getBangumiInfoApi, getBangumiTimelineApi } from '@/request/api/video/bangumi'
 import { BangumiTimeline, Banner, BangumiFollow, HotBangumi  } from "@/request/model/video/bangumi"
+import { toMedia } from '@/utils/redirect'
 
 const recommendInfo = reactive({
   bannerList: <Banner[]>[],

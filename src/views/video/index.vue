@@ -68,7 +68,7 @@
               <el-card 
                 v-for="(item, key) in videoInfo.pages" 
                 @click="changeEpisode(item.cid, key)" 
-                :class="`episode-card ${activeEpisode==key?'activeEpisode':''}`" 
+                :class="`episode-card ${activedEpisode==key?'activedEpisode':''}`" 
                 shadow="hover"
                 :title="item.part"
                 :body-style="{ 
@@ -86,7 +86,16 @@
         <el-tab-pane label="关联视频">
           <div class="scroll-wrap">
             <el-scrollbar>
-              <v-card @click="changeVideo(item.aid!)"  v-for="item in relatedInfo" :video-info="item" class="v-card"></v-card>
+              <v-card 
+                @click="changeVideo(item.aid!)"  
+                v-for="item in relatedInfo"
+                :pic="item.pic"
+                :title="item.title"
+                :name="item.owner.name"
+                :view="item.stat.view"
+                :danmaku="item.stat.danmaku"
+                class="v-card">
+              </v-card>
             </el-scrollbar>
           </div>
         </el-tab-pane>
@@ -132,15 +141,18 @@ const route = useRoute()
 
 const radio = ref('最热')
 const Player = ref()
-const activeEpisode = ref(0)
+const activedEpisode = ref(0)
 
 const {playInfo, getPlayInfo } = usePlayInfo()
 const {videoInfo, getVideoInfo} = useVideoInfo()
 const {relatedInfo, getRelatedInfo} = useRelatedInfo()
+
 // 初始化信息
-const init = (aid = route.query.aid as unknown as number) => {
-// 获取视频信息
-  getVideoInfo({aid}).then(() => {
+const init = ({aid = route.query.aid as unknown as number, bvid =route.query.bvid as unknown as string}) => {
+  activedEpisode.value = 0
+  const params = aid?{aid}:{bvid}
+  // 获取视频信息
+  getVideoInfo(params).then(() => {
     const playParams = {
       ...(videoInfo.aid?{avid: videoInfo.aid}:{bvid: videoInfo.bvid}),
       ...{cid: videoInfo.cid}
@@ -157,16 +169,16 @@ const init = (aid = route.query.aid as unknown as number) => {
   })
 }
 
-init()
+init({})
 
 const changeVideo = (aid:number) => {
   Player.value.destroy()
-  init(aid)
+  init({aid})
 }
 
 const changeEpisode = ( cid:number, index:number) => {
     Player.value.destroy()
-    activeEpisode.value = index
+    activedEpisode.value = index
     // 获取视频流
     const playParams = {
       ...(videoInfo.aid?{avid: videoInfo.aid}:{bvid: videoInfo.bvid}),
@@ -352,7 +364,6 @@ onBeforeUnmount(() => {
         height: 100%;
         .v-card {
           margin-bottom: 8px;
-          cursor: pointer;
         }
         .episode-card {
           width: 320px;
@@ -370,8 +381,8 @@ onBeforeUnmount(() => {
             text-overflow: ellipsis;
           }
         }
-        .activeEpisode {
-          border: 1px solid black;
+        .activedEpisode {
+          border: 2px solid #ed5b8c;
         }
       }
     }

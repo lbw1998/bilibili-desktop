@@ -49,7 +49,7 @@ service.interceptors.response.use(
     const { response } = error;
     if (response) {
       // 请求已发出，但是不在200的范围
-      handleResponseErrors(response.status, response.data.msg);
+      handleResponseErrors(response.status, response.data.message);
       return Promise.reject(response);
     } else {
       // 处理断网的情况
@@ -66,7 +66,7 @@ export interface BaseData<T = any> {
   code: number;
   message: string;
   data: T;
-  result?: T
+  result: T
 }
 
 const request = async <T = any>(config: AxiosRequestConfig): Promise<BaseData<T>> => {

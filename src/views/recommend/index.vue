@@ -5,7 +5,7 @@
       <refresh-button @click="refreshAll" :animated="refresh"></refresh-button>
     </div>
   </div>
-  <el-scrollbar  v-loading="refresh" ref="scrollWrap" >
+  <el-scrollbar v-loading="refresh" ref="scrollWrap" >
     <div class="contain-wrap"  infinite-scroll-distance="800" infinite-scroll-delay="1000" v-infinite-scroll="loadMore" >
       <div class="item" v-for="(item, key) in itemList">
         <v-card 

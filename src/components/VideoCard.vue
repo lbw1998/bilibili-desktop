@@ -1,10 +1,12 @@
 <template>
   <el-card class="card-wrap" :body-style="{ padding: '0px' }">
-    <el-image class="image" :src="pic" >
-      <template #placeholder>
-        <div class="image" v-loading="true"></div>
-      </template>
-    </el-image>
+    <div class="image-wrap">
+      <el-image class="image" :src="pic" >
+        <template #placeholder>
+          <div class="image" v-loading="true"></div>
+        </template>
+      </el-image>
+    </div>
     <div class="card-info">
       <el-avatar v-if="face" :size="42" class="face" :src="face"></el-avatar>
       <div class="owner">
@@ -49,9 +51,17 @@ defineProps<{
 .card-wrap {
   width: 100%;
   margin-bottom: 10px;
-  .image {
+  .image-wrap {
     width: 100%;
-    height: 186px;
+    padding-bottom: 62.5%;
+    position: relative;
+    .image {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
   }
   .card-info {
     padding: 0px 8px 4px;
@@ -71,7 +81,7 @@ defineProps<{
       }
     }
     .card-title {
-      width: 270px;
+      width: 100%;
       height: 40px;
       text-overflow: -o-ellipsis-lastline;
       overflow: hidden;

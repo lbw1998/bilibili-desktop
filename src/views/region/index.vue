@@ -1,28 +1,24 @@
-<!-- 动态 -->
 <template>
   <div class="header">
     <div class="title-bar">
-      <b class="title">{{regionTabs[0].label}}</b>
-      <refresh-button ></refresh-button>
+      <b class="title">{{route.query.regionName}}</b>
     </div>
   </div>
   <el-tabs v-model="rid" class="tabs-wrap" @tab-click="changeRid">
-    <template v-for="item in regionTabs" >
-      <el-tab-pane :label="item.label" :name="item.rid">
-      </el-tab-pane>
-    </template>
+    <el-tab-pane v-for="item in ridChild[code]" :label="item.label" :name="item.rid">
+    </el-tab-pane>
   </el-tabs>
-  <el-scrollbar v-loading="refresh" height="calc(100vh - 130px)">
+  <el-scrollbar v-loading="refresh" height="calc(100vh - 130px)"  >
     <div class="block-area">
-      <RecommendTab :rid="rid" v-show="rid == regionTabs[0].rid"></RecommendTab>
-      <template v-if="mediaInfo.recommend">
+      <template v-if="regionInfo.recommend">
         <div class="block-title">
           推荐
         </div>
         <div class="block-recommend">
           <v-card
             class="recommend-card"
-            v-for="item in mediaInfo.recommend"
+            v-for="item in regionInfo.recommend"
+            @click="toVideo({aid: item.param as unknown as number})"
             :pic="item.cover"
             :face="item.face"
             :like="item.like"
@@ -35,10 +31,11 @@
       <div class="block-title">
         综合动态
       </div>
-      <div class="block-new" infinite-scroll-distance="1200" infinite-scroll-delay="1000" v-infinite-scroll="getRegionNewInfo" >
+      <div class="block-new" infinite-scroll-distance="1200" infinite-scroll-delay="1000" v-infinite-scroll="getRegionNewInfo">
         <v-card
           class="new-card"
-          v-for="item in mediaInfo.new"
+          v-for="item in regionInfo.new"
+          @click="toVideo({aid: item.aid})"
           :pic="item.pic"
           :face="item.owner.face"
           :like="item.stat.like"
@@ -52,53 +49,45 @@
 </template>
 
 <script lang="ts" setup>
-import RefreshButton from '@/components/RefreshButton.vue'
-import RecommendTab from './components/RecommendTab.vue';
-import { ridChild } from '@/utils/rid';
-import { reactive, ref, watch } from 'vue';
-import VCard from '@/components/VideoCard.vue';
-import { Archive, RegionRecommend } from '@/request/model/region/info';
-import { getRegionInfoApi, getRegionNewInfoApi } from '@/request/api/region/info';
+import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import VCard from '@/components/VideoCard.vue';
+import { getRegionInfoApi, getRegionNewInfoApi } from '@/request/api/region/info';
+import { toVideo } from '@/utils/redirect';
+import { Archive, RegionRecommend } from '@/request/model/region/info';
+import { ridChild } from '@/utils/rid';
 
 const route = useRoute()
-const mediaInfo = reactive({
+
+let code = route.query.code as string
+const rid = ref(ridChild[code][0].rid)
+const refresh = ref(true)
+
+const regionInfo = reactive({
   recommend: <RegionRecommend[]>[],
   new: <Archive[]>[]
 })
-const refresh = ref(true)
-const regionTabs = ref(ridChild[route.query.code as string])
-const rid = ref(ridChild[route.query.code as string][0].rid)
 
 const getRegionRecommend = async () => {
   const { data } = await getRegionInfoApi({rid: rid.value})
-  mediaInfo.recommend = data.recommend
+  regionInfo.recommend = data.recommend
   refresh.value = false
 }
 
 const getRegionNewInfo = async () => {
   const { data } = await getRegionNewInfoApi({rid: rid.value})
-  mediaInfo.new = [...mediaInfo.new, ...data.archives]
+  data.archives && (regionInfo.new = [...regionInfo.new, ...data.archives])
 }
 
 const changeRid = () => {
   refresh.value = true
-  mediaInfo.new = []
+  regionInfo.new = []
   getRegionRecommend()
   getRegionNewInfo()
 }
 
 getRegionRecommend()
 getRegionNewInfo()
-
-watch(route, () => {
-  if( route.query.code) {
-    refresh.value = true
-    regionTabs.value = ridChild[route.query.code as string]
-    rid.value = ridChild[route.query.code as string][0].rid
-    changeRid()
-  }  
-})
 
 </script>
 

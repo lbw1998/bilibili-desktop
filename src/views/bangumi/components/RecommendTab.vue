@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar>
-    <el-carousel :interval="4000" type="card" height="20vh">  
+    <el-carousel :interval="4000" type="card" height="168px">  
       <el-carousel-item v-for="item in recommendInfo.bannerList" :key="item.aid">
         <el-image
           :src="item.cover"
@@ -11,15 +11,49 @@
         ></el-image>
       </el-carousel-item>
     </el-carousel>
-    <div class="block-area" :style="{height: showAll?'auto':'290px'}">
-      <div class="block-left">
-        <div class="left-title">
-          最近更新
+    <!-- 番剧显示 -->
+    <template v-if="rid == 13">
+      <div class="block-area" :style="{height: showAll?'auto':'290px'}">
+        <div class="block-left">
+          <div class="left-title">
+            最近更新
+          </div>
+          <div class="timeline-wrap">
+            <el-card shadow="hover" v-for="item in recommendInfo.timeline" :body-style="{ padding: '4px' }">
+              <div class="card-wrap" @click="toMedia({season_id:item.season_id, ep_id: item.ep_id, bgmcount: item.bgmcount })">
+                <el-image :src="item.square_cover" class="image">
+                  <template #placeholder>
+                    <div class="image" v-loading="true"></div>
+                  </template>
+                </el-image>
+                <div class="info">
+                  <div class="title">
+                    {{item.title}}
+                  </div>
+                  <div class="num">
+                    更新至
+                    <p :class="`detail ${item.new?'new':''}`">
+                      {{item.bgmcount}}话
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </el-card>
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
         </div>
-        <div class="timeline-wrap">
-          <el-card shadow="hover" v-for="item in recommendInfo.timeline" :body-style="{ padding: '4px' }">
-            <div class="card-wrap" @click="toMedia({season_id:item.season_id, ep_id: item.ep_id, bgmcount: item.bgmcount })">
-              <el-image :src="item.square_cover" class="image">
+        <div class="block-right" v-if="followShow">
+          <div class="right-title">
+            我的追番
+          </div>
+          <el-card 
+            shadow="hover" 
+            v-for="item in recommendInfo.followList" 
+            :body-style="{ padding: '4px' }"
+            @click="toMedia({season_id:item.season_id, ep_id: item.new_ep.id })"
+          >
+            <div class="card-wrap">
+              <el-image :src="item.new_ep.cover" class="image">
                 <template #placeholder>
                   <div class="image" v-loading="true"></div>
                 </template>
@@ -29,144 +63,92 @@
                   {{item.title}}
                 </div>
                 <div class="num">
-                  更新至
-                  <p :class="`detail ${item.new?'new':''}`">
-                    {{item.bgmcount}}话
-                  </p>
+                  <div class="num-item">
+                    {{item.new_ep.index_show}}
+                  </div>
+                  <div class="num-item">
+                    {{item.progress.index_show}}
+                  </div>
                 </div>
               </div>
             </div>
           </el-card>
-          <i></i><i></i><i></i><i></i><i></i>
         </div>
       </div>
-      <div class="block-right" v-if="followShow">
-        <div class="right-title">
-          我的追番
+      <div class="read-all" v-if="!showAll">
+        <div class="read-all-btn" @click="showAll = true">
+          <svg-icon class="arrow" name="arrow"></svg-icon>
+          全部
         </div>
-        <el-card 
-          shadow="hover" 
-          v-for="item in recommendInfo.followList" 
-          :body-style="{ padding: '4px' }"
-          @click="toMedia({season_id:item.season_id, ep_id: item.new_ep.id })"
-        >
-          <div class="card-wrap">
-            <el-image :src="item.new_ep.cover" class="image">
-              <template #placeholder>
-                <div class="image" v-loading="true"></div>
-              </template>
-            </el-image>
-            <div class="info">
-              <div class="title">
-                {{item.title}}
-              </div>
-              <div class="num">
-                <div class="num-item">
-                  {{item.new_ep.index_show}}
-                </div>
-                <div class="num-item">
-                  {{item.progress.index_show}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </el-card>
       </div>
-    </div>
-    <div class="read-all" v-if="!showAll">
-      <div class="read-all-btn" @click="showAll = true">
-        <svg-icon class="arrow" name="arrow"></svg-icon>
-        全部
+    </template>
+    <template v-for="items in recommendInfo.bangumiList">
+      <div class="hot-area" v-if="items.style == 'v_card'">
+        <div class="hot-title">
+          {{items.title}}
+        </div>
+        <div class="video-wrap">
+          <b-card
+            v-for="item in items.items"
+            @click="toMedia({season_id:item['season_id'], ep_id: item['new_ep'].id})"
+            class="item"
+            :title="item.title"
+            :pic="item['cover']"
+            :desc="item['desc']"
+            :badge_info="item['badge_info']"
+          ></b-card>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
       </div>
-    </div>
-    <div class="hot-area">
-      <div class="hot-title">
-        正在热播
-      </div>
-      <div class="video-wrap">
-        <b-card
-          v-for="item in recommendInfo.hotList"
-          @click="toMedia({season_id:item.season_id, ep_id: item.new_ep.id})"
-          class="item"
-          :title="item.title"
-          :pic="item.cover"
-          :desc="item.desc"
-          :badge_info="item.badge_info"
-        ></b-card>
-      </div>
-    </div>
-    <div class="hot-area">
-      <div class="hot-title">
-        大家都说好，近3年优秀动画
-      </div>
-      <div class="video-wrap">
-        <b-card
-          v-for="item in recommendInfo.recentlyList"
-          @click="toMedia({season_id:item.season_id, ep_id: item.new_ep.id})"
-          class="item"
-          :title="item.title"
-          :pic="item.cover"
-          :desc="item.desc"
-          :badge_info="item.badge_info"
-        ></b-card>
-      </div>
-    </div>
-    <div class="hot-area">
-      <div class="hot-title">
-        近期上线旧番
-      </div>
-      <div class="video-wrap">
-        <b-card
-          v-for="item in recommendInfo.oldList"
-          @click="toMedia({season_id:item.season_id, ep_id: item.new_ep.id})"
-          class="item"
-          :title="item.title"
-          :pic="item.cover"
-          :desc="item.desc"
-          :badge_info="item.badge_info"
-        ></b-card>
-      </div>
-    </div>
+    </template>
   </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import store from '@/utils/store'
 import BCard from './BangumiCard.vue'
 import { getBangumiFollowApi, getBangumiInfoApi, getBangumiTimelineApi } from '@/request/api/video/bangumi'
-import { BangumiTimeline, Banner, BangumiFollow, HotBangumi  } from "@/request/model/video/bangumi"
+import { BangumiTimeline, Banner, BangumiFollow, Module  } from "@/request/model/video/bangumi"
 import { toMedia } from '@/utils/redirect'
 
 const recommendInfo = reactive({
-  bannerList: <Banner[]>[],
+  bannerList: <Banner[]>[{},{},{}],
   timeline: <BangumiTimeline[]>[],
   followList: <BangumiFollow[]>[],
-  hotList: <HotBangumi[]>[],
-  recentlyList: <HotBangumi[]>[],
-  oldList: <HotBangumi[]>[]
+  bangumiList: <Module[]>[]
 })
 const followShow = ref(false)
 const showAll = ref(false)
+const tabMap = {
+  13: 8,
+  167: 11
+}
+const props = defineProps<{
+  rid: number
+}>()
 
 // 获取番剧分区信息
 const getBangumiInfo = async () => {
-  const { result } = await getBangumiInfoApi({tab_id: 8})
-  recommendInfo.bannerList = result!.modules[0].items as Banner[]
-  recommendInfo.hotList = result!.modules[3].items as HotBangumi[]
-  recommendInfo.recentlyList = result!.modules[8].items as HotBangumi[]
-  recommendInfo.oldList = result!.modules[9].items as HotBangumi[]
+  const { result } = await getBangumiInfoApi({tab_id: tabMap[props.rid]})
+  recommendInfo.bannerList = result.modules[0].items as Banner[]
+  recommendInfo.bangumiList = result.modules
 }
 // 获取番剧更新日期
 const getBangumiTimeline = async () => {
   const { result } = await getBangumiTimelineApi()
-  recommendInfo.timeline = result!
+  recommendInfo.timeline = result
 }
 // 获取追番信息
 const getBangumiFollow = async () => {
   const { result } = await getBangumiFollowApi()
   if(result) {
-    recommendInfo.followList = result!
+    recommendInfo.followList = result
     followShow.value = true;
   }
 }
@@ -178,6 +160,10 @@ const init = () => {
     getBangumiFollow()
   }
 }
+
+watch(props, () => {
+  init()
+})
 init()
 </script>
 
@@ -242,6 +228,7 @@ init()
                   max-width: 80px;
                   -o-text-overflow: ellipsis;
                   text-overflow: ellipsis;
+                  white-space: nowrap;
                   overflow: hidden;
                   color: #fff;
                   margin-left: 5px;
@@ -328,12 +315,13 @@ init()
     .video-wrap {
       width: 100%;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       .item {
-        // width: 160px;
-        width: 14%;
-        
-        // height: 148px;
+        width: 15%;
+      }
+      i {
+        width: 15%;
       }
     }
   }

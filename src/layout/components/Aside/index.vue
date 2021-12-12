@@ -23,11 +23,17 @@
       </el-icon>
       <template #title>分区</template>
     </el-menu-item>
-    <el-menu-item index="/bangumi">
+    <el-menu-item index="/bangumi?code=anime">
       <el-icon>
         <svg-icon name="bangumi" size="24" />
       </el-icon>
       <template #title>番剧</template>
+    </el-menu-item>
+    <el-menu-item index="/bangumi?code=guochuang">
+      <el-icon>
+        <svg-icon name="guochuang1" size="24" />
+      </el-icon>
+      <template #title>国创</template>
     </el-menu-item>
     <el-menu-item index="/live">
       <el-icon><VideoCamera /></el-icon>

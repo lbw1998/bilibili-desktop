@@ -9,8 +9,8 @@ export function useMediaPlayInfo() {
   })
   const getMediaPlayInfo = (params:PlayInfoParams) => new Promise<void>( async (resolve) => {
     const { result } = await getPlayInfoApi(params)
-    mediaPlayInfo.durl = result!.durl
-    mediaPlayInfo.timelength = result!.timelength
+    mediaPlayInfo.durl = result.durl
+    mediaPlayInfo.timelength = result.timelength
     resolve()
   })  
   return { mediaPlayInfo, getMediaPlayInfo }

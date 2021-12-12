@@ -69,7 +69,7 @@ interface Report5 {
   page_id: string;
 }
 
-interface Module {
+export interface Module {
   attr: Attr;
   headers: Header[];
   items: BangumiItems;
@@ -83,7 +83,7 @@ interface Module {
   wid: number[];
 }
 
-type BangumiItems = (Item | Banner | Items3 | HotBangumi | Items5 | Items6 | Items7 | Items8 | Items9)[]
+type BangumiItems = (Item | Banner | HotBangumi | HotBangumi | HotBangumi | HotBangumi | HotBangumi | HotBangumi | HotBangumi)[]
 
 interface Report4 {
   module_id: string;
@@ -205,7 +205,7 @@ interface Items5 {
   wid: number;
 }
 
-export interface HotBangumi {
+interface HotBangumi {
   badge: string;
   badge_info: Badgeinfo;
   badge_type: number;

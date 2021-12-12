@@ -64,31 +64,35 @@
     </div>
     <div class="r-con">
       <el-tabs>
-        <!-- <el-tab-pane label="分集">
+        <el-tab-pane label="正片">
           <div class="scroll-wrap">
             <el-scrollbar>
-              <el-card 
-                v-for="(item, key) in videoInfo.pages" 
-                @click="changeEpisode(item.cid, key)" 
-                :class="`episode-card ${activeEpisode==key?'activeEpisode':''}`" 
-                shadow="hover"
-                :title="item.part"
-                :body-style="{ 
-                  padding: '8px', 
-                  display: 'flex', 
-                  alignItems: 'center'
-                }"
+              <e-card
+                v-for="(item, index) in mediaInfo.episodes"
+                :class="`e-card ${activedEpisode==index?'actived':''}`" 
+                :cover="item.cover"
+                :title="item.title"
+                :subtitle="item.subtitle"
+                :long_title="item.long_title"
+                :badge_info="item.badge_info"
+                @click="changeEpisode(item.cid, index)"
               >
-                <span class="index">{{key + 1}}</span>
-                <p class="part">{{item.part}}</p>
-              </el-card>
+              </e-card>
             </el-scrollbar>
           </div>
-        </el-tab-pane> -->
-        <el-tab-pane label="关联视频">
+        </el-tab-pane>
+        <el-tab-pane label="相关推荐">
           <div class="scroll-wrap">
             <el-scrollbar>
-              <!-- <v-card @click="changeVideo(item.aid!)"  v-for="item in relatedInfo" :video-info="item" class="v-card"></v-card> -->
+              <r-card
+                v-for="item in mediaRelatedInfo.season"
+                :pic="item.new_ep && item.new_ep.cover"
+                :title="item.title"
+                :name="item.new_ep && item.new_ep.index_show"
+                :view="item.stat && item.stat.view"
+                :danmaku="item.stat && item.stat.danmaku"
+                :badge_info="item.badge_info"
+              ></r-card>
             </el-scrollbar>
           </div>
         </el-tab-pane>
@@ -120,14 +124,16 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 import store from '@/utils/store'
-import VCard from '@/views/video/components/RelatedCard.vue'
-import { Plus, Download } from '@element-plus/icons'
+import ECard from './components/EpisodeCard.vue'
+import RCard from '../video/components/RelatedCard.vue'
+import { Download } from '@element-plus/icons'
 import PlayerVue from '@/components/Player.vue'
 import { useMediaInfo } from './composables/useMediaInfo'
 import { useMediaStat } from './composables/useMediaStat'
 import { formatNumber } from '@/utils/tools'
 import { ref, onBeforeUnmount, computed } from 'vue'
 import { useMediaPlayInfo } from './composables/useMediaPlayInfo'
+import { useMediaRelatedInfo } from './composables/useMediaRelatedInfo'
 
 store.system.isFullScreen = true
 const route = useRoute()
@@ -135,15 +141,16 @@ const route = useRoute()
 const radio = ref('最热')
 const Player = ref()
 const cid = ref(0)
-const activeEpisode = ref(0)
-
+const activedEpisode = ref(0)
 
 const {mediaInfo, getMediaInfo} = useMediaInfo()
 const {mediaStat, getMediaStat} = useMediaStat()
 const {mediaPlayInfo, getMediaPlayInfo} = useMediaPlayInfo()
+const {mediaRelatedInfo, getMediaRelatedInfo} = useMediaRelatedInfo()
 // 初始化信息
 const init = (season_id = route.query.season_id as unknown as number, ep_id = route.query.ep_id as unknown as number) => {
-// 获取视频信息
+  activedEpisode.value = 0
+  // 获取视频信息
   getMediaInfo({ep_id}).then( result => {
     cid.value = result.episodes[0].cid
     getMediaPlayInfo({cid: cid.value}).then(() => {
@@ -151,22 +158,23 @@ const init = (season_id = route.query.season_id as unknown as number, ep_id = ro
     })
   })
   getMediaStat({season_id})
+  getMediaRelatedInfo({season_id})
 }
 
 init()
 
-const changeVideo = (aid:number) => {
+const changeEpisode = ( cid:number, index:number) => {
   Player.value.destroy()
-  init(aid)
+  activedEpisode.value = index
+  // 获取视频流
+  getMediaPlayInfo({cid}).then(() => {
+    Player.value.init()
+  })
 }
 
-const changeEpisode = ( cid:number, index:number) => {
-    Player.value.destroy()
-    activeEpisode.value = index
-    // 获取视频流
-    getMediaPlayInfo({cid}).then(() => {
-      Player.value.init()
-    })
+const changeMedia = (season_id:number, ep_id:number) => {
+  Player.value.destroy()
+  init(season_id, ep_id)
 }
 
 const playerConfig = computed(() => {
@@ -338,28 +346,15 @@ onBeforeUnmount(() => {
       height: calc(100vh - 116px);
       .el-scrollbar {
         height: 100%;
-        .v-card {
+        .e-card {
           margin-bottom: 8px;
           cursor: pointer;
         }
-        .episode-card {
-          width: 320px;
-          cursor: pointer;
-          margin-bottom: 4px;
-          font-weight: bold;
-          align-items: center;
-          .index {
-            width: 35px;
-          }
-          .part {
-            width: 263px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
+        .actived {
+          border: 2px solid #ed5b8c;
         }
-        .activeEpisode {
-          border: 1px solid black;
+        .r-card {
+          margin-bottom: 8px;
         }
       }
     }

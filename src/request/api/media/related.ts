@@ -1,7 +1,7 @@
 import { MediaRelatedInfo } from '@/request/model/media/related';
 import { request } from '@/utils/axios';
 
-interface MediaRelatedParams {
+export interface MediaRelatedParams {
   season_id: number
 }
 export const getMediaRelatedInfoApi = (params:MediaRelatedParams) => {

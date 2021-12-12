@@ -12,11 +12,11 @@ export function useMediaStat() {
   })
   const getMediaStat = async (params:MediaStatParams) => {
     const { result } = await getMediaStatApi(params)
-    mediaStat.coins = result!.coins
-    mediaStat.likes = result!.likes
-    mediaStat.danmakus = result!.danmakus
-    mediaStat.views = result!.views
-    mediaStat.follow = result!.follow
+    mediaStat.coins = result.coins
+    mediaStat.likes = result.likes
+    mediaStat.danmakus = result.danmakus
+    mediaStat.views = result.views
+    mediaStat.follow = result.follow
   }
   return { mediaStat, getMediaStat }
 }

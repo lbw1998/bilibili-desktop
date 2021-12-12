@@ -245,7 +245,7 @@ interface Freya {
   icon_show: number;
 }
 
-interface Episode {
+export interface Episode {
   aid: number;
   badge: string;
   badge_info: Badgeinfo;
@@ -286,7 +286,7 @@ interface Dimension {
   width: number;
 }
 
-interface Badgeinfo {
+export interface Badgeinfo {
   bg_color: string;
   bg_color_night: string;
   text: string;

@@ -7,7 +7,6 @@ const routes = [
     path: "/",
     name: 'layout',
     redirect: '/recommend',
-    // component: () => import("/src/layout/index.vue"),
     component: import("/src/layout/index.vue"),
     children: []
   },
@@ -20,7 +19,6 @@ const router = createRouter({
 
 const addRoute = () => {
   for (const path in modules) {
-    console.log(modules[path]);
     router.addRoute('layout', { path: `/${path.split('/')[2]}`,name: path.split('/')[2], component: modules[path] })
   }
 }

@@ -41,10 +41,15 @@ defineProps<{
   width: 100%;
   margin-bottom: 10px;
   .image-wrap {
+    width: 100%;
     position: relative;
+    padding-bottom: 133.5%;
     .image {
       width: 100%;
       height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
     }
     .image-tip {
       width: 60px;

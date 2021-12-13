@@ -58,7 +58,9 @@
               <span class="number">{{formatNumber(mediaStat.follow)}}</span>
             </div>
           </div>
-          <el-button :icon="Download" class="download-btn" disabled>下载</el-button>
+          <el-button class="download-btn" disabled>
+            <svg-icon name="download" />下载
+          </el-button>
         </div>
       </div>
     </div>
@@ -69,13 +71,13 @@
             <el-scrollbar>
               <e-card
                 v-for="(item, index) in mediaInfo.episodes"
-                :class="`e-card ${activedEpisode==index?'actived':''}`" 
+                :class="`e-card ${cid == item.cid?'actived':''}`" 
                 :cover="item.cover"
                 :title="item.title"
                 :subtitle="item.subtitle"
                 :long_title="item.long_title"
                 :badge_info="item.badge_info"
-                @click="changeEpisode(item.cid, index)"
+                @click="changeEpisode(item.cid)"
               >
               </e-card>
             </el-scrollbar>
@@ -85,6 +87,7 @@
           <div class="scroll-wrap">
             <el-scrollbar>
               <r-card
+                class="r-card"
                 v-for="item in mediaRelatedInfo.season"
                 :pic="item.new_ep && item.new_ep.cover"
                 :title="item.title"
@@ -126,7 +129,6 @@ import { useRoute } from 'vue-router'
 import store from '@/utils/store'
 import ECard from './components/EpisodeCard.vue'
 import RCard from '../video/components/RelatedCard.vue'
-import { Download } from '@element-plus/icons'
 import PlayerVue from '@/components/Player.vue'
 import { useMediaInfo } from './composables/useMediaInfo'
 import { useMediaStat } from './composables/useMediaStat'
@@ -140,7 +142,7 @@ const route = useRoute()
 
 const radio = ref('最热')
 const Player = ref()
-const cid = ref(0)
+const cid = ref(route.query.cid as unknown as number || 0)
 const activedEpisode = ref(0)
 
 const {mediaInfo, getMediaInfo} = useMediaInfo()
@@ -148,33 +150,33 @@ const {mediaStat, getMediaStat} = useMediaStat()
 const {mediaPlayInfo, getMediaPlayInfo} = useMediaPlayInfo()
 const {mediaRelatedInfo, getMediaRelatedInfo} = useMediaRelatedInfo()
 // 初始化信息
-const init = (season_id = route.query.season_id as unknown as number, ep_id = route.query.ep_id as unknown as number) => {
+const init = (ep_id = route.query.ep_id as unknown as number) => {
   activedEpisode.value = 0
   // 获取视频信息
   getMediaInfo({ep_id}).then( result => {
-    cid.value = result.episodes[0].cid
+    cid.value = cid.value || result.episodes[0].cid
+    getMediaStat({season_id: result.season_id})
+    getMediaRelatedInfo({season_id: result.season_id})
     getMediaPlayInfo({cid: cid.value}).then(() => {
       Player.value.init()
     })
   })
-  getMediaStat({season_id})
-  getMediaRelatedInfo({season_id})
 }
 
 init()
 
-const changeEpisode = ( cid:number, index:number) => {
+const changeEpisode = ( newCid:number) => {
   Player.value.destroy()
-  activedEpisode.value = index
+  cid.value = newCid
   // 获取视频流
-  getMediaPlayInfo({cid}).then(() => {
+  getMediaPlayInfo({cid: cid.value}).then(() => {
     Player.value.init()
   })
 }
 
 const changeMedia = (season_id:number, ep_id:number) => {
   Player.value.destroy()
-  init(season_id, ep_id)
+  init(ep_id)
 }
 
 const playerConfig = computed(() => {

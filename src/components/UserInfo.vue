@@ -57,27 +57,28 @@
         </div>
       </div>
       <el-menu
-        default-active="2"
+        :router="true"
+        @select="emit('changeVisible', false)"
       >
-        <el-menu-item index="1">
-          <el-icon><location /></el-icon>
+        <el-menu-item index="/home" >
+          <el-icon><svg-icon class="icon" name="user" /></el-icon>
           <span>个人主页</span>
         </el-menu-item>
-        <el-menu-item index="2">
-          <el-icon><icon-menu /></el-icon>
+        <el-menu-item index="/message">
+          <el-icon><svg-icon class="icon" name="message" /></el-icon>
           <span>消息</span>
         </el-menu-item>
-        <el-menu-item index="3">
-          <el-icon><document /></el-icon>
+        <el-menu-item index="/favorite">
+          <el-icon><svg-icon class="icon" name="star_outline" /></el-icon>
           <span>我的收藏</span>
         </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><setting /></el-icon>
+        <el-menu-item index="/pending">
+          <el-icon><svg-icon class="icon" name="pending" /></el-icon>
           <span>稍后再看</span>
         </el-menu-item>
-        <el-menu-item index="5">
-          <el-icon><setting /></el-icon>
-          <span>历史记录</span>
+        <el-menu-item index="/history">
+          <el-icon><svg-icon class="icon" name="history" /></el-icon>
+          <span>观看历史</span>
         </el-menu-item>
       </el-menu>
       <el-button class="logout" round size="small" type="danger" @click="emit('logout')">注销</el-button>
@@ -87,12 +88,6 @@
 
 <script lang="ts" setup>
 import { UserInfo, UserState } from '@/request/model/system/user';
-import {
-  Location,
-  Document,
-  Menu as IconMenu,
-  Setting,
-} from '@element-plus/icons'
 
 const props = defineProps<{
   visible: boolean,
@@ -209,9 +204,12 @@ const emit = defineEmits<{
   .el-menu {
     padding: 0 40px;
     border: none;
+    .icon {
+      vertical-align: unset;
+    }
     :deep(li) {
-      padding: 0 180px;
-      padding-left: 80px!important;
+      // padding: 0 180px;
+      padding-right: 120px!important;
     }
   }
   .logout {

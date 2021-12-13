@@ -7,6 +7,7 @@ export interface VideoInfo {
   copyright: number;
   pic: string;
   title: string;
+  redirect_url?: string;
   pubdate: number;
   ctime: number;
   desc: string;

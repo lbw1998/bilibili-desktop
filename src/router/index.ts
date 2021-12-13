@@ -7,7 +7,7 @@ const routes = [
     path: "/",
     name: 'layout',
     redirect: '/recommend',
-    component: import("/src/layout/index.vue"),
+    component: () => import("/src/layout/index.vue"),
     children: []
   },
 ];

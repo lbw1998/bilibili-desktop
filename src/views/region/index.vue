@@ -18,7 +18,7 @@
           <v-card
             class="recommend-card"
             v-for="item in regionInfo.recommend"
-            @click="toVideo({aid: item.param as unknown as number})"
+            @click="toVideoOrMedia({aid: item.param as unknown as number})"
             :pic="item.cover"
             :face="item.face"
             :like="item.like"
@@ -35,7 +35,7 @@
         <v-card
           class="new-card"
           v-for="item in regionInfo.new"
-          @click="toVideo({aid: item.aid})"
+          @click="toVideoOrMedia({aid: item.aid})"
           :pic="item.pic"
           :face="item.owner.face"
           :like="item.stat.like"
@@ -53,7 +53,7 @@ import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import VCard from '@/components/VideoCard.vue';
 import { getRegionInfoApi, getRegionNewInfoApi } from '@/request/api/region/info';
-import { toVideo } from '@/utils/redirect';
+import { toVideoOrMedia } from '@/utils/redirect';
 import { Archive, RegionRecommend } from '@/request/model/region/info';
 import { ridChild } from '@/utils/rid';
 

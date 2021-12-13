@@ -4,19 +4,17 @@
   "main": "electron/main.ts",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit --skipLibCheck && vite build",
+    "build": "vue-tsc --noEmit  && vite build",
     "serve": "vite preview",
-    "electron:serve": "cross-env NODE_ENV=development electron .",
-    "dev:electron": "tsc -p tsconfig.electron.json && cross-env NODE_ENV=development electron ./build/main.js",
-    "dev:tsc": "nodemon --watch electron/main.ts --exec yarn run electron:serve "
+    "electron:serve": "electron .",
+    "dev:tsc": "cross-env NODE_ENV=development nodemon --watch electron/main.ts --exec yarn run electron:serve "
   },
   "dependencies": {
     "@types/js-cookie": "^3.0.1",
     "axios": "^0.24.0",
     "electron": "15.3.1",
-    "element-plus": "^1.2.0-beta.3",
+    "element-plus": "^1.2.0-beta.6",
     "flv.js": "^1.6.2",
-    "js-cookie": "^3.0.1",
     "qrcode.vue": "^3.3.3",
     "svg-sprite-loader": "^6.0.11",
     "vue": "^3.2.16",

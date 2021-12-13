@@ -36,8 +36,8 @@ service.interceptors.response.use(
       if (res.data.code === 403) {
         // router.push({ path: "/login" });
       }
-      // if (res.data.code !== 0) {
-      //   Message.error(res.data.msg);
+      // if (res.data.code !== 0 && res.data.status !== false) {
+      //   handleResponseErrors(res.status, res.data.message);
       // }
       return Promise.resolve(res.data);
     } else {

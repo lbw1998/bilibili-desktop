@@ -13,7 +13,9 @@
                 <span class="username">{{videoInfo.owner.name}}</span>
               </div>
               <div class="message">
-                <el-button type="primary" class="follow" size="mini" :icon="Plus">关注</el-button>
+                <el-button type="primary" class="follow" size="mini"> 
+                  <svg-icon name="plus" />关注
+                </el-button>
               </div>
             </div>
           </div>
@@ -56,7 +58,9 @@
               <span class="number">{{formatNumber(videoInfo.stat.favorite)}}</span>
             </div>
           </div>
-          <el-button :icon="Download" class="download-btn" disabled>下载</el-button>
+          <el-button class="download-btn" disabled>
+            <svg-icon name="download" />下载
+          </el-button>
         </div>
       </div>
     </div>
@@ -128,7 +132,6 @@
 import { useRoute } from 'vue-router'
 import store from '@/utils/store'
 import VCard from '@/views/video/components/RelatedCard.vue'
-import { Plus, Download } from '@element-plus/icons'
 import PlayerVue from '@/components/Player.vue'
 import useVideoInfo from './composables/useVideoInfo'
 import usePlayInfo from './composables/usePlayInfo'

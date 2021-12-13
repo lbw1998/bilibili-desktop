@@ -1,12 +1,13 @@
 <template>
   <div class="header-wrap">
     <div class="search-wrap">
-      <el-button type="info" class="back" :icon="ArrowLeftBold" v-show="store.system.isFullScreen" circle @click="router.back()"></el-button>
+      <el-button type="info" class="back" v-show="store.system.isFullScreen" circle @click="router.back()">
+        <svg-icon name="arrow_left" />
+      </el-button>
       <el-autocomplete
         v-model="searchWord"
         class="search-input"
         placeholder="搜索视频,番剧或UP主"
-        :prefix-icon="Search"
         :trigger-on-focus="false"
         @select="toSearch({keyword: searchWord})"
         :hide-loading="true"
@@ -17,13 +18,13 @@
     </div>
     <el-space>
       <div class="btn" @click="handleWindow('minWindow')" style="background-color: #909399;" >
-        <svg t="1636980864414" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2253" width="14" height="14"><path d="M928.2 548h-832c-17.7 0-32-14.3-32-32s14.3-32 32-32h832c17.7 0 32 14.3 32 32s-14.3 32-32 32z" p-id="2254" fill="#ffffff"></path></svg>
+        <svg-icon class="icon" name="min_window" />
       </div>
       <div class="btn" @click="handleWindow('maxWindow')" style="background-color: #E6A23C;" >
-        <svg t="1636980838192" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1998" width="14" height="14"><path d="M892.3 224H133c-37.9 0-68.8 30.9-68.8 68.8V795c0 37.9 30.9 68.8 68.8 68.8h759.3c37.9 0 68.8-30.9 68.8-68.8V292.7c0-37.9-30.8-68.7-68.8-68.7zM133 288h759.3c2.6 0 4.8 2.1 4.8 4.8v57.7H128.2v-57.7c0-2.7 2.2-4.8 4.8-4.8z m759.3 511.7H133c-2.6 0-4.8-2.1-4.8-4.8V414.3h768.9V795c0 2.6-2.1 4.7-4.8 4.7z" p-id="1999" fill="#ffffff"></path></svg>
+        <svg-icon class="icon" name="max_window" />
       </div>
       <div class=" btn " @click="handleWindow('closeWindow')" style="background-color: #F56C6C;" >
-        <svg t="1636980708154" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1639" width="14" height="14"><path d="M556.6 513.2L827.8 242c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L511.3 468 240.1 196.7c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l271.3 271.3-271.3 271.2c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l271.3-271.3 271.3 271.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L556.6 513.2z" p-id="1640" fill="#ffffff"></path></svg>
+        <svg-icon class="icon" name="close_window" />
       </div>
     </el-space>
   </div>
@@ -33,7 +34,6 @@
 import store from '@/utils/store'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { ArrowLeftBold, Search } from '@element-plus/icons'
 import { toSearch } from '@/utils/redirect'
 import { searchSuggestApi } from '@/request/api/video/search'
 

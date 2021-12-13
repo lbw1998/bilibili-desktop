@@ -22,6 +22,7 @@
         <div class="block-recommend">
           <v-card
             class="recommend-card"
+            @click="toVideoOrMedia({aid: item.param as unknown as number})"
             v-for="item in mediaInfo.recommend"
             :pic="item.cover"
             :face="item.face"
@@ -38,6 +39,7 @@
       <div class="block-new" infinite-scroll-distance="1200" infinite-scroll-delay="1000" v-infinite-scroll="getRegionNewInfo" >
         <v-card
           class="new-card"
+          @click="redirect(item)"
           v-for="item in mediaInfo.new"
           :pic="item.pic"
           :face="item.owner.face"
@@ -60,6 +62,7 @@ import VCard from '@/components/VideoCard.vue';
 import { Archive, RegionRecommend } from '@/request/model/region/info';
 import { getRegionInfoApi, getRegionNewInfoApi } from '@/request/api/region/info';
 import { useRoute } from 'vue-router';
+import { toVideo, toMedia, toVideoOrMedia } from '@/utils/redirect';
 
 const route = useRoute()
 const mediaInfo = reactive({
@@ -74,6 +77,15 @@ const getRegionRecommend = async () => {
   const { data } = await getRegionInfoApi({rid: rid.value})
   mediaInfo.recommend = data.recommend
   refresh.value = false
+}
+
+const redirect = (item:any) => {
+  if(item.tname.includes('动画')) {
+    item.redirect_url = item.redirect_url.replace('https://www.bilibili.com/bangumi/play/ep', '')
+    toMedia({ep_id:item.redirect_url as number, cid: item.cid})
+  } else {
+    toVideo({aid: item.aid})
+  }
 }
 
 const getRegionNewInfo = async () => {

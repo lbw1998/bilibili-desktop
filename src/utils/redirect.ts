@@ -1,5 +1,6 @@
 import { RouteParamsRaw } from "vue-router";
 import router from "@/router";
+import { getVideoInfoApi } from "@/request/api/video/info";
 
 interface ToVideoParams extends RouteParamsRaw {
   aid?: number
@@ -10,10 +11,25 @@ export const toVideo = (query:ToVideoParams) => {
   router.push({name:'video', query})
 }
 
+// 不知道是Video页面还是Media页面
+export const toVideoOrMedia = async (query:ToVideoParams) => {
+  const { data: {redirect_url, cid} } = await getVideoInfoApi({aid: query.aid, bvid: query.bvid})
+  // media页面会含有redirect_url属性
+  if (redirect_url) {
+    let ep_id = redirect_url.replace('https://www.bilibili.com/bangumi/play/ep', '')
+    if (!/^[0-9]*$/.test(ep_id)) {
+      ep_id = ep_id.split('?')[0]
+    }
+    toMedia({ep_id:ep_id as unknown as number, cid})
+  } else {
+    router.push({name:'video', query})
+  }
+}
+
 interface ToMediaParams extends RouteParamsRaw {
-  ep_id: number,
-  season_id: number,
-  bgmcount?: string
+  ep_id?: number,
+  season_id?: number,
+  cid?: number
 }
 // 跳转到番剧/影视播放页面
 export const toMedia= (query:ToMediaParams) => {

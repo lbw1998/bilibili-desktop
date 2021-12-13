@@ -22,8 +22,6 @@ function findSvgFile(dir:string): string[] {
         .toString()
         .replace(clearReturn, '')
         .replace(svgTitle, ($1, $2) => {
-          // console.log(++i)
-          // console.log(dirent.name)
           let width = 0
           let height = 0
           let content = $2.replace(

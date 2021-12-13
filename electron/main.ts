@@ -26,15 +26,12 @@ function createWindow() {
   session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback)=> {
     details.requestHeaders['origin'] = "https://www.bilibili.com"
     details.requestHeaders['referer'] = "https://www.bilibili.com"
-      // details.requestHeaders['Host'] = "https://www.bilibili.com"
-      // details.requestHeaders['user-agent'] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
     callback({ requestHeaders: details.requestHeaders });
   })
-  // mainWindow.webContents.session.setProxy({proxyRules: 'https://www.bilibili.com'})
   const isDev = process.env.NODE_ENV === "development";
   if (isDev) {
     mainWindow.loadURL("http://localhost:3000/");
-    } else {
+  } else {
     mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
   }
   ipcMain.on('handleWindow', (e,type) => {

@@ -1,9 +1,10 @@
 <template>
-    <el-button type="info" class="refresh" :icon="RefreshRight"  circle></el-button>
+    <el-button type="info" class="refresh" circle>
+      <svg-icon name="refresh" />
+    </el-button>
 </template>
 
 <script lang="ts" setup>
-import { RefreshRight } from '@element-plus/icons'
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -19,11 +20,8 @@ const refresh = computed(() => props.animated === true ?'running':'paused')
 <style lang="scss" scoped>
   .refresh {
     color: #409EFF;
-    & :deep(.el-icon) {
-      animation: rotate 2s linear infinite;
-      animation-play-state: v-bind(refresh);
-    }
-    
+    animation: rotate 2s linear infinite;
+    animation-play-state: v-bind(refresh);
   }
   @keyframes rotate {
     from {

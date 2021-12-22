@@ -93,6 +93,11 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@types/js-cookie@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npmmirror.com/@types/js-cookie/download/@types/js-cookie-3.0.1.tgz#04aa743e2e0a85a22ee9aa61f6591a8bc19b5d68"
+  integrity sha512-7wg/8gfHltklehP+oyJnZrz9XBuX5ZPP4zB6UsI84utdlkRYLnOm2HfpLXazTwZA+fpGn0ir8tGNgVnMEleBGQ==
+
 "@types/minimist@^1.2.0":
   version "1.2.2"
   resolved "https://registry.nlark.com/@types/minimist/download/@types/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
@@ -2070,6 +2075,11 @@ js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.6.4"
   resolved "https://registry.npmmirror.com/js-base64/download/js-base64-2.6.4.tgz#f4e686c5de1ea1f867dbcad3d46d969428df98c4"
   integrity sha1-9OaGxd4eofhn28rT1G2WlCjfmMQ=
+
+js-cookie@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmmirror.com/js-cookie/download/js-cookie-3.0.1.tgz#9e39b4c6c2f56563708d7d31f6f5f21873a92414"
+  integrity sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==
 
 js-stringify@^1.0.2:
   version "1.0.2"

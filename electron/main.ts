@@ -3,6 +3,7 @@
 // 控制应用生命周期和创建原生浏览器窗口的模组
 const { app, BrowserWindow, Menu, ipcMain } = require('electron')
 const path = require('path')
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 const {session} = require('electron');
 app.commandLine.appendSwitch('disable-web-security');
 function createWindow() {

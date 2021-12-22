@@ -26,14 +26,14 @@
             </div>  
             <div class="media-pub">
               <span class="media-type">番剧</span>
-              <span>{{mediaInfo.new_ep && mediaInfo.new_ep.desc}}</span>
+              <span>{{mediaInfo.new_ep?.desc}}</span>
             </div>
             <div class="media-desc">
               {{mediaInfo.evaluate}}
             </div>
             <div class="media-rating">
-              <span class="score">{{mediaInfo.rating && mediaInfo.rating.score}}</span>
-              <p>{{formatNumber(mediaInfo.rating && mediaInfo.rating.count)}}人评分</p>
+              <span class="score">{{mediaInfo.rating?.score}}</span>
+              <p>{{formatNumber(mediaInfo.rating?.count)}}人评分</p>
             </div>
           </div>
         </div>
@@ -89,35 +89,21 @@
               <r-card
                 class="r-card"
                 v-for="item in mediaRelatedInfo.season"
-                :pic="item.new_ep && item.new_ep.cover"
+                :pic="item.new_ep?.cover"
                 :title="item.title"
-                :name="item.new_ep && item.new_ep.index_show"
-                :view="item.stat && item.stat.view"
-                :danmaku="item.stat && item.stat.danmaku"
+                :name="item.new_ep?.index_show"
+                :view="item.stat?.view"
+                :danmaku="item.stat?.danmaku"
                 :badge_info="item.badge_info"
               ></r-card>
             </el-scrollbar>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="评论">
-           <div class="recommend">
-            <div class="r-title">
-              <h1>最热评论</h1>
-              <el-radio-group v-model="radio" size='mini' >
-                <el-radio-button label="最热"></el-radio-button>
-                <el-radio-button label="最新"></el-radio-button>
-              </el-radio-group>
-            </div>
-            <div class="r-content"></div>
-            <div class="r-footer">
-              <el-input
-                :rows="2"
-                type="textarea"
-                placeholder="留下你的评论吧~"
-              />
-              <el-button>发布</el-button>
-            </div>
-          </div>
+        <el-tab-pane label="评论" lazy="true">
+          <reply-area
+            :type="1"
+            :oid="aid"
+            />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -133,17 +119,19 @@ import PlayerVue from '@/components/Player.vue'
 import { useMediaInfo } from './composables/useMediaInfo'
 import { useMediaStat } from './composables/useMediaStat'
 import { formatNumber } from '@/utils/tools'
-import { ref, onBeforeUnmount, computed } from 'vue'
+import { ref, onBeforeUnmount, computed, nextTick } from 'vue'
+import ReplyArea from '@/components/ReplyArea.vue'
 import { useMediaPlayInfo } from './composables/useMediaPlayInfo'
 import { useMediaRelatedInfo } from './composables/useMediaRelatedInfo'
 
 store.system.isFullScreen = true
 const route = useRoute()
 
-const radio = ref('最热')
 const Player = ref()
+const aid = ref(0)
 const cid = ref(route.query.cid as unknown as number || 0)
 const activedEpisode = ref(0)
+let episodes: any[]= []
 
 const {mediaInfo, getMediaInfo} = useMediaInfo()
 const {mediaStat, getMediaStat} = useMediaStat()
@@ -155,6 +143,8 @@ const init = (ep_id = route.query.ep_id as unknown as number) => {
   // 获取视频信息
   getMediaInfo({ep_id}).then( result => {
     cid.value = cid.value || result.episodes[0].cid
+    episodes = result.episodes
+    aid.value = episodes.filter( item => item.cid == cid.value)[0].aid
     getMediaStat({season_id: result.season_id})
     getMediaRelatedInfo({season_id: result.season_id})
     getMediaPlayInfo({cid: cid.value}).then(() => {
@@ -168,6 +158,7 @@ init()
 const changeEpisode = ( newCid:number) => {
   Player.value.destroy()
   cid.value = newCid
+  aid.value = episodes.filter( item => item.cid == cid.value)[0].aid
   // 获取视频流
   getMediaPlayInfo({cid: cid.value}).then(() => {
     Player.value.init()
@@ -198,7 +189,6 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding-right: 20px;
   display: flex;
   .l-con {
     width: calc(100% - 340px);
@@ -342,26 +332,35 @@ onBeforeUnmount(() => {
     width: 320px;
     height: 100%;
     flex: none;
-    margin-left: 30px;
+    margin-left: 20px;
+    .el-tabs {
+      :deep(.el-tabs__header) {
+        padding-right: 20px;
+      }
+    }
     .scroll-wrap {
-      width: 336px;
+      width: 100%;
       height: calc(100vh - 116px);
       .el-scrollbar {
         height: 100%;
+        width: 100%;
+        padding-right: 20px;
         .e-card {
           margin-bottom: 8px;
+          width: 100%;
           cursor: pointer;
         }
         .actived {
           border: 2px solid #ed5b8c;
         }
         .r-card {
+          width: 100%;
           margin-bottom: 8px;
         }
       }
     }
     .recommend {
-      width: 336px;
+      width: 300px;
       height: calc(100vh - 116px);
       .r-title {
         display: flex;

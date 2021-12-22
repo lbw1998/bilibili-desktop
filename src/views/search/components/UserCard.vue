@@ -27,45 +27,6 @@ defineProps<{
   .avatar {
     margin-bottom: 5px;
   }
-  .lv {
-    background-image: url('https://s1.hdslb.com/bfs/static/jinkela/search/assets/sprite-690be8a6ea.png');
-    width: 28px;
-    height: 16px;
-    display: inline-block;
-    line-height: 16px;
-    vertical-align: middle;
-    margin: 5px 0;
-  }
-  .lv.icon-lv0{
-    background-position:-148px -231px
-  }
-  .lv.icon-lv1{
-    background-position:-148px -185px
-  }
-  .lv.icon-lv2{
-    background-position:-148px -139px
-  }
-  .lv.icon-lv3{
-    background-position:-365px -438px
-  }
-  .lv.icon-lv4{
-    background-position:-319px -536px
-  }
-  .lv.icon-lv5{
-    background-position:-261px -536px
-  }
-  .lv.icon-lv6{
-    background-position:-377px -490px
-  }
-  .lv.icon-lv7{
-    background-position:-319px -490px
-  }
-  .lv.icon-lv8{
-    background-position:-377px -536px
-  }
-  .lv.icon-lv9{
-    background-position:-261px -490px
-  }
   .desc {
     width: 160px;
     text-align: center;

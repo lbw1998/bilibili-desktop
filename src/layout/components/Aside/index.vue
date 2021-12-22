@@ -50,7 +50,7 @@
       <template #title>动态</template>
     </el-menu-item>
     <div class="user">
-      <el-avatar :size="38" v-if="!store.user.isLogin" @click="showDialog">
+      <el-avatar :size="38" v-if="!store.user?.isLogin" @click="showDialog">
         <svg-icon name="user" />
       </el-avatar>
       <el-avatar :size="38" v-else :src="userInfo.face" @click="userDialog = true" ></el-avatar>
@@ -81,13 +81,14 @@
 </template>
 
 <script setup lang="ts">
+import qs from 'qs'
 import { ref } from "vue";
+import store from "@/utils/store"
 import QrcodeVue from 'qrcode.vue'
+import { ElNotification } from "element-plus";
 import UserInfoVue from "@/components/UserInfo.vue";
 import useUserInfo from "./composables/getUserInfo";
-import { ElNotification } from "element-plus";
-import { getBiliCSRF, setBiliCSRF, clearBiliCSRF } from "@/utils/storage";
-import store from "@/utils/store";
+import { getBiliCSRF, setBiliCSRF, clearCookie } from "@/utils/cookie";
 import { getLoginUrlApi, loginApi, logoutApi } from "@/request/api/system/login";
 
 const loginDialog = ref(false)
@@ -115,14 +116,14 @@ const login = async (oauthKey:string) => {
   const res = await loginApi({oauthKey})
   if(res.code == 0) {
     loginDialog.value = false
-    const csrf = res.data.url.split('bili_jct=')[1].split('&')[0]
-    setBiliCSRF(csrf)
+    const cookie = qs.parse(res.data.url.split("?")[1])
+    setBiliCSRF(cookie.bili_jct, {expires: ~~(cookie.Expires/60/60/24).toFixed(0)})
     getUserInfo()
   }
 }
 // 清除定时器
 const clearTimer = () => {
-  clearInterval(Number(timer))
+  clearInterval(~~timer!)
 }
 // 显示扫描弹框
 const showDialog = () => {
@@ -134,7 +135,7 @@ const logout = async () => {
   const { code } = await logoutApi({biliCSRF: getBiliCSRF() || ''})
   if(code == 0 ) {
     userDialog.value = false
-    clearBiliCSRF()
+    clearCookie()
     ElNotification({
       title: '通知',
       message: '注销成功',

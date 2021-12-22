@@ -40,7 +40,7 @@ defineProps<{
 
 <style lang="scss" scoped>
   .el-card {
-    width: 320px;
+    width: 300px;
     box-sizing: border-box;
     .card-wrap {
       display: flex;
@@ -65,7 +65,7 @@ defineProps<{
       }
       .info {
         margin-left: 10px;
-        width: 160px;
+        width: 140px;
         .title {
           font-size: 14px;
           font-weight: 500;

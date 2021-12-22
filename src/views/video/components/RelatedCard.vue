@@ -7,7 +7,7 @@
             <div class="image" v-loading="true"></div>
           </template>
         </el-image>
-        <div class="image-tip" v-if="badge_info && badge_info.text" :style="{backgroundColor: badge_info.bg_color }">
+        <div class="image-tip" v-if="badge_info?.text" :style="{backgroundColor: badge_info.bg_color }">
           {{badge_info.text}}
         </div>
       </div>
@@ -74,7 +74,7 @@ defineProps<{
       }
       .info {
         margin-left: 10px;
-        width: 160px;
+        width: 140px;
         .title {
           font-size: 14px;
           font-weight: 500;
@@ -90,7 +90,7 @@ defineProps<{
           -webkit-box-orient: vertical;
         }
         .count-up {
-          width: 160px;
+          width: 140px;
           margin-bottom: 4px;
           color: #999;
           overflow: hidden;
@@ -104,10 +104,12 @@ defineProps<{
           color: #999;
           .view {
             font-size: 12px;
-            min-width: 55px;
             text-indent: 5px;
+            min-width: 50px;
             display: inline-block;
-            margin-right: 5px;
+            &:first-of-type {
+              margin-right: 5px;
+            }
           }
         }
       }

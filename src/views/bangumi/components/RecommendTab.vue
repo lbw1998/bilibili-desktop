@@ -1,15 +1,17 @@
 <template>
   <el-scrollbar>
     <el-carousel :interval="4000" type="card" height="168px">  
-      <el-carousel-item v-for="item in recommendInfo.bannerList" :key="item.aid">
-        <el-image
-          :src="item.cover"
-          style="width:100%;height: 100%;"
-          fit="cover"
-          :alt="item.desc"
-          @click="toMedia({season_id:item.season_id!, ep_id: item.episode_id! })"
-        ></el-image>
-      </el-carousel-item>
+      <template v-for="item in recommendInfo.bannerList">
+        <el-carousel-item v-if="item.type == 'PGC'" >
+          <el-image
+            :src="item.cover"
+            style="width:100%;height: 100%;"
+            fit="cover"
+            :alt="item.desc"
+            @click="toMedia({season_id:item.season_id!, ep_id: item.episode_id! })"
+          ></el-image>
+        </el-carousel-item>
+      </template>
     </el-carousel>
     <!-- 番剧显示 -->
     <template v-if="rid == 13">

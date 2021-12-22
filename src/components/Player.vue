@@ -48,7 +48,7 @@ const init = (config:PlayerConfig = props.config) => {
   }
 }
 const destroy = () => {
-  flvPlayer && flvPlayer.destroy()
+  flvPlayer?.destroy()
 }
 defineExpose({init, destroy})
 </script>

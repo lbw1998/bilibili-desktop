@@ -24,12 +24,12 @@ export default function useUserInfo() {
   const getUserInfo = async () => {
     const resInfo = await getUserInfoApi()
     const resState = await getUserStateApi()
-    if (resState && resState.code == 0) {
+    if (resState?.code == 0) {
       userState.follower= resState.data.follower
       userState.following= resState.data.following
       userState.dynamic_count= resState.data.dynamic_count
     }
-    if (resInfo && resInfo.code == 0) {
+    if (resInfo?.code == 0) {
       store.user.mid = resInfo.data.mid
       userInfo.face = resInfo.data.face
       userInfo.vipStatus = resInfo.data.vipStatus

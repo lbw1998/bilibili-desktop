@@ -30,7 +30,7 @@
             {{userInfo.level_info.current_exp}} / {{userInfo.level_info.next_exp}}
           </div>
         </div>
-        <el-progress color="#f3cb85" :show-text="false" :percentage="Number(userInfo.level_info.current_exp/userInfo.level_info.next_exp)*100" />
+        <el-progress color="#f3cb85" :show-text="false" :percentage="~~(userInfo.level_info.current_exp/userInfo.level_info.next_exp)*100" />
       </div>
       <div class="coins">
         <div class="coins-container">

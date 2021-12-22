@@ -72,7 +72,7 @@
           :desc="item.desc"
           :cv="item.cv"
           @click="toMedia({season_id: item.season_id, ep_id: item.eps[0].id})"
-          :score="item.media_score && item.media_score.score"
+          :score="item.media_score?.score"
         ></b-card>
         <!-- 直播间 -->
         <v-card
@@ -106,7 +106,7 @@
           :fix_pubtime_str="item.fix_pubtime_str"
           :desc="item.desc"
           :actors="item.cv"
-          :score="item.media_score && item.media_score.score"
+          :score="item.media_score?.score"
           @click="toMedia({season_id: item.season_id, ep_id: item.eps[0].id})"
         ></b-card>
       </template>

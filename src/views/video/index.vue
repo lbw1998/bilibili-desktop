@@ -1,5 +1,5 @@
 <template>
-  <div class="v-wrap">
+  <div class="v-wrap" @click="clearReplyItem">
     <div class="l-con">
       <div class="video-wrap">
         <PlayerVue ref="Player" :config="playerConfig" />
@@ -30,11 +30,11 @@
           </div>
           <div class="count">
             <svg-icon name="view" />
-            <span class="view">{{formatNumber(videoInfo.stat.view)}}</span>
+            <span class="view">{{formatNumber(videoInfo.stat?.view)}}</span>
             <svg-icon name="barrage" />
-            <span class="view">{{formatNumber(videoInfo.stat.danmaku)}}</span>
+            <span class="view">{{formatNumber(videoInfo.stat?.danmaku)}}</span>
             <svg-icon name="comment"/>
-            <span class="view">{{formatNumber(videoInfo.stat.reply)}}</span>
+            <span class="view">{{formatNumber(videoInfo.stat?.reply)}}</span>
           </div>
         </div>
         <div class="btn-wrap">
@@ -43,19 +43,19 @@
               <el-button circle size="small">
                 <svg-icon name="like" class="icon" color="#ed5b8c"></svg-icon>
               </el-button>
-              <span class="number">{{formatNumber(videoInfo.stat.like)}}</span>
+              <span class="number">{{formatNumber(videoInfo.stat?.like)}}</span>
             </div>
             <div class="status-item">
               <el-button circle size="small">
                 <svg-icon name="money" class="icon" color="#ed5b8c"></svg-icon>
               </el-button>
-              <span class="number">{{formatNumber(videoInfo.stat.coin)}}</span>
+              <span class="number">{{formatNumber(videoInfo.stat?.coin)}}</span>
             </div>
             <div class="status-item">
               <el-button class="btn" circle size="small">
                 <svg-icon name="star" class="icon" color="#ed5b8c"></svg-icon>
               </el-button>
-              <span class="number">{{formatNumber(videoInfo.stat.favorite)}}</span>
+              <span class="number">{{formatNumber(videoInfo.stat?.favorite)}}</span>
             </div>
           </div>
           <el-button class="download-btn" disabled>
@@ -65,8 +65,8 @@
       </div>
     </div>
     <div class="r-con">
-      <el-tabs>
-        <el-tab-pane label="分集" v-if="videoInfo.videos !== 1">
+      <el-tabs v-model="actived">
+        <el-tab-pane label="分集" name="分集" v-if="videoInfo.videos !== 1">
           <div class="scroll-wrap">
             <el-scrollbar>
               <el-card 
@@ -87,7 +87,7 @@
             </el-scrollbar>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="关联视频">
+        <el-tab-pane label="关联视频" name="关联视频">
           <div class="scroll-wrap">
             <el-scrollbar>
               <v-card 
@@ -95,35 +95,23 @@
                 v-for="item in relatedInfo"
                 :pic="item.pic"
                 :title="item.title"
-                :name="item.owner.name"
-                :view="item.stat.view"
-                :danmaku="item.stat.danmaku"
+                :name="item.owner?.name"
+                :view="item.stat?.view"
+                :danmaku="item.stat?.danmaku"
                 class="v-card">
               </v-card>
             </el-scrollbar>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="评论">
-           <div class="recommend">
-            <div class="r-title">
-              <h1>最热评论</h1>
-              <el-radio-group v-model="radio" size='mini' >
-                <el-radio-button label="最热"></el-radio-button>
-                <el-radio-button label="最新"></el-radio-button>
-              </el-radio-group>
-            </div>
-            <div class="r-content"></div>
-            <div class="r-footer">
-              <el-input
-                :rows="2"
-                type="textarea"
-                placeholder="留下你的评论吧~"
-              />
-              <el-button>发布</el-button>
-            </div>
-          </div>
+        <el-tab-pane label="评论" name="评论">
         </el-tab-pane>
       </el-tabs>
+      <reply-area
+        v-if="actived == '评论'"
+        ref="Reply"
+        :type="1"
+        :oid="oid"
+        />
     </div>
   </div>
 </template>
@@ -138,17 +126,23 @@ import usePlayInfo from './composables/usePlayInfo'
 import useRelatedInfo from './composables/useRelatedInfo'
 import { parseTimestamp, formatNumber } from '@/utils/tools'
 import { ref, onBeforeUnmount, computed } from 'vue'
+import ReplyArea from '@/components/ReplyArea.vue'
 
 store.system.isFullScreen = true
 const route = useRoute()
 
-const radio = ref('最热')
 const Player = ref()
+const Reply = ref()
 const activedEpisode = ref(0)
+// 评论区ID
+const oid = ref(~~route.query.aid!)
+const actived = ref("关联视频")
 
 const {playInfo, getPlayInfo } = usePlayInfo()
 const {videoInfo, getVideoInfo} = useVideoInfo()
 const {relatedInfo, getRelatedInfo} = useRelatedInfo()
+
+
 
 // 初始化信息
 const init = ({aid = route.query.aid as unknown as number, bvid =route.query.bvid as unknown as string}) => {
@@ -156,11 +150,12 @@ const init = ({aid = route.query.aid as unknown as number, bvid =route.query.bvi
   const params = aid?{aid}:{bvid}
   // 获取视频信息
   getVideoInfo(params).then(() => {
+    actived.value =  (videoInfo.videos !== 1)?"分集":"关联视频"
     const playParams = {
       ...(videoInfo.aid?{avid: videoInfo.aid}:{bvid: videoInfo.bvid}),
       ...{cid: videoInfo.cid}
     }
-    // 获取视频流
+    // 获取视频流并播放
     getPlayInfo(playParams).then(() => {
       Player.value.init()
     })
@@ -176,6 +171,7 @@ init({})
 
 const changeVideo = (aid:number) => {
   Player.value.destroy()
+  oid.value = aid
   init({aid})
 }
 
@@ -199,6 +195,10 @@ const playerConfig = computed(() => {
   }
 })
 
+const clearReplyItem = () => {
+  // Reply.clearReplyItem()
+}
+
 onBeforeUnmount(() => {
   store.system.isFullScreen = false
   Player.value.destroy()
@@ -211,7 +211,6 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding-right: 20px;
   display: flex;
   .l-con {
     width: calc(100% - 340px);
@@ -359,17 +358,26 @@ onBeforeUnmount(() => {
     width: 320px;
     height: 100%;
     flex: none;
-    margin-left: 30px;
+    margin-left: 20px;
+    position: relative;
+    .el-tabs {
+      :deep(.el-tabs__header) {
+        padding-right: 20px;
+      }
+    }
     .scroll-wrap {
-      width: 336px;
+      width: 100%;
       height: calc(100vh - 116px);
       .el-scrollbar {
         height: 100%;
+        padding-right: 20px;
+        box-sizing: border-box;
         .v-card {
+          width: 300px;
           margin-bottom: 8px;
         }
         .episode-card {
-          width: 320px;
+          width: 300px;
           cursor: pointer;
           margin-bottom: 4px;
           font-weight: bold;
@@ -389,29 +397,7 @@ onBeforeUnmount(() => {
         }
       }
     }
-    .recommend {
-      width: 336px;
-      height: calc(100vh - 116px);
-      .r-title {
-        display: flex;
-        justify-content: space-between;
-        padding-right: 16px;
-        align-items: center;
-      }
-      .r-content {
-        padding-right: 16px;
-        background-color: pink;
-        height: calc(100vh - 220px);
-      }
-      .r-footer {
-        margin-top: 8px;
-        display: flex;
-        padding-right: 20px;
-        .el-button {
-          margin-left: 10px;
-        }
-      }
-    }
+    
   }
 }
 </style>

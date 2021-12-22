@@ -70,7 +70,7 @@ export interface BaseData<T = any> {
 }
 
 const request = async <T = any>(config: AxiosRequestConfig): Promise<BaseData<T>> => {
-  if (config.method && config.method.toUpperCase() === "POST") {
+  if (config.method?.toUpperCase() === "POST") {
     config.data = qs.stringify(config.data)
   }
   const data:BaseData<T> = await service.request(config)

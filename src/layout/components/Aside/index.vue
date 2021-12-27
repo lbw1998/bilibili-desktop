@@ -89,7 +89,7 @@ import { ElNotification } from "element-plus";
 import UserInfoVue from "@/components/UserInfo.vue";
 import useUserInfo from "./composables/getUserInfo";
 import { getBiliCSRF, setBiliCSRF, clearCookie } from "@/utils/cookie";
-import { getLoginUrlApi, loginApi, logoutApi } from "@/request/api/system/login";
+import { getLoginUrlApi, loginApi, logoutApi } from "@/request/api/user/login";
 
 const loginDialog = ref(false)
 const userDialog = ref(false)
@@ -121,6 +121,7 @@ const login = async (oauthKey:string) => {
     getUserInfo()
   }
 }
+
 // 清除定时器
 const clearTimer = () => {
   clearInterval(~~timer!)

@@ -2,6 +2,7 @@
 
 import axios, { Method, AxiosRequestHeaders, AxiosRequestConfig  } from "axios";
 import qs from "qs"
+import { getBiliCSRF } from '@/utils/cookie';
 // const HttpsProxyAgent = require('https-proxy-agent');
 import { handleResponseErrors } from "./tools";
 // import router from "../router";
@@ -36,9 +37,10 @@ service.interceptors.response.use(
       if (res.data.code === 403) {
         // router.push({ path: "/login" });
       }
-      // if (res.data.code !== 0 && res.data.status !== false) {
-      //   handleResponseErrors(res.status, res.data.message);
-      // }
+      if (res.data.code != undefined && res.data.code !== 0 ) {
+        handleResponseErrors(res.status, res.data.message);
+        return Promise.reject(res.data);
+      }
       return Promise.resolve(res.data);
     } else {
       return Promise.reject(res);
@@ -71,6 +73,7 @@ export interface BaseData<T = any> {
 
 const request = async <T = any>(config: AxiosRequestConfig): Promise<BaseData<T>> => {
   if (config.method?.toUpperCase() === "POST") {
+    getBiliCSRF() && (config.params = {...config.params, csrf: getBiliCSRF()})
     config.data = qs.stringify(config.data)
   }
   const data:BaseData<T> = await service.request(config)

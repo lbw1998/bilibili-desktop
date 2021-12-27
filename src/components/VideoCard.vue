@@ -6,6 +6,7 @@
           <div class="image" v-loading="true"></div>
         </template>
       </el-image>
+      <p class="tip">{{formatTime(duration)}}</p>
     </div>
     <div class="card-info">
       <el-avatar v-if="face" :size="42" class="face" :src="face"></el-avatar>
@@ -34,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { formatNumber } from '@/utils/tools';
+import { formatNumber,formatTime } from '@/utils/tools';
 defineProps<{
   pic: string,
   face?: string,
@@ -42,7 +43,8 @@ defineProps<{
   title: string,
   view?: number,
   like?: number,
-  online?: number
+  online?: number,
+  duration: number | string
 }>()
 
 </script>
@@ -61,6 +63,19 @@ defineProps<{
       position: absolute;
       left: 0;
       top: 0;
+    }
+    .tip {
+      position: absolute;
+      left: 6px;
+      bottom: 6px;
+      width: 60px;
+      height: 24px;
+      text-align: center;
+      line-height: 24px;
+      color: white;
+      border-radius: 4px;
+      font-size: 12px;
+      background: rgba($color: #000, $alpha: 0.5);
     }
   }
   .card-info {

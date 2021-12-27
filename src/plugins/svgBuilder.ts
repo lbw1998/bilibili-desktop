@@ -57,7 +57,6 @@ export const svgBuilder = (
   // if (path === '') return {}
   idPerfix = perfix
   const res = findSvgFile(path)
-  // console.log(res.length)
   // const res = []
   return {
     name: 'svg-transform',

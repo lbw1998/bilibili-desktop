@@ -24,6 +24,7 @@
             :like="item.like"
             :name="item.name"
             :view="item.play"
+            :duration="item.duration"
             :title="item.title"
           ></v-card>
         </div>
@@ -41,6 +42,7 @@
           :like="item.stat.like"
           :name="item.owner.name"
           :view="item.stat.view"
+          :duration="item.duration"
           :title="item.title"
         ></v-card>
       </div>

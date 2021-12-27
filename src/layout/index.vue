@@ -1,11 +1,11 @@
 <template>
   <el-container class="app-wrap">
     <el-aside v-show="!store.system.isFullScreen">
-      <Aside></Aside>
+      <Aside ref="asideBar"></Aside>
     </el-aside>
     <el-container>
       <el-header>
-        <Header></Header>
+        <Header ref="Head"></Header>
       </el-header>
       <el-main>
         <Main></Main>
@@ -19,6 +19,25 @@ import Aside from "./components/Aside/index.vue";
 import Main from "./components/Main.vue";
 import Header from "./components/Header.vue";
 import store from "@/utils/store";
+import { ref, provide } from "vue";
+
+const asideBar = ref()
+const Head = ref()
+console.log(Head.value);
+
+// 校验是否登录
+const verifyLogin = (cb:Function) => {
+  const _this = this
+  return function () {
+    if (store.user.isLogin) {
+      cb.apply(_this, arguments)
+    } else {
+      asideBar.value.getLoginUrl()
+    }
+  }
+}
+provide('verifyLogin', verifyLogin)
+
 </script>
 
 <style lang="scss" scoped>

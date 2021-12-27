@@ -100,14 +100,12 @@ import { ReplyItem } from '@/request/model/reply/info';
 import ReplyCard from './ReplyCard.vue';
 import { addReplyApi, addReplyParams } from '@/request/api/reply/add';
 import { ElNotification } from 'element-plus';
-import { getBiliCSRF } from '@/utils/cookie';
 import { likeReplyApi } from '@/request/api/reply/like';
 
 const props = defineProps<{
   type: number
   oid: number
 }>()
-const csrf = getBiliCSRF()!
 // 一级评论页码
 let next = 0
 // 二级评论页码
@@ -179,7 +177,7 @@ const likeThis = async (reply_item:ReplyItem) => {
     0: 1,
     1: 0
   }
-  const {code, message} = await likeReplyApi({type: props.type, oid: props.oid,rpid,csrf,action: actionMap[action]})
+  const {code, message} = await likeReplyApi({type: props.type, oid: props.oid,rpid,action: actionMap[action]})
   if(code == 0 ) {
     action?reply_item.like--:reply_item.like++
     reply_item.action = actionMap[action]
@@ -198,7 +196,6 @@ const replyThis = async () => {
     type: props.type,
     oid: props.oid,
     message: messageInfo.value,
-    csrf
   }
   if (replyItem.value.rpid) {
     // 是否回复二级评论

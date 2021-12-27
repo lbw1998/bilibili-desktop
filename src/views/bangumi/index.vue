@@ -30,6 +30,7 @@
             :name="item.name"
             :view="item.play"
             :title="item.title"
+            :duration="item.duration"
           ></v-card>
         </div>
       </template>
@@ -47,6 +48,7 @@
           :name="item.owner.name"
           :view="item.stat.view"
           :title="item.title"
+          :duration="item.duration"
         ></v-card>
       </div>
     </div>

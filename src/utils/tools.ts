@@ -1,6 +1,8 @@
 import { ElMessage } from "element-plus";
+import store from "./store";
 // import router from "@/router";
 
+// 处理时间戳
 export const parseTimestamp = (timestamp :number) => {
   function zeroize( num:number ) {
     return (String(num).length == 1 ? '0' : '') + num;
@@ -33,6 +35,7 @@ export const parseTimestamp = (timestamp :number) => {
 }
 }
 
+// 处理数量
 export const formatNumber = (num:number) => {
   if (num > 100000000) {
     return (num/100000000).toFixed(1) + '亿'
@@ -41,6 +44,17 @@ export const formatNumber = (num:number) => {
   } else {
     return num
   }
+}
+// 处理时长
+export const formatTime = (time:number | string) => {
+  if (typeof time == 'string') {
+    let arr = time.split(':')
+    time = Number(Number(arr[0])*60 + Number(arr[1]))
+  }
+  let h = Math.floor(time / 3600) < 10 ? '0' + Math.floor(time / 3600) : Math.floor(time / 3600)
+  let m = Math.floor((time / 60 % 60)) < 10 ? '0' + Math.floor((time / 60 % 60)) : Math.floor((time / 60 % 60))
+  let s = Math.floor((time % 60)) < 10 ? '0' + Math.floor((time % 60)) : Math.floor((time % 60))
+  return `${time > 3600 ? (h + ':'): ''}${m}:${s}`
 }
 
 /**

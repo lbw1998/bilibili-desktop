@@ -1,7 +1,8 @@
 import { reactive } from "vue";
 import store from "@/utils/store";
-import { getUserInfoApi, getUserStateApi } from "@/request/api/system/user";
-import { UserInfo, UserState } from "@/request/model/system/user";
+import { getBiliCSRF } from "@/utils/cookie";
+import { getUserInfoApi, getUserStateApi } from "@/request/api/user/info";
+import { UserInfo, UserState } from "@/request/model/user/info";
 
 export default function useUserInfo() {
   const userInfo = reactive(<UserInfo>{
@@ -22,6 +23,7 @@ export default function useUserInfo() {
     dynamic_count: 0
   })
   const getUserInfo = async () => {
+    if (!getBiliCSRF()) return
     const resInfo = await getUserInfoApi()
     const resState = await getUserStateApi()
     if (resState?.code == 0) {

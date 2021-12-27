@@ -38,29 +38,12 @@
           </div>
         </div>
         <div class="btn-wrap">
-          <div class="video-status">
-            <div class="status-item">
-              <el-button circle size="small">
-                <svg-icon name="like" class="icon" color="#ed5b8c"></svg-icon>
-              </el-button>
-              <span class="number">{{formatNumber(mediaStat.likes)}}</span>
-            </div>
-            <div class="status-item">
-              <el-button circle size="small">
-                <svg-icon name="money" class="icon" color="#ed5b8c"></svg-icon>
-              </el-button>
-              <span class="number">{{formatNumber(mediaStat.coins)}}</span>
-            </div>
-            <div class="status-item">
-              <el-button class="btn" circle size="small">
-                <svg-icon name="star" class="icon" color="#ed5b8c"></svg-icon>
-              </el-button>
-              <span class="number">{{formatNumber(mediaStat.follow)}}</span>
-            </div>
-          </div>
-          <el-button class="download-btn" disabled>
-            <svg-icon name="download" />下载
-          </el-button>
+          <video-state 
+            :like="mediaStat.likes"
+            :coin="mediaStat.coins"
+            :favorite="mediaStat.follow"
+            :aid="aid"
+          />
         </div>
       </div>
     </div>
@@ -119,7 +102,8 @@ import PlayerVue from '@/components/Player.vue'
 import { useMediaInfo } from './composables/useMediaInfo'
 import { useMediaStat } from './composables/useMediaStat'
 import { formatNumber } from '@/utils/tools'
-import { ref, onBeforeUnmount, computed, nextTick } from 'vue'
+import { ref, onBeforeUnmount, computed } from 'vue'
+import VideoState from '@/components/VideoState.vue'
 import ReplyArea from '@/components/ReplyArea.vue'
 import { useMediaPlayInfo } from './composables/useMediaPlayInfo'
 import { useMediaRelatedInfo } from './composables/useMediaRelatedInfo'
@@ -156,11 +140,11 @@ const init = (ep_id = route.query.ep_id as unknown as number) => {
 init()
 
 const changeEpisode = ( newCid:number) => {
-  Player.value.destroy()
   cid.value = newCid
   aid.value = episodes.filter( item => item.cid == cid.value)[0].aid
   // 获取视频流
   getMediaPlayInfo({cid: cid.value}).then(() => {
+    Player.value.destroy()
     Player.value.init()
   })
 }
@@ -299,28 +283,6 @@ onBeforeUnmount(() => {
       }
       .btn-wrap {
         width: 200px;
-        .video-status {
-          width: 100%;
-          justify-content: space-between;
-          display: flex;
-          .status-item {
-            display: flex;
-            flex-direction: column;
-            margin-left: 5px;
-            align-items: center;
-            .btn {
-              width: 48px;
-            }
-            .icon {
-              font-size: 28px;
-            }
-            .number {
-              width: 100%;
-              text-align: center;
-              color: #999;
-            }
-          }
-        }
         .download-btn {
           width: 200px;
           margin-top: 20px;

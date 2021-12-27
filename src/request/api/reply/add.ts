@@ -4,7 +4,6 @@ export interface addReplyParams {
   type: number
   oid: number // 目标评论区id
   message: string
-  csrf: string
   root?: number // 根评论rpid
   parent?: number // 父评论rpid
 }

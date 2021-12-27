@@ -55,6 +55,7 @@
           :title="item.title"
           :view="item.play"
           :like="item.review"
+          :duration="item.duration"
           @click="toVideo({aid: item.id})"
         ></v-card>
         <!-- 番剧 -->

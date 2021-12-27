@@ -16,6 +16,7 @@
           :view="item.stat.view"
           :like="item.stat.like"
           :face="item.owner.face"
+          :duration="item.duration"
         ></v-card>
       </div>
     </div>

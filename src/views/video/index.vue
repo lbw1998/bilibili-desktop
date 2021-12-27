@@ -38,29 +38,12 @@
           </div>
         </div>
         <div class="btn-wrap">
-          <div class="video-status">
-            <div class="status-item">
-              <el-button circle size="small">
-                <svg-icon name="like" class="icon" color="#ed5b8c"></svg-icon>
-              </el-button>
-              <span class="number">{{formatNumber(videoInfo.stat?.like)}}</span>
-            </div>
-            <div class="status-item">
-              <el-button circle size="small">
-                <svg-icon name="money" class="icon" color="#ed5b8c"></svg-icon>
-              </el-button>
-              <span class="number">{{formatNumber(videoInfo.stat?.coin)}}</span>
-            </div>
-            <div class="status-item">
-              <el-button class="btn" circle size="small">
-                <svg-icon name="star" class="icon" color="#ed5b8c"></svg-icon>
-              </el-button>
-              <span class="number">{{formatNumber(videoInfo.stat?.favorite)}}</span>
-            </div>
-          </div>
-          <el-button class="download-btn" disabled>
-            <svg-icon name="download" />下载
-          </el-button>
+          <video-state 
+            :like="videoInfo.stat?.like"
+            :coin="videoInfo.stat?.coin"
+            :favorite="videoInfo.stat?.favorite"
+            :aid="oid"
+          />
         </div>
       </div>
     </div>
@@ -120,6 +103,7 @@
 import { useRoute } from 'vue-router'
 import store from '@/utils/store'
 import VCard from '@/views/video/components/RelatedCard.vue'
+import VideoState from '@/components/VideoState.vue'
 import PlayerVue from '@/components/Player.vue'
 import useVideoInfo from './composables/useVideoInfo'
 import usePlayInfo from './composables/usePlayInfo'
@@ -129,8 +113,8 @@ import { ref, onBeforeUnmount, computed } from 'vue'
 import ReplyArea from '@/components/ReplyArea.vue'
 
 store.system.isFullScreen = true
-const route = useRoute()
 
+const route = useRoute()
 const Player = ref()
 const Reply = ref()
 const activedEpisode = ref(0)
@@ -141,8 +125,6 @@ const actived = ref("关联视频")
 const {playInfo, getPlayInfo } = usePlayInfo()
 const {videoInfo, getVideoInfo} = useVideoInfo()
 const {relatedInfo, getRelatedInfo} = useRelatedInfo()
-
-
 
 // 初始化信息
 const init = ({aid = route.query.aid as unknown as number, bvid =route.query.bvid as unknown as string}) => {
@@ -176,16 +158,16 @@ const changeVideo = (aid:number) => {
 }
 
 const changeEpisode = ( cid:number, index:number) => {
-    Player.value.destroy()
-    activedEpisode.value = index
-    // 获取视频流
-    const playParams = {
-      ...(videoInfo.aid?{avid: videoInfo.aid}:{bvid: videoInfo.bvid}),
-      ...{cid}
-    }
-    getPlayInfo(playParams).then(() => {
-      Player.value.init()
-    })
+  Player.value.destroy()
+  activedEpisode.value = index
+  // 获取视频流
+  const playParams = {
+    ...(videoInfo.aid?{avid: videoInfo.aid}:{bvid: videoInfo.bvid}),
+    ...{cid}
+  }
+  getPlayInfo(playParams).then(() => {
+    Player.value.init()
+  })
 }
 
 const playerConfig = computed(() => {
@@ -325,32 +307,6 @@ onBeforeUnmount(() => {
       }
       .btn-wrap {
         width: 200px;
-        .video-status {
-          width: 100%;
-          justify-content: space-between;
-          display: flex;
-          .status-item {
-            display: flex;
-            flex-direction: column;
-            margin-left: 5px;
-            align-items: center;
-            .btn {
-              width: 48px;
-            }
-            .icon {
-              font-size: 28px;
-            }
-            .number {
-              width: 100%;
-              text-align: center;
-              color: #999;
-            }
-          }
-        }
-        .download-btn {
-          width: 200px;
-          margin-top: 20px;
-        }
       }
     }
   }

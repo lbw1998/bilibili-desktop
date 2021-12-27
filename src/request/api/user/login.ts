@@ -1,4 +1,4 @@
-import { LoginData, Qrcode } from '@/request/model/system/login';
+import { LoginData, Qrcode } from '@/request/model/user/login';
 import { request } from '@/utils/axios';
 
 // 获取登录二维码URL

@@ -13,10 +13,10 @@
         <el-avatar :size="68" :src="userInfo.face"></el-avatar>
         <img v-if="userInfo.vipStatus != 0" class="bili-avatar-icon" :src="userInfo.vip.avatar_subscript_url">
       </div>
-      <template v-if="userInfo.vipStatus != 0">
         <p class="nickname"  :style="{color: userInfo.vip_nickname_color}">
           {{userInfo.uname}}
         </p>
+      <template v-if="userInfo.vipStatus != 0">
         <div class="vip">
           {{userInfo.vip.label.text}}
         </div>

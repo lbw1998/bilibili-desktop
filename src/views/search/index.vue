@@ -119,10 +119,7 @@
         <i class="u-content" v-for="i in 6"></i>
       </template>
     </div>
-    <div v-show="!itemList[0]" class="empty-wrap">
-      <img src="../../assets/img/empty.png" >
-      <p class="tip">什么都没有找到啊 T_T</p>
-    </div>
+    <Empty v-show="!itemList[0]"></Empty>
   </el-scrollbar> 
 </template>
 
@@ -133,6 +130,7 @@ import { useRoute } from 'vue-router';
 import VCard from '@/components/VideoCard.vue';
 import BCard from '@/components/BangumiCard.vue';
 import UCard from './components/UserCard.vue';
+import Empty from '@/components/Empty.vue';
 import useSearchResult from './composables/useSearchResult';
 import { SearchTypeParams } from '@/request/api/video/search';
 import { SearchItem } from '@/request/model/video/search';
@@ -349,22 +347,7 @@ getSearchResult()
       width: 210px;
     }
   }
-  .empty-wrap {
-    width: 100%;
-    height: calc(100vh - 320px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    img {
-      width: 480px;
-    }
-    .tip {
-      font-size: 15px;
-      color: #757575;
-      margin-top: 10px;
-    }
-  }
+  
 }
 .el-tabs {
   margin-left: 10px;

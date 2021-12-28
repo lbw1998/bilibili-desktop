@@ -3,7 +3,6 @@
   <div class="header">
     <div class="title-bar">
       <b class="title">{{regionTabs[0].label}}</b>
-      <refresh-button ></refresh-button>
     </div>
   </div>
   <el-tabs v-model="rid" class="tabs-wrap" @tab-click="changeRid">
@@ -56,7 +55,6 @@
 </template>
 
 <script lang="ts" setup>
-import RefreshButton from '@/components/RefreshButton.vue'
 import RecommendTab from './components/RecommendTab.vue';
 import { ridChild } from '@/utils/rid';
 import { reactive, ref, watch } from 'vue';
@@ -120,8 +118,6 @@ watch(route, () => {
 .header {
   padding-right: 20px;
   .title-bar {
-    display: flex;
-    justify-content: space-between;
     padding: 8px;
     .title {
       font-size: 28px;

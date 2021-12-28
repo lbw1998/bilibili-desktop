@@ -1,7 +1,7 @@
 <template>
   <el-container class="app-wrap">
     <el-aside v-show="!store.system.isFullScreen">
-      <Aside ref="asideBar"></Aside>
+      <Aside ref="AsideBar"></Aside>
     </el-aside>
     <el-container>
       <el-header>
@@ -21,9 +21,7 @@ import Header from "./components/Header.vue";
 import store from "@/utils/store";
 import { ref, provide } from "vue";
 
-const asideBar = ref()
-const Head = ref()
-console.log(Head.value);
+const AsideBar = ref()
 
 // 校验是否登录
 const verifyLogin = (cb:Function) => {
@@ -32,7 +30,8 @@ const verifyLogin = (cb:Function) => {
     if (store.user.isLogin) {
       cb.apply(_this, arguments)
     } else {
-      asideBar.value.getLoginUrl()
+      console.log(AsideBar.value.getLoginUrl);
+      AsideBar.value.showDialog()
     }
   }
 }

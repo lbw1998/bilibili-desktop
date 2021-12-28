@@ -68,13 +68,20 @@
       title="扫码登录"
       width="350px"
       :close-on-click-modal="false"
+      :append-to-body="true"
       @close="clearTimer"
     >
-      <div class="dialog-contain">
+      <div 
+        class="dialog-contain" 
+        style="width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;">
         <div v-loading="loading" class="qrcode-wrap">
           <qrcode-vue  :value="loginUrl" :size="250" level="L" />
         </div>
-        <span>请使用移动客户端扫描上方二维码</span>
+        <span class="tip" color="color: #d8d8d8;">请使用移动客户端扫描上方二维码</span>
       </div>
     </el-dialog>
   </el-menu>
@@ -146,7 +153,7 @@ const logout = async () => {
     store.clearUserInfo()
   }
 }
-
+defineExpose({showDialog})
 
 </script>
 
@@ -172,16 +179,6 @@ const logout = async () => {
     -webkit-app-region: no-drag;
     .el-avatar {
       cursor: pointer;
-    }
-  }
-  .dialog-contain {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    .tip {
-      color: #d8d8d8;
     }
   }
 }

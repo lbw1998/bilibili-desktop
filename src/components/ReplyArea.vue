@@ -1,6 +1,6 @@
 <template>
   <div class="reply-wrap">
-    <div class="r-title">
+    <div class="r-title" v-if="replyInfo.replyList.length">
       <h1>最{{mode == 1?'热':'新'}}评论</h1>
       <el-radio-group v-model="mode" size='mini' @change="changeMode" >
         <el-radio-button :label="0" >最热</el-radio-button>
@@ -55,7 +55,7 @@
           </el-scrollbar>
         </div>
       </div>
-      <el-scrollbar v-show="!isSecondReply">
+      <el-scrollbar v-show="!isSecondReply && replyInfo.replyList.length">
         <div class="reply-warp" 
           infinite-scroll-distance="800" 
           infinite-scroll-delay="1000" 
@@ -80,6 +80,7 @@
           />
         </div>
       </el-scrollbar>
+      <Empty v-if="!replyInfo.replyList.length" tip="暂无评论  T_T" />
     </div>
     <div class="r-footer">
       <el-input
@@ -94,13 +95,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, watch } from 'vue';
-import { getReplyInfoApi, getSecondReplyInfoApi } from '@/request/api/reply/info';
-import { ReplyItem } from '@/request/model/reply/info';
+import Empty from './Empty.vue';
 import ReplyCard from './ReplyCard.vue';
-import { addReplyApi, addReplyParams } from '@/request/api/reply/add';
+import { reactive, ref, watch } from 'vue';
 import { ElNotification } from 'element-plus';
+import { ReplyItem } from '@/request/model/reply/info';
 import { likeReplyApi } from '@/request/api/reply/like';
+import { addReplyApi, addReplyParams } from '@/request/api/reply/add';
+import { getReplyInfoApi, getSecondReplyInfoApi } from '@/request/api/reply/info';
 
 const props = defineProps<{
   type: number

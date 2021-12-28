@@ -15,6 +15,7 @@
           :view="item.stat.view"
           :like="item.stat.like"
           :face="item.owner.face"
+          :duration="item.duration"
         ></v-card>
       </div>
     </div>
@@ -56,8 +57,6 @@ getHot()
   .header {
     padding-right: 20px;
     .title-bar {
-      display: flex;
-      justify-content: space-between;
       padding-bottom: 8px;
       .title {
         font-size: 28px;
@@ -90,5 +89,4 @@ getHot()
       }
     }
   }
-  
 </style>

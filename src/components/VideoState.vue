@@ -14,7 +14,7 @@
         <span class="number">{{formatNumber(coin || 0 + state.coinNum)}}</span>
       </div>
       <div class="status-item">
-        <el-button class="btn" circle size="small" @click="favoriteThis">
+        <el-button class="btn" circle size="small" @click="openDialog">
           <svg-icon name="star" class="icon" :color="state.isFavorited?'#ed5b8c':''"></svg-icon>
         </el-button>
         <span class="number">{{formatNumber(favorite || 0 + state.favouritNum)}}</span>
@@ -24,16 +24,53 @@
       <svg-icon name="download" />下载
     </el-button>
   </div>
+  <el-dialog 
+    v-model="visible" 
+    title="添加到收藏夹" 
+    width="340px" 
+    destroy-on-close
+    close-on-click-modal="false"
+    @close="clearDialog"
+    center>
+    <el-checkbox-group class="checkbox-group" v-model="checkList">
+      <el-checkbox 
+        v-for="(item, index) in favoriteList" 
+        :label="item.id"
+        @change="changeCheckNum(item)"
+        :checked="!!item.fav_state">
+        {{item.title}}
+        <div class="percent">{{item.media_count + (index?'/1000':'')}}</div>
+      </el-checkbox>
+    </el-checkbox-group> 
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button 
+          type="primary" 
+          :disabled="!editFavorite.addList.length && !editFavorite.delList.length" 
+          @click="favoriteThis"
+          >确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
 import store from '@/utils/store';
-import { reactive, watch ,inject} from 'vue';
+import { reactive, watch ,inject, ref} from 'vue';
 import { ElMessage } from "element-plus";
 import { formatNumber } from '@/utils/tools';
 import { coinVideoApi, favoriteVideoApi, likeVideoApi } from '@/request/api/video/action';
 import { getVideoCoinStateApi, getVideoFavouriteStateApi, getVideoLikeStateApi } from '@/request/api/video/info';
+import { getFavoriteApi } from '@/request/api/user/favorite';
+import { FavoriteItem } from '@/request/model/user/favorite';
 
+const visible = ref(false)
+const checkList = ref([])
+const editFavorite = reactive({
+  addList: <number[]>[],
+  delList: <number[]>[]
+})
+const favoriteList = ref(<FavoriteItem[]>[])
 const props = defineProps<{
   like: number,
   coin: number,
@@ -58,11 +95,11 @@ const getVideoState = () => {
   getVideoLikeStateApi(params).then( ({data}) => {
     state.isLiked = !!data
   })
-  getVideoCoinStateApi(params).then( ({data}) => {
-    state.isCoined = !!data.multiply
+  getVideoCoinStateApi(params).then( ({data:{multiply}}) => {
+    state.isCoined = !!multiply
   })
-  getVideoFavouriteStateApi(params).then( ({data}) => {
-    state.isFavorited = data.favoured
+  getVideoFavouriteStateApi(params).then( ({data:{favoured}}) => {
+    state.isFavorited = favoured
   })
 }
 
@@ -82,13 +119,60 @@ const coinThis = () => {
     ElMessage.success("投币成功")
   })
 }
+// 获取收藏夹列表
+const getFavoriteList = async () => {
+  const {data:{list}} = await getFavoriteApi({up_mid: store.user.mid, rid: props.aid, type: 2})
+  favoriteList.value = list
+}
+// 打开弹框
+const openDialog = async () => {
+  getFavoriteList()
+  visible.value = true
+
+}
+const changeCheckNum = (item:FavoriteItem) => {
+  item.fav_state = !item.fav_state as unknown as number
+  if(item.fav_state) {
+    // 如果变为选中状态
+    item.media_count++
+    if (editFavorite.delList.includes(item.id)) {
+      editFavorite.delList = editFavorite.delList.filter( i => i !=item.id)
+    } else {
+      editFavorite.addList.push(item.id)
+    }
+  } else {
+    item.media_count--
+    if (editFavorite.addList.includes(item.id)) {
+      editFavorite.addList = editFavorite.addList.filter( i => i !=item.id)
+    } else {
+      editFavorite.delList.push(item.id)
+    }
+  }
+}
 // 收藏
 const favoriteThis = () => {
-  favoriteVideoApi({rid: props.aid, type: 2}).then( () => {
+  if (!editFavorite.addList.length && !editFavorite.delList.length) {
+    visible.value = false
+    return
+  }
+  const params = {
+    rid: props.aid, 
+    type: 2, 
+    add_media_ids: editFavorite.addList.toString(),
+    del_media_ids: editFavorite.delList.toString()
+  }
+  favoriteVideoApi(params).then( () => {
     state.isFavorited = !state.isFavorited
     state.isFavorited?state.favouritNum++:state.favouritNum--
+    visible.value = false
     ElMessage.success("收藏成功")
   })
+}
+const clearDialog = () => {
+  checkList.value = []
+  favoriteList.value = []
+  editFavorite.addList = []
+  editFavorite.delList = []
 }
 
 watch(props,() => {
@@ -127,6 +211,18 @@ getVideoState()
   .download-btn {
     width: 200px;
     margin-top: 20px;
+  }
+}
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  .percent {
+    position: absolute;
+    right: 0px;
+    top: 13px;
+  }
+  .el-checkbox:last-of-type {
+    margin-right: 30px;
   }
 }
 </style>

@@ -44,6 +44,7 @@ export default function useUserInfo() {
       userInfo.wallet = resInfo.data.wallet
     }
     store.user.isLogin = resInfo.data.isLogin
+    store.user.mid = resInfo.data.mid
   }
   return {userInfo, userState, getUserInfo}
 }

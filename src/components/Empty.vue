@@ -15,6 +15,7 @@ defineProps<{
   .empty-wrap {
     width: 100%;
     height: 100%;
+    padding: 40px 0;
     display: flex;
     align-items: center;
     justify-content: center;

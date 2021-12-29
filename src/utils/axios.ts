@@ -37,7 +37,7 @@ service.interceptors.response.use(
       if (res.data.code === 403) {
         // router.push({ path: "/login" });
       }
-      if (res.data.code != undefined && res.data.code !== 0 ) {
+      if (res.data.code != undefined && res.data.code !== 0 && res.data.code !== -101) {
         handleResponseErrors(res.status, res.data.message);
         return Promise.reject(res.data);
       }

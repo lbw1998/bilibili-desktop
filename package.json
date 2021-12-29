@@ -1,18 +1,50 @@
 {
   "name": "bilibili-desktop",
-  "version": "0.0.0",
+  "description": "bilibili桌面端",
+  "author": "取暖",
+  "version": "1.0.1",
   "main": "electron/main.ts",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit  && vite build",
     "serve": "vite preview",
     "electron:serve": "electron .",
-    "dev:tsc": "cross-env NODE_ENV=development nodemon --watch electron/main.ts --exec yarn run electron:serve "
+    "dev:tsc": "cross-env NODE_ENV=development nodemon --watch electron/main.ts --exec yarn run electron:serve ",
+    "electron:build": "yarn run build && electron-builder"
+  },
+  "build": {
+    "appId": "com.bwen.bilibili",
+    "productName": "bilibili",
+    "copyright": "Copyright © 2021 取暖",
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "dist/favicon.ico",
+      "uninstallerIcon": "dist/favicon.ico"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "win": {
+      "icon": "dist/favicon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist_electron"
+    }
   },
   "dependencies": {
     "@types/js-cookie": "^3.0.1",
     "axios": "^0.24.0",
-    "electron": "15.3.1",
     "element-plus": "^1.2.0-beta.6",
     "flv.js": "^1.6.2",
     "js-cookie": "^3.0.1",
@@ -22,6 +54,8 @@
     "vue-router": "4"
   },
   "devDependencies": {
+    "electron-builder": "^22.14.5",
+    "electron": "15.3.1",
     "@types/node": "^16.11.7",
     "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue": "^1.9.3",

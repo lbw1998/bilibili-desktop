@@ -14,6 +14,8 @@ function createWindow() {
     minWidth: 1200,
     minHeight: 840,
     frame: false,
+    transparent: true,
+    backgroundColor: '#00000000',
     webPreferences: {
       webSecurity: false,
       // preload: path.join(__dirname, "preload.ts"),
@@ -32,7 +34,8 @@ function createWindow() {
   const isDev = process.env.NODE_ENV === "development";
   if (isDev) {
     mainWindow.loadURL("http://localhost:3000/");
-  } else {
+    mainWindow.webContents.openDevTools();
+} else {
     mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
   }
   ipcMain.on('handleWindow', (e,type) => {
@@ -44,7 +47,6 @@ function createWindow() {
       mainWindow.destroy()
     }
   })
-  mainWindow.webContents.openDevTools();
 }
 app.on("ready", () => {
   createWindow();

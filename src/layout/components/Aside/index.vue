@@ -43,12 +43,12 @@
       <el-icon><VideoCamera /></el-icon>
       <template #title>直播</template>
     </el-menu-item> -->
-    <el-menu-item index="/dynamic">
+    <!-- <el-menu-item index="/dynamic">
       <el-icon>
         <svg-icon name="dynamic" size="24" />
       </el-icon>
       <template #title>动态</template>
-    </el-menu-item>
+    </el-menu-item> -->
     <div class="user">
       <el-avatar :size="38" v-if="!store.user?.isLogin" @click="showDialog">
         <svg-icon name="user" />

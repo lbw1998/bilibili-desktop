@@ -6,7 +6,7 @@
           <div class="image" v-loading="true"></div>
         </template>
       </el-image>
-      <p class="tip">{{formatTime(duration)}}</p>
+      <p class="tip" v-if="duration">{{formatTime(duration)}}</p>
     </div>
     <div class="card-info">
       <el-avatar v-if="face" :size="42" class="face" :src="face"></el-avatar>
@@ -44,7 +44,7 @@ defineProps<{
   view?: number,
   like?: number,
   online?: number,
-  duration: number | string
+  duration?: number | string
 }>()
 
 </script>

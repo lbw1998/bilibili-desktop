@@ -112,24 +112,23 @@ const likeThis = verifyLogin(() => {
   })
 })
 // 投币
-const coinThis = () => {
+const coinThis = verifyLogin(() => {
   coinVideoApi({aid: props.aid, multiply: 1}).then( () => {
     state.isCoined = !state.isCoined
     state.isCoined?state.coinNum++:state.coinNum--
     ElMessage.success("投币成功")
   })
-}
+})
 // 获取收藏夹列表
 const getFavoriteList = async () => {
   const {data:{list}} = await getFavoriteApi({up_mid: store.user.mid, rid: props.aid, type: 2})
   favoriteList.value = list
 }
 // 打开弹框
-const openDialog = async () => {
+const openDialog =  verifyLogin(() => {
   getFavoriteList()
   visible.value = true
-
-}
+})
 const changeCheckNum = (item:FavoriteItem) => {
   item.fav_state = !item.fav_state as unknown as number
   if(item.fav_state) {

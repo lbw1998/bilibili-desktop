@@ -138,9 +138,9 @@ const init = ({aid = route.query.aid as unknown as number, bvid =route.query.bvi
       ...{cid: videoInfo.cid}
     }
     // 获取视频流并播放
-    // getPlayInfo(playParams).then(() => {
-    //   Player.value.init()
-    // })
+    getPlayInfo(playParams).then(() => {
+      Player.value.init()
+    })
     const relatedParams = {
       ...(videoInfo.aid?{aid: videoInfo.aid}:{bvid: videoInfo.bvid}),
     }

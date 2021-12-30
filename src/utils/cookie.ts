@@ -1,15 +1,12 @@
-import Cookies from "js-cookie"
+const { ipcRenderer  } = require('electron')
 
 const BiliCSRF = 'bili_jct'
+const domain = '.bilibili.com' 
 
 export function getBiliCSRF() {
-  return Cookies.get(BiliCSRF)
-}
-
-export function setBiliCSRF(value:string, option:Object) {
-  return Cookies.set(BiliCSRF,value, option)
+  return ipcRenderer.sendSync('getCookie', {name: BiliCSRF, domain})[0].value
 }
 
 export function clearCookie() {
-  Cookies.remove(BiliCSRF)
+  return ipcRenderer.send('clearCookie', {url: '/', name: BiliCSRF})
 }

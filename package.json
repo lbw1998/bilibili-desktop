@@ -2,7 +2,7 @@
   "name": "bilibili-desktop",
   "description": "bilibili桌面端",
   "author": "取暖",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "main": "electron/main.ts",
   "scripts": {
     "dev": "vite",

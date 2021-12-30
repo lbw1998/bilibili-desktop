@@ -23,7 +23,8 @@ export default function useUserInfo() {
     dynamic_count: 0
   })
   const getUserInfo = async () => {
-    if (!getBiliCSRF()) return
+    const csrf = getBiliCSRF()
+    if (!csrf) return
     const resInfo = await getUserInfoApi()
     const resState = await getUserStateApi()
     if (resState?.code == 0) {
@@ -45,6 +46,7 @@ export default function useUserInfo() {
     }
     store.user.isLogin = resInfo.data.isLogin
     store.user.mid = resInfo.data.mid
+    store.user.csrf = csrf
   }
   return {userInfo, userState, getUserInfo}
 }

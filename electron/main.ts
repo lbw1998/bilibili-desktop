@@ -1,11 +1,15 @@
 // main.js
 
 // 控制应用生命周期和创建原生浏览器窗口的模组
-const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const {session} = require('electron');
+const { app, BrowserWindow, Menu } = require('electron')
 const path = require('path')
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
-const {session} = require('electron');
 app.commandLine.appendSwitch('disable-web-security');
+const referer = require("./referer.ts")
+
+const ipc = require("./ipc.ts")
+
 function createWindow() {
   Menu.setApplicationMenu(null)
   const mainWindow = new BrowserWindow({
@@ -23,14 +27,6 @@ function createWindow() {
       contextIsolation: false,
     }
   });
-  const filter = {
-    urls: ["*://*/*"]
-  }
-  session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback)=> {
-    details.requestHeaders['origin'] = "https://www.bilibili.com"
-    details.requestHeaders['referer'] = "https://www.bilibili.com"
-    callback({ requestHeaders: details.requestHeaders });
-  })
   const isDev = process.env.NODE_ENV === "development";
   if (isDev) {
     mainWindow.loadURL("http://localhost:3000/");
@@ -38,18 +34,13 @@ function createWindow() {
 } else {
     mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
   }
-  ipcMain.on('handleWindow', (e,type) => {
-    if (type === 'minWindow' ) {
-      mainWindow.minimize();
-    } else if (type === 'maxWindow') {
-      mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize()
-    } else {
-      mainWindow.destroy()
-    }
-  })
+  ipc.handleWindow(mainWindow)
 }
+
 app.on("ready", () => {
   createWindow();
+  referer.setReferer(session)
+  ipc.cookie(session)
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });

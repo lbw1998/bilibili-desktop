@@ -2,7 +2,8 @@
 
 import axios, { Method, AxiosRequestHeaders, AxiosRequestConfig  } from "axios";
 import qs from "qs"
-import { getBiliCSRF } from '@/utils/cookie';
+import store from "./store";
+
 // const HttpsProxyAgent = require('https-proxy-agent');
 import { handleResponseErrors } from "./tools";
 // import router from "../router";
@@ -73,7 +74,7 @@ export interface BaseData<T = any> {
 
 const request = async <T = any>(config: AxiosRequestConfig): Promise<BaseData<T>> => {
   if (config.method?.toUpperCase() === "POST") {
-    getBiliCSRF() && (config.params = {...config.params, csrf: getBiliCSRF()})
+    store.user.csrf && (config.params = {...config.params, csrf: store.user.csrf})
     config.data = qs.stringify(config.data)
   }
   const data:BaseData<T> = await service.request(config)

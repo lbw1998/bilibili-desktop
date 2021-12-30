@@ -4,6 +4,7 @@ const store = reactive({
   user: {
     isLogin: false,
     mid: 0,
+    csrf: ""
   },
   system: {
     isFullScreen: false

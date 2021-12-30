@@ -88,14 +88,13 @@
 </template>
 
 <script setup lang="ts">
-import qs from 'qs'
 import { ref } from "vue";
 import store from "@/utils/store"
 import QrcodeVue from 'qrcode.vue'
 import { ElNotification } from "element-plus";
 import UserInfoVue from "@/components/UserInfo.vue";
 import useUserInfo from "./composables/getUserInfo";
-import { getBiliCSRF, setBiliCSRF, clearCookie } from "@/utils/cookie";
+import { clearCookie } from "@/utils/cookie";
 import { getLoginUrlApi, loginApi, logoutApi } from "@/request/api/user/login";
 
 const loginDialog = ref(false)
@@ -123,8 +122,6 @@ const login = async (oauthKey:string) => {
   const res = await loginApi({oauthKey})
   if(res.code == 0) {
     loginDialog.value = false
-    const cookie = qs.parse(res.data.url.split("?")[1])
-    setBiliCSRF(cookie.bili_jct, {expires: ~~(cookie.Expires/60/60/24).toFixed(0)})
     getUserInfo()
   }
 }
@@ -140,7 +137,7 @@ const showDialog = () => {
 }
 // 注销
 const logout = async () => {
-  const { code } = await logoutApi({biliCSRF: getBiliCSRF() || ''})
+  const { code } = await logoutApi({biliCSRF: store.user.csrf})
   if(code == 0 ) {
     userDialog.value = false
     clearCookie()

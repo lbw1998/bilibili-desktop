@@ -1,4 +1,4 @@
-   <template>
+<template>
   <svg :class="svgClass" v-bind="$attrs" :style="{color: color}">
     <use :xlink:href="iconName"/>
   </svg>

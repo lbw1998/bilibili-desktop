@@ -2,19 +2,19 @@
   <div class="state-wrap">
     <div class="video-status">
       <div class="status-item">
-        <el-button circle size="small" @click="likeThis">
+        <el-button circle size="large" @click="likeThis">
           <svg-icon name="like" class="icon" :color="state.isLiked?'#ed5b8c':''"></svg-icon>
         </el-button>
         <span class="number">{{formatNumber(like || 0 + state.likeNum)}}</span>
       </div>
       <div class="status-item">
-        <el-button circle size="small" @click="coinThis">
+        <el-button circle size="large" @click="coinThis">
           <svg-icon name="money" class="icon" :color="state.isCoined?'#ed5b8c':''"></svg-icon>
         </el-button>
         <span class="number">{{formatNumber(coin || 0 + state.coinNum)}}</span>
       </div>
       <div class="status-item">
-        <el-button class="btn" circle size="small" @click="openDialog">
+        <el-button circle size="large" @click="openDialog">
           <svg-icon name="star" class="icon" :color="state.isFavorited?'#ed5b8c':''"></svg-icon>
         </el-button>
         <span class="number">{{formatNumber(favorite || 0 + state.favouritNum)}}</span>
@@ -194,9 +194,6 @@ getVideoState()
       flex-direction: column;
       margin-left: 5px;
       align-items: center;
-      .btn {
-        width: 48px;
-      }
       .icon {
         font-size: 28px;
       }

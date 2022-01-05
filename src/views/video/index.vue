@@ -2,7 +2,7 @@
   <div class="v-wrap" @click="clearReplyItem">
     <div class="l-con">
       <div class="video-wrap">
-        <PlayerVue ref="Player" :config="playerConfig" />
+        <PlayerVue ref="Player" @changeQuality="changeQuality" :config="playerConfig" />
       </div>
       <div class="info-wrap">
         <div class="up-info">
@@ -151,6 +151,20 @@ const init = ({aid = route.query.aid as unknown as number, bvid =route.query.bvi
 
 init({})
 
+const changeQuality = (pn: number) => {
+  const playParams = {
+    ...(videoInfo.aid?{avid: videoInfo.aid}:{bvid: videoInfo.bvid}),
+    ...{cid: videoInfo.cid},
+    pn
+  }
+  
+  Player.value.destroy()
+  // 获取视频流并播放
+  getPlayInfo(playParams).then(() => {
+    Player.value.init()
+  })
+}
+
 const changeVideo = (aid:number) => {
   Player.value.destroy()
   oid.value = aid
@@ -170,9 +184,18 @@ const changeEpisode = ( cid:number, index:number) => {
   })
 }
 
+const merge = (arrTitle:Array<string>, arrValue:Array<number>) =>{
+  if(!arrTitle) return []
+  let qualityArr = []
+  for (let i = 0; i < arrTitle.length; i++) {
+    qualityArr.push({title: arrTitle[i], value: arrValue[i]})
+  }
+  return qualityArr
+}
+
 const playerConfig = computed(() => {
   return {
-    duration: playInfo.timelength,
+    qualityList: merge(playInfo.accept_description, playInfo.accept_quality),
     segments: playInfo.durl.map( i => {return { duration: i.length, filesize: i.size, url: i.url}})
   }
 })

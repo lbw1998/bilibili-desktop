@@ -18,15 +18,15 @@
       </div>
       <div class="card-bottom">
         <template v-if="view">
-          <svg-icon name="view" color="#999999"/>
+          <svg-icon class="icon" name="view"/>
           <span class="view">{{formatNumber(view)}}</span>
         </template>
         <template v-if="like">
-          <svg-icon name="barrage" color="#999999"/>
+          <svg-icon class="icon" name="barrage"/>
           <span class="view">{{formatNumber(like)}}</span>
         </template>
         <template v-if="online">
-          <svg-icon name="user" color="#999999" />
+          <svg-icon class="icon" name="user"/>
           <span class="view">{{formatNumber(online)}}</span>
         </template>
       </div>
@@ -113,8 +113,10 @@ defineProps<{
     .card-bottom {
       display: flex;
       align-items: center;
+      .icon {
+        fill: #999999;
+      }
       span {
-        
         font-size: 12px;
         margin: 0 8px 0 5px;
       }

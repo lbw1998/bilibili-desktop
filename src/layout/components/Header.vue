@@ -1,5 +1,6 @@
 <template>
-  <div class="header-wrap">
+  <div class="header-wrap" >
+    <div class="dbclick" @dblclick="handleWindow('maxWindow')"></div>
     <div class="search-wrap">
       <el-button type="info" class="back" v-show="store.system.isFullScreen" circle @click="router.back()">
         <svg-icon name="arrow_left" />
@@ -58,6 +59,11 @@ const querySearch = async (keyword: string, cb:Function) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  .dbclick {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
   .search-wrap {
     transform: translateY(6px);
     padding-left: 20px;

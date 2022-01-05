@@ -31,7 +31,7 @@ function createWindow() {
   if (isDev) {
     mainWindow.loadURL("http://localhost:3000/");
     mainWindow.webContents.openDevTools();
-} else {
+  } else {
     mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
   }
   ipc.handleWindow(mainWindow)

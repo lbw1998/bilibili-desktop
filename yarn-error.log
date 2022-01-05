@@ -1,20 +1,30 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js upgrade electron@15.3.2
+  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js add vueuse
 
 PATH: 
-  C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;D:\Xftp 6\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;D:\Program Files\Git\cmd;D:\MySQL\MySQL Server 5.5\bin;D:\Program Files\Java\jdk1.8.0_291\\bin;D:\Program Files\Java\jdk1.8.0_291\\jre\bin;D:\Android\Sdk\platform-tools;D:\Android\Sdk\emulator;D:\Android\Sdk\tools;D:\Android\Sdk\tools\bin;D:\Program Files (x86)\NetSarang\Xshell 7\;D:\Qt\Qt5.4.0\5.4\mingw491_32\bin;C:\MinGW\bin;C:\Users\Luo\AppData\Local\Yarn\Data\global\node_modules\.bin;C:\Users\Luo\AppData\Local\Microsoft\WindowsApps;C:\Users\Luo\AppData\Roaming\npm;D:\Programs\Microsoft VS Code\bin;d:\Fiddler;C:\Users\Luo\AppData\Local\Microsoft\WindowsApps
+  C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;D:\Xftp 6\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\Program Files\Git\cmd;D:\MySQL\MySQL Server 5.5\bin;D:\Program Files\Java\jdk1.8.0_291\\bin;D:\Program Files\Java\jdk1.8.0_291\\jre\bin;D:\Android\Sdk\platform-tools;D:\Android\Sdk\emulator;D:\Android\Sdk\tools;D:\Android\Sdk\tools\bin;D:\Program Files (x86)\NetSarang\Xshell 7\;D:\Qt\Qt5.4.0\5.4\mingw491_32\bin;C:\MinGW\bin;C:\Users\Luo\AppData\Local\Yarn\Data\global\node_modules\.bin;C:\Program Files\nodejs\;C:\Users\Luo\AppData\Local\Microsoft\WindowsApps;D:\Programs\Microsoft VS Code\bin;d:\Fiddler;C:\Users\Luo\AppData\Local\Microsoft\WindowsApps;C:\Users\Luo\AppData\Roaming\npm
 
 Yarn version: 
   1.22.10
 
 Node version: 
-  14.15.1
+  16.13.1
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: EBUSY: resource busy or locked, unlink 'D:\front-end\bilibili-desktop\node_modules\electron\dist\v8_context_snapshot.bin'
+  Error: https://registry.npm.taobao.org/vueuse: Not found
+      at Request.params.callback [as _callback] (C:\Program Files\nodejs\node_modules\yarn\lib\cli.js:66988:18)
+      at Request.self.callback (C:\Program Files\nodejs\node_modules\yarn\lib\cli.js:140662:22)
+      at Request.emit (node:events:390:28)
+      at Request.<anonymous> (C:\Program Files\nodejs\node_modules\yarn\lib\cli.js:141634:10)
+      at Request.emit (node:events:390:28)
+      at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\yarn\lib\cli.js:141556:12)
+      at Object.onceWrapper (node:events:509:28)
+      at IncomingMessage.emit (node:events:402:35)
+      at endReadableNT (node:internal/streams/readable:1343:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -64,21 +74,21 @@ npm manifest:
     "dependencies": {
       "@types/js-cookie": "^3.0.1",
       "axios": "^0.24.0",
-      "element-plus": "^1.2.0-beta.6",
       "flv.js": "^1.6.2",
       "js-cookie": "^3.0.1",
       "qrcode.vue": "^3.3.3",
       "svg-sprite-loader": "^6.0.11",
-      "vue": "^3.2.16",
+      "vue": "3.2.16",
       "vue-router": "4"
     },
     "devDependencies": {
-      "electron-builder": "^22.14.5",
-      "electron": "15.3.1",
       "@types/node": "^16.11.7",
       "@types/qs": "^6.9.7",
       "@vitejs/plugin-vue": "^1.9.3",
       "cross-env": "^7.0.3",
+      "electron": "16.0.2",
+      "electron-builder": "^22.14.5",
+      "element-plus": "^1.2.0-beta.6",
       "node-sass": "^6.0.1",
       "nodemon": "^2.0.15",
       "sass": "^1.43.4",
@@ -213,9 +223,9 @@ Lockfile:
       tmp-promise "^3.0.2"
   
   "@popperjs/core@^2.10.2":
-    version "2.10.2"
-    resolved "https://registry.npmmirror.com/@popperjs/core/download/@popperjs/core-2.10.2.tgz#0798c03351f0dea1a5a4cabddf26a55a7cbee590"
-    integrity sha1-B5jAM1Hw3qGlpMq93yalWny+5ZA=
+    version "2.11.2"
+    resolved "https://registry.npmmirror.com/@popperjs/core/download/@popperjs/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
+    integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
   
   "@sindresorhus/is@^0.14.0":
     version "0.14.0"
@@ -277,9 +287,9 @@ Lockfile:
     integrity sha512-w3mrvNXLeDYV1GKTZorGJQivK6XLCoGwpnyJFbJVK/aTBQUxOCaa/GlFAAN3OTDFcb7h5tiFG+YXCO2By+riZw==
   
   "@types/node@^14.6.2":
-    version "14.17.34"
-    resolved "https://registry.npmmirror.com/@types/node/download/@types/node-14.17.34.tgz#fe4b38b3f07617c0fa31ae923fca9249641038f0"
-    integrity sha512-USUftMYpmuMzeWobskoPfzDi+vkpe0dvcOBRNOscFrGxVp4jomnRxWuVohgqBow2xyIPC0S3gjxV/5079jhmDg==
+    version "14.18.4"
+    resolved "https://registry.npmmirror.com/@types/node/download/@types/node-14.18.4.tgz#b722d6c91f156d9359aeb20f2d7d06337b15c603"
+    integrity sha512-swe3lD4izOJWHuxvsZdDFRq6S9i6koJsXOnQKYekhSO5JTizMVirUFgY/bUsaOJQj8oSD4oxmRYPBM/0b6jpdw==
   
   "@types/node@^16.11.7":
     version "16.11.7"
@@ -380,6 +390,16 @@ Lockfile:
       vscode-nls "^5.0.0"
       vscode-uri "^2.1.2"
   
+  "@vue/compiler-core@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/compiler-core/download/@vue/compiler-core-3.2.16.tgz#aa1c475e5183f24ca93de1bb009b77e63cd189ab"
+    integrity sha1-qhxHXlGD8kypPeG7AJt35jzRias=
+    dependencies:
+      "@babel/parser" "^7.15.0"
+      "@vue/shared" "3.2.16"
+      estree-walker "^2.0.2"
+      source-map "^0.6.1"
+  
   "@vue/compiler-core@3.2.21":
     version "3.2.21"
     resolved "https://registry.npmmirror.com/@vue/compiler-core/download/@vue/compiler-core-3.2.21.tgz#26566c32b2ad838199d471ef5df620a83846f24e"
@@ -390,7 +410,15 @@ Lockfile:
       estree-walker "^2.0.2"
       source-map "^0.6.1"
   
-  "@vue/compiler-dom@3.2.21", "@vue/compiler-dom@^3.2.19":
+  "@vue/compiler-dom@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/compiler-dom/download/@vue/compiler-dom-3.2.16.tgz#b0748874c4fcf98dfb20efc8a40f629c90c8a620"
+    integrity sha1-sHSIdMT8+Y37IO/IpA9inJDIpiA=
+    dependencies:
+      "@vue/compiler-core" "3.2.16"
+      "@vue/shared" "3.2.16"
+  
+  "@vue/compiler-dom@^3.2.19":
     version "3.2.21"
     resolved "https://registry.npmmirror.com/@vue/compiler-dom/download/@vue/compiler-dom-3.2.21.tgz#d6f6c85364ef8888f9c4e9122bfba11e78fb398c"
     integrity sha1-1vbIU2TviIj5xOkSK/uhHnj7OYw=
@@ -398,77 +426,89 @@ Lockfile:
       "@vue/compiler-core" "3.2.21"
       "@vue/shared" "3.2.21"
   
-  "@vue/compiler-sfc@3.2.21":
-    version "3.2.21"
-    resolved "https://registry.npmmirror.com/@vue/compiler-sfc/download/@vue/compiler-sfc-3.2.21.tgz#42639ee49e725afb7d8f1d1940e75dc17a56002c"
-    integrity sha1-QmOe5J5yWvt9jx0ZQOddwXpWACw=
+  "@vue/compiler-sfc@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/compiler-sfc/download/@vue/compiler-sfc-3.2.16.tgz#7e8c372baa0fa93f0c91058d8fa25780f7233f29"
+    integrity sha1-fow3K6oPqT8MkQWNj6JXgPcjPyk=
     dependencies:
       "@babel/parser" "^7.15.0"
-      "@vue/compiler-core" "3.2.21"
-      "@vue/compiler-dom" "3.2.21"
-      "@vue/compiler-ssr" "3.2.21"
-      "@vue/ref-transform" "3.2.21"
-      "@vue/shared" "3.2.21"
+      "@vue/compiler-core" "3.2.16"
+      "@vue/compiler-dom" "3.2.16"
+      "@vue/compiler-ssr" "3.2.16"
+      "@vue/ref-transform" "3.2.16"
+      "@vue/shared" "3.2.16"
       estree-walker "^2.0.2"
       magic-string "^0.25.7"
       postcss "^8.1.10"
       source-map "^0.6.1"
   
-  "@vue/compiler-ssr@3.2.21":
-    version "3.2.21"
-    resolved "https://registry.npmmirror.com/@vue/compiler-ssr/download/@vue/compiler-ssr-3.2.21.tgz#37d124f89e8adef9fd56b85775de4b5310a0436e"
-    integrity sha1-N9Ek+J6K3vn9VrhXdd5LUxCgQ24=
+  "@vue/compiler-ssr@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/compiler-ssr/download/@vue/compiler-ssr-3.2.16.tgz#7184aac9a69bbde73614eceb726491f7e91350e8"
+    integrity sha1-cYSqyaabvec2FOzrcmSR9+kTUOg=
     dependencies:
-      "@vue/compiler-dom" "3.2.21"
-      "@vue/shared" "3.2.21"
+      "@vue/compiler-dom" "3.2.16"
+      "@vue/shared" "3.2.16"
   
   "@vue/devtools-api@^6.0.0-beta.18":
     version "6.0.0-beta.20.1"
     resolved "https://registry.npmmirror.com/@vue/devtools-api/download/@vue/devtools-api-6.0.0-beta.20.1.tgz#5b499647e929c35baf2a66a399578f9aa4601142"
     integrity sha512-R2rfiRY+kZugzWh9ZyITaovx+jpU4vgivAEAiz80kvh3yviiTU3CBuGuyWpSwGz9/C7TkSWVM/FtQRGlZ16n8Q==
   
-  "@vue/reactivity@3.2.21", "@vue/reactivity@^3.2.19":
+  "@vue/reactivity@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/reactivity/download/@vue/reactivity-3.2.16.tgz#0d4253443d580c906508b0b05b2cd136d46bf4a2"
+    integrity sha1-DUJTRD1YDJBlCLCwWyzRNtRr9KI=
+    dependencies:
+      "@vue/shared" "3.2.16"
+  
+  "@vue/reactivity@^3.2.19":
     version "3.2.21"
     resolved "https://registry.npmmirror.com/@vue/reactivity/download/@vue/reactivity-3.2.21.tgz#073ad144192ed78a07e151e95a3baa515e4099a2"
     integrity sha1-BzrRRBku14oH4VHpWjuqUV5AmaI=
     dependencies:
       "@vue/shared" "3.2.21"
   
-  "@vue/ref-transform@3.2.21":
-    version "3.2.21"
-    resolved "https://registry.npmmirror.com/@vue/ref-transform/download/@vue/ref-transform-3.2.21.tgz#b0c554c9f640c3f005f77e676066aa0faba90984"
-    integrity sha1-sMVUyfZAw/AF935nYGaqD6upCYQ=
+  "@vue/ref-transform@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/ref-transform/download/@vue/ref-transform-3.2.16.tgz#796a96a205a318b4b0f40bbdace78396c4d0708b"
+    integrity sha1-eWqWogWjGLSw9Au9rOeDlsTQcIs=
     dependencies:
       "@babel/parser" "^7.15.0"
-      "@vue/compiler-core" "3.2.21"
-      "@vue/shared" "3.2.21"
+      "@vue/compiler-core" "3.2.16"
+      "@vue/shared" "3.2.16"
       estree-walker "^2.0.2"
       magic-string "^0.25.7"
   
-  "@vue/runtime-core@3.2.21":
-    version "3.2.21"
-    resolved "https://registry.npmmirror.com/@vue/runtime-core/download/@vue/runtime-core-3.2.21.tgz#e12dac8c3893b7aebfc37e32066718d8aa686ac5"
-    integrity sha1-4S2sjDiTt66/w34yBmcY2KpoasU=
+  "@vue/runtime-core@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/runtime-core/download/@vue/runtime-core-3.2.16.tgz#4c8d909029e595762cb70b97702485bfaf4c047c"
+    integrity sha1-TI2QkCnllXYstwuXcCSFv69MBHw=
     dependencies:
-      "@vue/reactivity" "3.2.21"
-      "@vue/shared" "3.2.21"
+      "@vue/reactivity" "3.2.16"
+      "@vue/shared" "3.2.16"
   
-  "@vue/runtime-dom@3.2.21":
-    version "3.2.21"
-    resolved "https://registry.npmmirror.com/@vue/runtime-dom/download/@vue/runtime-dom-3.2.21.tgz#33dd15bc85281e773177a30dc6931c294bd77aa1"
-    integrity sha1-M90VvIUoHncxd6MNxpMcKUvXeqE=
+  "@vue/runtime-dom@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/runtime-dom/download/@vue/runtime-dom-3.2.16.tgz#50aa4afd11fe32f4d70915753411fb387ff9785a"
+    integrity sha1-UKpK/RH+MvTXCRV1NBH7OH/5eFo=
     dependencies:
-      "@vue/runtime-core" "3.2.21"
-      "@vue/shared" "3.2.21"
+      "@vue/runtime-core" "3.2.16"
+      "@vue/shared" "3.2.16"
       csstype "^2.6.8"
   
-  "@vue/server-renderer@3.2.21":
-    version "3.2.21"
-    resolved "https://registry.npmmirror.com/@vue/server-renderer/download/@vue/server-renderer-3.2.21.tgz#887d0a44de76f72313cff2686a24c0315231d634"
-    integrity sha1-iH0KRN529yMTz/JoaiTAMVIx1jQ=
+  "@vue/server-renderer@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/server-renderer/download/@vue/server-renderer-3.2.16.tgz#791e47957c16f31e53a773c27b0b88d8095d4586"
+    integrity sha1-eR5HlXwW8x5Tp3PCewuI2AldRYY=
     dependencies:
-      "@vue/compiler-ssr" "3.2.21"
-      "@vue/shared" "3.2.21"
+      "@vue/compiler-ssr" "3.2.16"
+      "@vue/shared" "3.2.16"
+  
+  "@vue/shared@3.2.16":
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/@vue/shared/download/@vue/shared-3.2.16.tgz#a7f5e37e07ac68d4b7ea8ebeba515b46d205c524"
+    integrity sha1-p/XjfgesaNS36o6+ulFbRtIFxSQ=
   
   "@vue/shared@3.2.21", "@vue/shared@^3.2.19":
     version "3.2.21"
@@ -704,7 +744,7 @@ Lockfile:
   
   async-validator@^4.0.7:
     version "4.0.7"
-    resolved "https://registry.npmmirror.com/async-validator/download/async-validator-4.0.7.tgz?cache=0&sync_timestamp=1634529532378&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fasync-validator%2Fdownload%2Fasync-validator-4.0.7.tgz#034a0fd2103a6b2ebf010da75183bec299247afe"
+    resolved "https://registry.npmmirror.com/async-validator/download/async-validator-4.0.7.tgz?cache=0&sync_timestamp=1634529574100&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fasync-validator%2Fdownload%2Fasync-validator-4.0.7.tgz#034a0fd2103a6b2ebf010da75183bec299247afe"
     integrity sha1-A0oP0hA6ay6/AQ2nUYO+wpkkev4=
   
   async@0.9.x:
@@ -805,7 +845,7 @@ Lockfile:
   
   boolean@^3.0.1:
     version "3.1.4"
-    resolved "https://registry.nlark.com/boolean/download/boolean-3.1.4.tgz#f51a2fb5838a99e06f9b6ec1edb674de67026435"
+    resolved "https://registry.nlark.com/boolean/download/boolean-3.1.4.tgz?cache=0&sync_timestamp=1629410102021&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fboolean%2Fdownload%2Fboolean-3.1.4.tgz#f51a2fb5838a99e06f9b6ec1edb674de67026435"
     integrity sha1-9RovtYOKmeBvm27B7bZ03mcCZDU=
   
   boxen@^5.0.0:
@@ -1194,7 +1234,7 @@ Lockfile:
   
   config-chain@^1.1.11:
     version "1.1.13"
-    resolved "https://registry.nlark.com/config-chain/download/config-chain-1.1.13.tgz#fad0795aa6a6cdaff9ed1b68e9dff94372c232f4"
+    resolved "https://registry.nlark.com/config-chain/download/config-chain-1.1.13.tgz?cache=0&sync_timestamp=1622749561653&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fconfig-chain%2Fdownload%2Fconfig-chain-1.1.13.tgz#fad0795aa6a6cdaff9ed1b68e9dff94372c232f4"
     integrity sha1-+tB5Wqamza/57Rto6d/5Q3LCMvQ=
     dependencies:
       ini "^1.3.4"
@@ -1269,9 +1309,9 @@ Lockfile:
     integrity sha1-7yp6lm7BEIM4g2m6oC6+rSKbMNU=
   
   csstype@^2.6.8:
-    version "2.6.18"
-    resolved "https://registry.nlark.com/csstype/download/csstype-2.6.18.tgz?cache=0&sync_timestamp=1631540782346&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcsstype%2Fdownload%2Fcsstype-2.6.18.tgz#980a8b53085f34af313410af064f2bd241784218"
-    integrity sha1-mAqLUwhfNK8xNBCvBk8r0kF4Qhg=
+    version "2.6.19"
+    resolved "https://registry.npmmirror.com/csstype/download/csstype-2.6.19.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fcsstype%2Fdownload%2Fcsstype-2.6.19.tgz#feeb5aae89020bb389e1f63669a5ed490e391caa"
+    integrity sha512-ZVxXaNy28/k3kJg0Fou5MiYpp88j7H9hLZp8PDC3jV0WFjfH5E9xHb56L0W59cPbKbcHXeP4qyT8PrHp8t6LcQ==
   
   dashdash@^1.12.0:
     version "1.14.1"
@@ -1282,8 +1322,8 @@ Lockfile:
   
   dayjs@^1.10.7:
     version "1.10.7"
-    resolved "https://registry.nlark.com/dayjs/download/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
-    integrity sha1-LPX5Gt0oEWdIRAhmoKHSbzps5Gg=
+    resolved "https://registry.npmmirror.com/dayjs/download/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
+    integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
   
   debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
     version "2.6.9"
@@ -1576,10 +1616,10 @@ Lockfile:
       lazy-val "^1.0.5"
       mime "^2.5.2"
   
-  electron@15.3.1:
-    version "15.3.1"
-    resolved "https://registry.npmmirror.com/electron/download/electron-15.3.1.tgz#38ce9dfcd4ec51a33d62de23de15fb5ceeaea25d"
-    integrity sha512-6/qp3Dor7HSGq28qhJEVD1zBFZoWicmo3/ZLvo7rhXPPZFwEMSJGPMEZM9WYSfWW4t/OozpWNuuDe970cF7g2Q==
+  electron@16.0.2:
+    version "16.0.2"
+    resolved "https://registry.npmmirror.com/electron/download/electron-16.0.2.tgz#6d0ae3152c410478dfffdbf80852a3840679b8c5"
+    integrity sha512-kT746yVMztrP4BbT3nrFNcUcfgFu2yelUw6TWBVTy0pju+fBISaqcvoiMrq+8U0vRpoXSu2MJYygOf4T0Det7g==
     dependencies:
       "@electron/get" "^1.13.0"
       "@types/node" "^14.6.2"
@@ -1658,7 +1698,7 @@ Lockfile:
   
   es6-error@^4.1.1:
     version "4.1.1"
-    resolved "https://registry.nlark.com/es6-error/download/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
+    resolved "https://registry.npm.taobao.org/es6-error/download/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
     integrity sha1-njr0B0Wd7tR+mpH5uIWoTrBcVh0=
   
   es6-promise@^4.2.8:
@@ -1848,7 +1888,7 @@ Lockfile:
   
   extract-zip@^1.0.3:
     version "1.7.0"
-    resolved "https://registry.nlark.com/extract-zip/download/extract-zip-1.7.0.tgz#556cc3ae9df7f452c493a0cfb51cc30277940927"
+    resolved "https://registry.npm.taobao.org/extract-zip/download/extract-zip-1.7.0.tgz#556cc3ae9df7f452c493a0cfb51cc30277940927"
     integrity sha1-VWzDrp339FLEk6DPtRzDAneUCSc=
     dependencies:
       concat-stream "^1.6.2"
@@ -1878,7 +1918,7 @@ Lockfile:
   
   fd-slicer@~1.1.0:
     version "1.1.0"
-    resolved "https://registry.nlark.com/fd-slicer/download/fd-slicer-1.1.0.tgz#25c7c89cb1f9077f8891bbe61d8f390eae256f1e"
+    resolved "https://registry.npm.taobao.org/fd-slicer/download/fd-slicer-1.1.0.tgz#25c7c89cb1f9077f8891bbe61d8f390eae256f1e"
     integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
     dependencies:
       pend "~1.2.0"
@@ -2138,7 +2178,7 @@ Lockfile:
   
   global-tunnel-ng@^2.7.1:
     version "2.7.1"
-    resolved "https://registry.nlark.com/global-tunnel-ng/download/global-tunnel-ng-2.7.1.tgz#d03b5102dfde3a69914f5ee7d86761ca35d57d8f"
+    resolved "https://registry.npm.taobao.org/global-tunnel-ng/download/global-tunnel-ng-2.7.1.tgz#d03b5102dfde3a69914f5ee7d86761ca35d57d8f"
     integrity sha1-0DtRAt/eOmmRT17n2GdhyjXVfY8=
     dependencies:
       encodeurl "^1.0.2"
@@ -2148,7 +2188,7 @@ Lockfile:
   
   globalthis@^1.0.1:
     version "1.0.2"
-    resolved "https://registry.nlark.com/globalthis/download/globalthis-1.0.2.tgz#2a235d34f4d8036219f7e34929b5de9e18166b8b"
+    resolved "https://registry.npm.taobao.org/globalthis/download/globalthis-1.0.2.tgz#2a235d34f4d8036219f7e34929b5de9e18166b8b"
     integrity sha1-KiNdNPTYA2IZ9+NJKbXenhgWa4s=
     dependencies:
       define-properties "^1.1.3"
@@ -2750,7 +2790,7 @@ Lockfile:
   
   jsonfile@^4.0.0:
     version "4.0.0"
-    resolved "https://registry.nlark.com/jsonfile/download/jsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
+    resolved "https://registry.nlark.com/jsonfile/download/jsonfile-4.0.0.tgz?cache=0&sync_timestamp=1618846895804&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjsonfile%2Fdownload%2Fjsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
     integrity sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=
     optionalDependencies:
       graceful-fs "^4.1.6"
@@ -2883,7 +2923,7 @@ Lockfile:
   
   magic-string@^0.25.7:
     version "0.25.7"
-    resolved "https://registry.npm.taobao.org/magic-string/download/magic-string-0.25.7.tgz#3f497d6fd34c669c6798dcb821f2ef31f5445051"
+    resolved "https://registry.nlark.com/magic-string/download/magic-string-0.25.7.tgz?cache=0&sync_timestamp=1618846922153&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fmagic-string%2Fdownload%2Fmagic-string-0.25.7.tgz#3f497d6fd34c669c6798dcb821f2ef31f5445051"
     integrity sha1-P0l9b9NMZpxnmNy4IfLvMfVEUFE=
     dependencies:
       sourcemap-codec "^1.4.4"
@@ -2919,14 +2959,14 @@ Lockfile:
   
   matcher@^3.0.0:
     version "3.0.0"
-    resolved "https://registry.npmmirror.com/matcher/download/matcher-3.0.0.tgz#bd9060f4c5b70aa8041ccc6f80368760994f30ca"
+    resolved "https://registry.npmmirror.com/matcher/download/matcher-3.0.0.tgz?cache=0&sync_timestamp=1633253473002&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fmatcher%2Fdownload%2Fmatcher-3.0.0.tgz#bd9060f4c5b70aa8041ccc6f80368760994f30ca"
     integrity sha1-vZBg9MW3CqgEHMxvgDaHYJlPMMo=
     dependencies:
       escape-string-regexp "^4.0.0"
   
   memoize-one@^6.0.0:
     version "6.0.0"
-    resolved "https://registry.npmmirror.com/memoize-one/download/memoize-one-6.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fmemoize-one%2Fdownload%2Fmemoize-one-6.0.0.tgz#b2591b871ed82948aee4727dc6abceeeac8c1045"
+    resolved "https://registry.npmmirror.com/memoize-one/download/memoize-one-6.0.0.tgz?cache=0&sync_timestamp=1634697208428&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fmemoize-one%2Fdownload%2Fmemoize-one-6.0.0.tgz#b2591b871ed82948aee4727dc6abceeeac8c1045"
     integrity sha1-slkbhx7YKUiu5HJ9xqvO7qyMEEU=
   
   meow@^9.0.0:
@@ -3217,7 +3257,7 @@ Lockfile:
   
   npm-conf@^1.1.3:
     version "1.1.3"
-    resolved "https://registry.nlark.com/npm-conf/download/npm-conf-1.1.3.tgz#256cc47bd0e218c259c4e9550bf413bc2192aff9"
+    resolved "https://registry.npm.taobao.org/npm-conf/download/npm-conf-1.1.3.tgz#256cc47bd0e218c259c4e9550bf413bc2192aff9"
     integrity sha1-JWzEe9DiGMJZxOlVC/QTvCGSr/k=
     dependencies:
       config-chain "^1.1.11"
@@ -3419,7 +3459,16 @@ Lockfile:
       source-map "^0.5.6"
       supports-color "^3.2.3"
   
-  postcss@^8.1.10, postcss@^8.3.6, postcss@^8.3.8:
+  postcss@^8.1.10:
+    version "8.4.5"
+    resolved "https://registry.npmmirror.com/postcss/download/postcss-8.4.5.tgz#bae665764dfd4c6fcc24dc0fdf7e7aa00cc77f95"
+    integrity sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==
+    dependencies:
+      nanoid "^3.1.30"
+      picocolors "^1.0.0"
+      source-map-js "^1.0.1"
+  
+  postcss@^8.3.6, postcss@^8.3.8:
     version "8.3.11"
     resolved "https://registry.npmmirror.com/postcss/download/postcss-8.3.11.tgz?cache=0&sync_timestamp=1634821260697&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fpostcss%2Fdownload%2Fpostcss-8.3.11.tgz#c3beca7ea811cd5e1c4a3ec6d2e7599ef1f8f858"
     integrity sha1-w77KfqgRzV4cSj7G0udZnvH4+Fg=
@@ -3478,8 +3527,8 @@ Lockfile:
   
   progress@^2.0.3:
     version "2.0.3"
-    resolved "https://registry.nlark.com/progress/download/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
-    integrity sha1-foz42PW48jnBvGi+tOt4Vn1XLvg=
+    resolved "https://registry.npmmirror.com/progress/download/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
+    integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
   
   promise@^7.0.1:
     version "7.3.1"
@@ -3948,7 +3997,7 @@ Lockfile:
   
   serialize-error@^7.0.1:
     version "7.0.1"
-    resolved "https://registry.npmmirror.com/serialize-error/download/serialize-error-7.0.1.tgz?cache=0&sync_timestamp=1637131178697&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fserialize-error%2Fdownload%2Fserialize-error-7.0.1.tgz#f1360b0447f61ffb483ec4157c737fab7d778e18"
+    resolved "https://registry.npmmirror.com/serialize-error/download/serialize-error-7.0.1.tgz?cache=0&sync_timestamp=1637131114993&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fserialize-error%2Fdownload%2Fserialize-error-7.0.1.tgz#f1360b0447f61ffb483ec4157c737fab7d778e18"
     integrity sha1-8TYLBEf2H/tIPsQVfHN/q313jhg=
     dependencies:
       type-fest "^0.13.1"
@@ -4034,6 +4083,11 @@ Lockfile:
     resolved "https://registry.npmmirror.com/source-map-js/download/source-map-js-0.6.2.tgz?cache=0&sync_timestamp=1636401089874&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsource-map-js%2Fdownload%2Fsource-map-js-0.6.2.tgz#0bb5de631b41cfbda6cfba8bd05a80efdfd2385e"
     integrity sha1-C7XeYxtBz72mz7qL0FqA79/SOF4=
   
+  source-map-js@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.npmmirror.com/source-map-js/download/source-map-js-1.0.1.tgz?cache=0&sync_timestamp=1636400915509&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsource-map-js%2Fdownload%2Fsource-map-js-1.0.1.tgz#a1741c131e3c77d048252adfa24e23b908670caf"
+    integrity sha512-4+TN2b3tqOCd/kaGRJ/sTYA0tR0mdXx26ipdolxcwtJVqEnqNYvlCAt1q3ypy4QMlYus+Zh34RNtYLoq2oQ4IA==
+  
   source-map-resolve@^0.5.0:
     version "0.5.3"
     resolved "https://registry.nlark.com/source-map-resolve/download/source-map-resolve-0.5.3.tgz#190866bece7553e1f8f267a2ee82c606b5509a1a"
@@ -4077,7 +4131,7 @@ Lockfile:
   
   sourcemap-codec@^1.4.4:
     version "1.4.8"
-    resolved "https://registry.npm.taobao.org/sourcemap-codec/download/sourcemap-codec-1.4.8.tgz#ea804bd94857402e6992d05a38ef1ae35a9ab4c4"
+    resolved "https://registry.nlark.com/sourcemap-codec/download/sourcemap-codec-1.4.8.tgz#ea804bd94857402e6992d05a38ef1ae35a9ab4c4"
     integrity sha1-6oBL2UhXQC5pktBaOO8a41qatMQ=
   
   spdx-correct@^3.0.0:
@@ -4115,7 +4169,7 @@ Lockfile:
   
   sprintf-js@^1.1.2:
     version "1.1.2"
-    resolved "https://registry.npm.taobao.org/sprintf-js/download/sprintf-js-1.1.2.tgz#da1765262bf8c0f571749f2ad6c26300207ae673"
+    resolved "https://registry.nlark.com/sprintf-js/download/sprintf-js-1.1.2.tgz#da1765262bf8c0f571749f2ad6c26300207ae673"
     integrity sha1-2hdlJiv4wPVxdJ8q1sJjACB65nM=
   
   sshpk@^1.7.0:
@@ -4234,7 +4288,7 @@ Lockfile:
   
   sumchecker@^3.0.1:
     version "3.0.1"
-    resolved "https://registry.nlark.com/sumchecker/download/sumchecker-3.0.1.tgz#6377e996795abb0b6d348e9b3e1dfb24345a8e42"
+    resolved "https://registry.npm.taobao.org/sumchecker/download/sumchecker-3.0.1.tgz#6377e996795abb0b6d348e9b3e1dfb24345a8e42"
     integrity sha1-Y3fplnlauwttNI6bPh37JDRajkI=
     dependencies:
       debug "^4.1.0"
@@ -4436,7 +4490,7 @@ Lockfile:
   
   tunnel@^0.0.6:
     version "0.0.6"
-    resolved "https://registry.nlark.com/tunnel/download/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
+    resolved "https://registry.npm.taobao.org/tunnel/download/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
     integrity sha1-cvExSzSlsZLbASMk3yzFh8pH+Sw=
   
   tweetnacl@^0.14.3, tweetnacl@~0.14.0:
@@ -4515,7 +4569,7 @@ Lockfile:
   
   universalify@^0.1.0:
     version "0.1.2"
-    resolved "https://registry.nlark.com/universalify/download/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
+    resolved "https://registry.npm.taobao.org/universalify/download/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
     integrity sha1-tkb2m+OULavOzJ1mOcgNwQXvqmY=
   
   universalify@^2.0.0:
@@ -4776,7 +4830,7 @@ Lockfile:
   
   vue-demi@*:
     version "0.12.1"
-    resolved "https://registry.npmmirror.com/vue-demi/download/vue-demi-0.12.1.tgz?cache=0&sync_timestamp=1635960719282&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fvue-demi%2Fdownload%2Fvue-demi-0.12.1.tgz#f7e18efbecffd11ab069d1472d7a06e319b4174c"
+    resolved "https://registry.npmmirror.com/vue-demi/download/vue-demi-0.12.1.tgz#f7e18efbecffd11ab069d1472d7a06e319b4174c"
     integrity sha1-9+GO++z/0RqwadFHLXoG4xm0F0w=
   
   vue-router@4:
@@ -4793,16 +4847,16 @@ Lockfile:
     dependencies:
       vscode-vue-languageservice "^0.27.0"
   
-  vue@^3.2.16:
-    version "3.2.21"
-    resolved "https://registry.npmmirror.com/vue/download/vue-3.2.21.tgz#55f5665172d95cf97e806b9aad0a375180be23a1"
-    integrity sha1-VfVmUXLZXPl+gGuarQo3UYC+I6E=
+  vue@3.2.16:
+    version "3.2.16"
+    resolved "https://registry.npmmirror.com/vue/download/vue-3.2.16.tgz#bc547784b5df360cfa64d72fd0b94cd20149cf1e"
+    integrity sha512-aGm8HbZe6IIj2b/LX6QXpAwwDFrpo8E1jdTkuBX2fS42c1+mQ1n0Wl+Dxnj9cgRM7bp1MIoXbPbDyDsOrXTO0w==
     dependencies:
-      "@vue/compiler-dom" "3.2.21"
-      "@vue/compiler-sfc" "3.2.21"
-      "@vue/runtime-dom" "3.2.21"
-      "@vue/server-renderer" "3.2.21"
-      "@vue/shared" "3.2.21"
+      "@vue/compiler-dom" "3.2.16"
+      "@vue/compiler-sfc" "3.2.16"
+      "@vue/runtime-dom" "3.2.16"
+      "@vue/server-renderer" "3.2.16"
+      "@vue/shared" "3.2.16"
   
   webworkify-webpack@^2.1.5:
     version "2.1.5"
@@ -4957,7 +5011,7 @@ Lockfile:
   
   yauzl@^2.10.0:
     version "2.10.0"
-    resolved "https://registry.nlark.com/yauzl/download/yauzl-2.10.0.tgz#c7eb17c93e112cb1086fa6d8e51fb0667b79a5f9"
+    resolved "https://registry.npm.taobao.org/yauzl/download/yauzl-2.10.0.tgz#c7eb17c93e112cb1086fa6d8e51fb0667b79a5f9"
     integrity sha1-x+sXyT4RLLEIb6bY5R+wZnt5pfk=
     dependencies:
       buffer-crc32 "~0.2.3"

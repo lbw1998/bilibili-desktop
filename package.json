@@ -9,8 +9,8 @@
     "build": "vue-tsc --noEmit  && vite build",
     "serve": "vite preview",
     "electron:serve": "electron .",
-    "dev:tsc": "cross-env NODE_ENV=development nodemon --watch electron/main.ts --exec npm run electron:serve ",
-    "electron:build": "npm run build && electron-builder"
+    "dev:tsc": "cross-env NODE_ENV=development nodemon --watch electron/main.ts --exec yarn run electron:serve ",
+    "electron:build": "yarn run build && electron-builder"
   },
   "build": {
     "appId": "com.bwen.bilibili",
@@ -45,6 +45,7 @@
   "dependencies": {
     "@types/js-cookie": "^3.0.1",
     "axios": "^0.24.0",
+    "element-plus": "^1.2.0-beta.6",
     "flv.js": "^1.6.2",
     "js-cookie": "^3.0.1",
     "qrcode.vue": "^3.3.3",
@@ -53,15 +54,14 @@
     "vue-router": "4"
   },
   "devDependencies": {
+    "electron-builder": "^22.14.5",
+    "electron": "16.0.2",
     "@types/node": "^16.11.7",
     "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue": "^1.9.3",
     "cross-env": "^7.0.3",
-    "electron": "16.0.2",
-    "electron-builder": "^22.14.5",
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.15",
-    "element-plus": "^1.2.0-beta.6",
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
     "typescript": "^4.4.3",

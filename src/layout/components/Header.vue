@@ -1,6 +1,5 @@
 <template>
   <div class="header-wrap" >
-    <div class="dbclick" @dblclick="handleWindow('maxWindow')"></div>
     <div class="search-wrap">
       <el-button type="info" class="back" v-show="store.system.isFullScreen" circle @click="router.back()">
         <svg-icon name="arrow_left" />

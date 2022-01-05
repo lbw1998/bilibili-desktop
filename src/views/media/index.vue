@@ -154,9 +154,18 @@ const changeMedia = (season_id:number, ep_id:number) => {
   init(ep_id)
 }
 
+const merge = (arrTitle:Array<string>, arrValue:Array<number>) =>{
+  if(!arrTitle) return []
+  let qualityArr = []
+  for (let i = 0; i < arrTitle.length; i++) {
+    qualityArr.push({title: arrTitle[i], value: arrValue[i]})
+  }
+  return qualityArr
+}
+
 const playerConfig = computed(() => {
   return {
-    duration: mediaPlayInfo.timelength,
+    qualityList: merge(mediaPlayInfo.accept_description, mediaPlayInfo.accept_quality),
     segments: mediaPlayInfo.durl.map( i => {return { duration: i.length, filesize: i.size, url: i.url}})
   }
 })

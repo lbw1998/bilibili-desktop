@@ -8,6 +8,17 @@
 5. 本项目为开源项目，不接受任何形式的催单和索取行为，更不容许存在付费内容
 
 ---
+## 本地测试
+1. 克隆项目到本地
+2. 打开项目
+3. 运行yarn run dev 
+4. 运行yarn run dev:tsc
+5. 重新生成项目并部署
+---
+## 安装包下载
+[下载地址](https://github.com/lbw1998/bilibili-desktop/releases/tag/v0.0.1beat)
+
+---
 ## 项目截图
 ![项目截图](https://github.com/lbw1998/file/blob/main/bilibili-desktop/img/1.png)
 

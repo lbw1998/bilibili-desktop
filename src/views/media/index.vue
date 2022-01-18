@@ -2,7 +2,7 @@
   <div class="v-wrap">
     <div class="l-con">
       <div class="video-wrap">
-        <PlayerVue ref="Player" :config="playerConfig" />
+        <PlayerVue ref="Player" @changeQuality="changeQuality" :config="playerConfig" />
       </div>
       <div class="info-wrap">
         <div class="media-info">
@@ -153,7 +153,18 @@ const changeMedia = (season_id:number, ep_id:number) => {
   Player.value.destroy()
   init(ep_id)
 }
-
+const changeQuality = (qn: number) => {
+  const playParams = {
+    ...{cid: cid.value},
+    qn
+  }
+  
+  Player.value.destroy()
+  // 获取视频流并播放
+  getMediaPlayInfo(playParams).then(() => {
+    Player.value.init()
+  })
+}
 const merge = (arrTitle:Array<string>, arrValue:Array<number>) =>{
   if(!arrTitle) return []
   let qualityArr = []

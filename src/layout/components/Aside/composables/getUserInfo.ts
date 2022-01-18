@@ -25,28 +25,30 @@ export default function useUserInfo() {
   const getUserInfo = async () => {
     const csrf = getBiliCSRF()
     if (!csrf) return
-    const resInfo = await getUserInfoApi()
-    const resState = await getUserStateApi()
-    if (resState?.code == 0) {
-      userState.follower= resState.data.follower
-      userState.following= resState.data.following
-      userState.dynamic_count= resState.data.dynamic_count
-    }
-    if (resInfo?.code == 0) {
+    Promise.all([getUserInfoApi(),getUserStateApi()]).then(res =>{
+      const resInfo = res[0]
+      const resState = res[1]
+      if (resState?.code == 0) {
+        userState.follower= resState.data.follower
+        userState.following= resState.data.following
+        userState.dynamic_count= resState.data.dynamic_count
+      }
+      if (resInfo?.code == 0) {
+        store.user.mid = resInfo.data.mid
+        userInfo.face = resInfo.data.face
+        userInfo.vipStatus = resInfo.data.vipStatus
+        userInfo.vipType = resInfo.data.vipType
+        userInfo.vip = resInfo.data.vip
+        userInfo.uname = resInfo.data.uname
+        userInfo.vip_nickname_color = resInfo.data.vip_nickname_color
+        userInfo.level_info = resInfo.data.level_info
+        userInfo.money = resInfo.data.money
+        userInfo.wallet = resInfo.data.wallet
+      }
+      store.user.isLogin = resInfo.data.isLogin
       store.user.mid = resInfo.data.mid
-      userInfo.face = resInfo.data.face
-      userInfo.vipStatus = resInfo.data.vipStatus
-      userInfo.vipType = resInfo.data.vipType
-      userInfo.vip = resInfo.data.vip
-      userInfo.uname = resInfo.data.uname
-      userInfo.vip_nickname_color = resInfo.data.vip_nickname_color
-      userInfo.level_info = resInfo.data.level_info
-      userInfo.money = resInfo.data.money
-      userInfo.wallet = resInfo.data.wallet
-    }
-    store.user.isLogin = resInfo.data.isLogin
-    store.user.mid = resInfo.data.mid
-    store.user.csrf = csrf
+      store.user.csrf = csrf
+    }) 
   }
   return {userInfo, userState, getUserInfo}
 }

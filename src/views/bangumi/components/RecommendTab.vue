@@ -137,6 +137,7 @@ const props = defineProps<{
 
 // 获取番剧分区信息
 const getBangumiInfo = async () => {
+  if(!tabMap[props.rid]) return
   const { result } = await getBangumiInfoApi({tab_id: tabMap[props.rid]})
   recommendInfo.bannerList = result.modules[0].items as Banner[]
   recommendInfo.bangumiList = result.modules

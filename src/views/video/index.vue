@@ -151,11 +151,11 @@ const init = ({aid = route.query.aid as unknown as number, bvid =route.query.bvi
 
 init({})
 
-const changeQuality = (pn: number) => {
+const changeQuality = (qn: number) => {
   const playParams = {
     ...(videoInfo.aid?{avid: videoInfo.aid}:{bvid: videoInfo.bvid}),
     ...{cid: videoInfo.cid},
-    pn
+    qn
   }
   
   Player.value.destroy()

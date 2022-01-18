@@ -49,9 +49,11 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item class="player-quality-item" v-for="item in props.config.qualityList" @click="changeQuality(item)">
-                    {{ item.title }}
-                  </el-dropdown-item>
+                  <template v-for="item in props.config.qualityList">
+                    <el-dropdown-item class="player-quality-item" v-if="item.value !== 16" @click="changeQuality(item)">
+                      {{ item.title }}
+                    </el-dropdown-item>
+                  </template>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -156,7 +158,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'changeQuality', pn:number):void
+  (event: 'changeQuality', qn:number):void
 }>()
 
 let videoPlayer:HTMLVideoElement;
